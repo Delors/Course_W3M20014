@@ -1,0 +1,49 @@
+/* 
+    This demonstrates how to style LectureDoc documents.
+*/
+
+
+small {
+    font-size: smaller;
+}
+
+ul {
+    list-style-type: disc;
+    list-style-position: outside;    
+    padding-left: 60px;
+}
+
+ol {
+    list-style-position: outside;    
+    padding-left: 60px;
+}
+
+.admonition {
+    margin: 25px 0px;
+    background-color: rgb(251, 200, 200);
+    border: 0;
+    border-radius: 25px;
+}
+
+/* Important! This fixes a MathJax rendering issue! */ 
+p.admonition-title {
+    margin: 0;
+    padding-bottom: 25px;
+}
+
+.ld-slide {
+    border-radius: 25px;
+}
+
+img.logo {
+    position: absolute;
+    bottom: 100px;
+    right: 275px;
+    scale: 4;
+}
+
+blockquote {
+    padding: 25px;
+    border-radius: 15px;
+    background-color: rgba(55,55,55,0.075);
+}
