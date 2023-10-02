@@ -61,3 +61,16 @@ blockquote {
 pre.code {
     margin:0;
 }
+
+.smaller {
+    font-size: smaller;
+}
+
+.small {
+    font-size: 30px;
+}
+
+.hexdump {
+    font-size: 30px;
+    font-family: monospace;
+}
