@@ -55,6 +55,8 @@ class LDTranslator(html5_polyglot.HTMLTranslator):
         self.stylesheet.append(self.ld_stylesheet_template % {'ld_path': 'ld'})
         self.meta = ['<meta name="viewport" '
                          'content="width=device-width, initial-scale=1.0, user-scalable=no" />\n']
+        self.meta.append('<meta http-equiv="Content-Type" '
+                            'content="text/html; charset=utf-8">\n')
         self.meta.append('<meta name="version" content="LD2 0.1" />\n')
 
         self.section_count = 0
