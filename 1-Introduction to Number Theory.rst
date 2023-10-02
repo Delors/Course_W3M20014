@@ -120,7 +120,10 @@ One of the basic techniques of number theory.
 
 Procedure for determing the greatest common divisor (GCD) of two positive integers.
 
-Two integers are relatively prime if their only common positive integer factor is 1 (e.g. 7 and 9).
+
+.. admonition:: Definition
+
+    Two integers are **relatively prime** if their only common positive integer factor is 1 (e.g. 7 and 9, but also 3 and 8).
 
 
 Greatest Common Divisor (:ab:`GCD`)
@@ -184,6 +187,7 @@ Computing the GCD using the Euclidean algorithm.
        <iframe src="Test/gcd animation/Standard/Standard.html" style="margin:auto;position:relative;width:600px;height:400px;overflow:hidden;" title="W3Schools Free Online Web Tutorials"></iframe>
 
 .. image:: 1-Euclidean_algorithm.svg
+    :width: 1600
 
 
 Greatest Common Divisor (:ab:`GCD`)
@@ -193,6 +197,7 @@ Example of computing the GCD using the Euclidean algorithm.
 
 
 .. image:: 1-Euclidean_algorithm_example.png
+    :width: 600
 
 
 Euclidean Algorithm
@@ -269,3 +274,324 @@ Congruences have the following properties:
 2. :math:`a \equiv b (mod\; n) \Rightarrow b \equiv a (mod\; n)`
 3. :math:`a \equiv b (mod\; n)\; and\; b \equiv c (mod\; n) \Rightarrow a \equiv c (mod\; n)`
 
+
+Properties of Congruence (Explained)
+------------------------------------
+
+    To demonstrate the first point, if :math:`n|(a - b)`, then :math:`(a - b) = kn` for some :math:`k`
+
+    - So we can write :math:`a=b+kn`
+
+    - Therefore, (a\; mod\; n) = (remainder when b + kn is divided by n) = (remainder when b is divided by n) = (b\; mod\; n)
+
+    .. admonition:: Example
+        :class: incremental
+
+        :math:`23 = 8(mod\; 5)` because :math:`23 - 8 = 15 = 5* 3`
+
+        :math:`-11 = 5(mod\; 8)` because :math:`-11 - 5 = -16 = 8* (-2)`
+
+        :math:`81 = 0(mod\; 27)` because :math:`81 - 0 = 81 = 27* 3`
+
+
+Modular Arithmetic
+------------------
+
+Modular arithmetic exhibits the following properties: 
+
+1. :math:`[(a\; mod\; n) + (b\; mod\; n)]\; mod\; n = (a + b)\; mod\; n`
+2. :math:`[(a\; mod\; n) - (b\; mod\; n)]\; mod\; n = (a - b)\; mod\; n`
+3. :math:`[(a\; mod\; n) \times (b\; mod\; n)]\; mod\; n = (a \times b)\; mod\; n`
+
+Modular Arithmetic (First Property)
+-----------------------------------
+
+Define :math:`(a\; mod\; n) = r_a` and :math:`(b\; mod\; n) = r_b`. Then we can write :math:`a = r_a + jn`` for some integer j and :math:`b = r_b + kn` for some integer k 
+Then:
+
+.. math:: 
+
+    (a + b)\; mod\; n = (ra + jn + rb + kn)\; mod\; n
+    = (ra + rb + (k + j)n)\; mod\; n
+    = (ra + rb)\; mod\; n
+    = [(a\; mod\; n) + (b\; mod\; n)]\; mod\; n
+
+
+Modular Arithmetic (Examples of Properties)
+-------------------------------------------
+
+.. admonition:: Examples
+    
+    
+    .. math::
+
+        11\; mod\; 8 = 3;\qquad 15\; mod\; 8 = 7
+
+    .. math::
+        :class: incremental
+        
+        [(11\; mod\; 8) + (15\; mod\; 8)]\; mod\; 8 = 10\; mod\; 8 = 2 
+        
+        (11 + 15)\; mod\; 8 = 26\; mod\; 8 = 2
+
+    .. math::
+        :class: incremental
+
+        [(11\; mod\; 8) - (15\; mod\; 8)]\; mod\; 8 = - 4\; mod\; 8 = 4 
+        
+        (11 - 15)\; mod\; 8 = -4\; mod\; 8 = 4
+
+    .. math::
+        :class: incremental
+
+        [(11\; mod\; 8) \times (15\; mod\; 8)]\; mod\; 8= 21\; mod\; 8 = 5 
+        
+        (11 \times 15)\; mod\; 8 = 165\; mod\; 8 = 5
+
+
+Modular Arithmetic Modulo 8
+---------------------------
+
+Definition
+
+.. math:: 
+
+    Z_n = {0,1,...,(n-1)}
+
+Addition
+
+.. csv-table:: 
+    :header: ":math:`+`","0","1","2","3","4","5","6","7"
+
+    0,*0*,1,2,3,4,5,6,7
+    1,1,2,3,4,5,6,7,*0*
+    2,2,3,4,5,6,7,*0*,1
+    3,3,4,5,6,7,*0*,1,2
+    4,4,5,6,7,*0*,1,2,3
+    5,5,6,7,*0*,1,2,3,4
+    6,6,7,*0*,1,2,3,4,5
+    7,7,*0*,1,2,3,4,5,6
+
+Modular Arithmetic Modulo 8
+---------------------------
+
+Multiplication
+
+.. csv-table:: 
+    :header: ×,"0","1","2","3","4","5","6","7"
+
+    0, 0,0,0,0,0,0,0,0
+    1, 0,*1*,2,3,4,5,6,7
+    2, 0,2,4,6,0,2,4,6
+    3, 0,3,6,*1*,4,7,2,5
+    4, 0,4,0,4,0,4,0,4
+    5, 0,5,2,7,4,*1*,6,3
+    6, 0,6,4,2,0,6,4,2
+    7, 0,7,6,5,4,3,2,*1*
+
+.. 
+    Generator script:
+    for i in range(0,8):
+    print(str(i)+", ",end="")
+    for j in range(0,8):
+        v = (i*j) % 8
+        if v == 1:
+            v = "*"+str(v)+"*"
+        else:
+            v = str(v)
+        print(v+",",end="")
+    print()
+
+Modular Arithmetic Modulo 8
+---------------------------
+
+Additive and muliplicative inverse modulo 8.
+
+.. note:: 
+
+    The negative/additive inverse of an integer x is the integer y such that :math:`(x + y)\; mod\; 8 = 0`.  
+
+    The muliplicative inverse of an integer x is the integer y such that :math:`(x \times y)\; mod\; 8 = 1`.
+
+
+.. csv-table:: 
+    :header: :math:`w`, :math:`-w`, :math:`w^{-1}`
+    
+    0, 0, :math:`-`
+    1, 7, 1
+    2, 6, :math:`-`
+    3, 5, 3
+    4, 4, :math:`-`
+    5, 3, 5
+    6, 2, :math:`-`
+    7, 1, 7 
+
+
+Properties of Modular Arithmetic for Integers in :math:`Z_n`
+------------------------------------------------------------
+
+:Commutative Laws:
+
+    
+
+    :math:`(w + x)\; mod\; n = (x + w)\; mod\; n`
+
+    :math:`(w \times x)\; mod\; n = (x \times w)\; mod\; n`
+
+.. class:: incremental
+
+    :Associative Laws:
+
+        :math:`[(w + x) + y]\; mod\; n = [w + (x + y)]\; mod\; n`
+
+        :math:`[(w \times x) \times y]\; mod\; n = [w \times (x \times y)]\; mod\; n`
+
+.. class:: incremental
+
+    :Distributive Law:
+        :math:`[w \times (x + y)]\; mod\; n = [(w \times x) + (w \times y)]\; mod\; n`
+
+.. class:: incremental
+
+    :Identities:
+        :math:`(0 + w)\; mod\; n = w\; mod\; n`
+        :math:`(1 \times w)\; mod\; n = w\; mod\; n`
+
+.. class:: incremental
+
+    :Additive Inverse (-w):
+        For each :math:`w \in Z_n` there exists a zu such that :math:`w + z \equiv 0\; mod\; n`
+
+
+Prime Numbers
+-------------
+
+.. class:: incremental
+
+   - Prime numbers only have divisors of 1 and itself.
+   - They cannot be written as a product of other numbers
+   - Prime numbers are central to number theory
+   - Any integer a > 1 can be factored in a unique way as: :math:`a=p_1^{a_1} \times p_2^{a_2} \times \dots \times p_t^{a_1}`  where :math:`p_1 < p_2 < . . . < p_t` are prime numbers and where each :math:`a_i` is a positive integer
+   - This is known as the fundamental theorem of arithmetic.
+  
+.. admonition:: Note
+    :class: incremental
+
+    .. math:: 
+
+        a = \displaystyle \prod_{p \in P} p^{a_p}\qquad where\; each\; a_p \geq 0
+
+
+Fermat's theorem
+----------------
+
+.. admonition:: Note
+    :class: note
+
+    Important in public-key cryptography.
+
+States the following:
+
+- If p is prime and a is a positive integer not divisible by p then :math:`a^{p-1} \equiv 1 (mod\;p)`
+
+.. class:: incremental
+
+    Alternative form:
+    
+    - If p is prime and a is a positive integer then :math:`a^p \equiv a(mod\; p)`
+
+
+
+
+Some values of Euler's Totient Function :math:`\phi(n)`
+-------------------------------------------------------
+
+Euler's totient function (:math:`\phi(n)`.) is defined as the number of positive integers less than n and relatively prime to n; by convention :math:`\phi(1) = 1`.
+
+.. csv-table:: 
+    :header: 𝜑(n), +0, +1, +2, +3, +4, +5, +6, +7, +8, +9
+
+    0+, / , 1, 1, 2, 2, 4, 2, 6, 4, 6
+    10+, 4, 10, 4, 12, 6, 8, 8, 16, 6, 18
+    20+, 8, 12, 10, 22, 8, 20, 12, 18, 12, 28
+    30+, 8, 30, 16, 20, 16, 24, 12, 36, 18, 24
+    40+, 16, 40, 12, 42, 20, 24, 22, 46, 16, 42
+    50+, 20, 32, 24, 52, 18, 40, 24, 36, 28, 58
+    60+, 16, 60, 30, 36, 32, 48, 20, 66, 32, 44
+    70+, 24, 70, 24, 72, 36, 40, 36, 60, 24, 78
+    80+, 32, 54, 40, 82, 24, 64, 42, 56, 40, 88
+    90+, 24, 72, 44, 60, 46, 72, 32, 96, 42, 60
+
+cf. https://de.wikipedia.org/wiki/Eulersche_Phi-Funktion
+
+
+Euler's Theorem
+----------------
+
+States that for every a and n that are relatively prime: 
+
+.. math::
+        a^{\phi(n)} \equiv 1(mod\; n)
+
+An alternative form is:
+
+.. math::
+        a^{\phi(n)+1} \equiv a (mod\; n)
+
+
+Miller-Rabin Algorithm
+----------------------
+
+- Many cryptographic algorithms require one or more very large prime numbers at random. 
+- The Miller-Rabin primality test is a probabilistic primality test that is fast and simple. 
+
+- Background: Any positive odd integer :math:`n \geq 3` can be expressed as :math:`n-1 = 2^kq \qquad with\; k > 0, q\; odd`
+
+
+Miller-Rabin Algorithm
+----------------------
+
+.. code:: pseudocode
+
+    TEST(n, k) # n > 2, an odd integer to be tested for primality
+               # k, the number of rounds of testing to perform
+
+    let s > 0 and d odd > 0 such that n−1 = pow(2,s)*d  
+    repeat k times:
+        a ← random(2, n−2)
+        x ← pow(a,d) mod n
+        repeat s times:
+            y ← sqr(x) mod n
+            if y = 1 and x ≠ 1 and x ≠ n−1 then return “composite”
+            x ← y
+        if y ≠ 1 then return “composite”
+    return “probably prime”
+
+
+Deterministic Primality Algorithm
+---------------------------------
+
+.. class:: incremental
+
+  - Prior to 2002 there was no known method of efficiently proving the primality of very large numbers.
+  - All of the algorithms in use produced a probabilistic result
+  - In 2002 Agrawal, Kayal, and Saxena developed an algorithm that efficiently determines whether a given large number is prime:
+    - Known as the AKS algorithm.
+    - Does not appear to be as efficient as the Miller-Rabin algorithm.
+
+
+Chinese Remainder Theorem (CRT)
+-------------------------------
+
+.. note:: 
+     
+    Provides a way to manipulate (potentially very large) numbers mod M in terms of tuples of smaller numbers
+      
+      - This can be useful when M is 150 digits or more
+      - However, it is necessary to know beforehand the factorization of M
+
+- Believed to have been discovered by the Chinese mathematician Sun-Tsu in around 100 A.D.
+- One of the most useful results of number theory
+- Says it is possible to reconstruct integers in a certain range from their residues modulo a set of pairwise relatively prime moduli
+- Can be stated in several ways
+  

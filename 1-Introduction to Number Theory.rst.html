@@ -2,6 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta name="version" content="LD2 0.1" />
 <meta content="Michael Eichberg" name="author" />
 <meta content="Number Theory" name="keywords" />
@@ -623,7 +624,7 @@ a { text-decoration: none; }
 <dd class="lecturer"><p><strong>Prof. Dr. Michael Eichberg</strong></p>
 </dd>
 <dt class="version">Version<span class="colon">:</span></dt>
-<dd class="version">2023-10-01</dd>
+<dd class="version">2023-10-02</dd>
 </dl>
 <img alt="DHBW CAS Logo" class="logo" src="DHBW_CAS_LOGO.svg" />
 </div>
@@ -689,7 +690,10 @@ a = -11; n = 7; -11 = (-2)\times 7 + 3; \quad r = 3 \quad q = -2
 <h2>Euclidean Algorithm</h2>
 <p>One of the basic techniques of number theory.</p>
 <p>Procedure for determing the greatest common divisor (GCD) of two positive integers.</p>
-<p>Two integers are relatively prime if their only common positive integer factor is 1 (e.g. 7 and 9).</p>
+<aside class="admonition admonition-definition">
+<p class="admonition-title">Definition</p>
+<p>Two integers are <strong>relatively prime</strong> if their only common positive integer factor is 1 (e.g. 7 and 9, but also 3 and 8).</p>
+</aside>
 </div><div class="ld-slide" id="greatest-common-divisor-gcd">
 <h2>Greatest Common Divisor (<abbr>GCD</abbr>)</h2>
 <ul class="incremental">
@@ -733,11 +737,11 @@ gcd(a,b) = max[k, such\,that\, k|a \, and \, k|b]
 <!-- To be done!!!
 .. raw:: html
    <iframe src="Test/gcd animation/Standard/Standard.html" style="margin:auto;position:relative;width:600px;height:400px;overflow:hidden;" title="W3Schools Free Online Web Tutorials"></iframe> -->
-<img alt="1-Euclidean_algorithm.svg" src="1-Euclidean_algorithm.svg" />
+<img alt="1-Euclidean_algorithm.svg" src="1-Euclidean_algorithm.svg" style="width: 1600px;" />
 </div><div class="ld-slide" id="greatest-common-divisor-gcd-4">
 <h2>Greatest Common Divisor (<abbr>GCD</abbr>)</h2>
 <p>Example of computing the GCD using the Euclidean algorithm.</p>
-<img alt="1-Euclidean_algorithm_example.png" src="1-Euclidean_algorithm_example.png" />
+<img alt="1-Euclidean_algorithm_example.png" src="1-Euclidean_algorithm_example.png" style="width: 600px;" />
 </div><div class="ld-slide" id="euclidean-algorithm-1">
 <h2>Euclidean Algorithm</h2>
 <table style="width: 100%;">
@@ -863,6 +867,612 @@ a =  \left\lfloor a / n \right\rfloor \times n + (a\; mod\;  n)
 <li><p><span class="math">\(a \equiv b (mod\; n) \Rightarrow b \equiv a (mod\; n)\)</span></p></li>
 <li><p><span class="math">\(a \equiv b (mod\; n)\; and\; b \equiv c (mod\; n) \Rightarrow a \equiv c (mod\; n)\)</span></p></li>
 </ol>
+</div><div class="ld-slide" id="properties-of-congruence-explained">
+<h2>Properties of Congruence (Explained)</h2>
+<blockquote>
+<p>To demonstrate the first point, if <span class="math">\(n|(a - b)\)</span>, then <span class="math">\((a - b) = kn\)</span> for some <span class="math">\(k\)</span></p>
+<ul class="simple">
+<li><p>So we can write <span class="math">\(a=b+kn\)</span></p></li>
+<li><p>Therefore, (a; mod; n) = (remainder when b + kn is divided by n) = (remainder when b is divided by n) = (b; mod; n)</p></li>
+</ul>
+<aside class="admonition incremental">
+<p class="admonition-title">Example</p>
+<p><span class="math">\(23 = 8(mod\; 5)\)</span> because <span class="math">\(23 - 8 = 15 = 5* 3\)</span></p>
+<p><span class="math">\(-11 = 5(mod\; 8)\)</span> because <span class="math">\(-11 - 5 = -16 = 8* (-2)\)</span></p>
+<p><span class="math">\(81 = 0(mod\; 27)\)</span> because <span class="math">\(81 - 0 = 81 = 27* 3\)</span></p>
+</aside>
+</blockquote>
+</div><div class="ld-slide" id="modular-arithmetic-1">
+<h2>Modular Arithmetic</h2>
+<p>Modular arithmetic exhibits the following properties:</p>
+<ol class="arabic simple">
+<li><p><span class="math">\([(a\; mod\; n) + (b\; mod\; n)]\; mod\; n = (a + b)\; mod\; n\)</span></p></li>
+<li><p><span class="math">\([(a\; mod\; n) - (b\; mod\; n)]\; mod\; n = (a - b)\; mod\; n\)</span></p></li>
+<li><p><span class="math">\([(a\; mod\; n) \times (b\; mod\; n)]\; mod\; n = (a \times b)\; mod\; n\)</span></p></li>
+</ol>
+</div><div class="ld-slide" id="modular-arithmetic-first-property">
+<h2>Modular Arithmetic (First Property)</h2>
+<p>Define <span class="math">\((a\; mod\; n) = r_a\)</span> and <span class="math">\((b\; mod\; n) = r_b\)</span>. Then we can write <span class="math">\(a = r_a + jn`\)</span> for some integer j and <span class="math">\(b = r_b + kn\)</span> for some integer k
+Then:</p>
+<div class="math">
+\begin{equation*}
+(a + b)\; mod\; n = (ra + jn + rb + kn)\; mod\; n
+= (ra + rb + (k + j)n)\; mod\; n
+= (ra + rb)\; mod\; n
+= [(a\; mod\; n) + (b\; mod\; n)]\; mod\; n
+\end{equation*}
+</div>
+</div><div class="ld-slide" id="modular-arithmetic-examples-of-properties">
+<h2>Modular Arithmetic (Examples of Properties)</h2>
+<aside class="admonition admonition-examples">
+<p class="admonition-title">Examples</p>
+<div class="math">
+\begin{equation*}
+11\; mod\; 8 = 3;\qquad 15\; mod\; 8 = 7
+\end{equation*}
+</div>
+<div class="incremental math">
+\begin{equation*}
+[(11\; mod\; 8) + (15\; mod\; 8)]\; mod\; 8 = 10\; mod\; 8 = 2
+\end{equation*}
+</div>
+<div class="incremental math">
+\begin{equation*}
+(11 + 15)\; mod\; 8 = 26\; mod\; 8 = 2
+\end{equation*}
+</div>
+<div class="incremental math">
+\begin{equation*}
+[(11\; mod\; 8) - (15\; mod\; 8)]\; mod\; 8 = - 4\; mod\; 8 = 4
+\end{equation*}
+</div>
+<div class="incremental math">
+\begin{equation*}
+(11 - 15)\; mod\; 8 = -4\; mod\; 8 = 4
+\end{equation*}
+</div>
+<div class="incremental math">
+\begin{equation*}
+[(11\; mod\; 8) \times (15\; mod\; 8)]\; mod\; 8= 21\; mod\; 8 = 5
+\end{equation*}
+</div>
+<div class="incremental math">
+\begin{equation*}
+(11 \times 15)\; mod\; 8 = 165\; mod\; 8 = 5
+\end{equation*}
+</div>
+</aside>
+</div><div class="ld-slide" id="modular-arithmetic-modulo-8">
+<h2>Modular Arithmetic Modulo 8</h2>
+<p>Definition</p>
+<div class="math">
+\begin{equation*}
+Z_n = {0,1,...,(n-1)}
+\end{equation*}
+</div>
+<p>Addition</p>
+<table>
+<thead>
+<tr><th class="head"><p><span class="math">\(+\)</span></p></th>
+<th class="head"><p>0</p></th>
+<th class="head"><p>1</p></th>
+<th class="head"><p>2</p></th>
+<th class="head"><p>3</p></th>
+<th class="head"><p>4</p></th>
+<th class="head"><p>5</p></th>
+<th class="head"><p>6</p></th>
+<th class="head"><p>7</p></th>
+</tr>
+</thead>
+<tbody>
+<tr><td><p>0</p></td>
+<td><p><em>0</em></p></td>
+<td><p>1</p></td>
+<td><p>2</p></td>
+<td><p>3</p></td>
+<td><p>4</p></td>
+<td><p>5</p></td>
+<td><p>6</p></td>
+<td><p>7</p></td>
+</tr>
+<tr><td><p>1</p></td>
+<td><p>1</p></td>
+<td><p>2</p></td>
+<td><p>3</p></td>
+<td><p>4</p></td>
+<td><p>5</p></td>
+<td><p>6</p></td>
+<td><p>7</p></td>
+<td><p><em>0</em></p></td>
+</tr>
+<tr><td><p>2</p></td>
+<td><p>2</p></td>
+<td><p>3</p></td>
+<td><p>4</p></td>
+<td><p>5</p></td>
+<td><p>6</p></td>
+<td><p>7</p></td>
+<td><p><em>0</em></p></td>
+<td><p>1</p></td>
+</tr>
+<tr><td><p>3</p></td>
+<td><p>3</p></td>
+<td><p>4</p></td>
+<td><p>5</p></td>
+<td><p>6</p></td>
+<td><p>7</p></td>
+<td><p><em>0</em></p></td>
+<td><p>1</p></td>
+<td><p>2</p></td>
+</tr>
+<tr><td><p>4</p></td>
+<td><p>4</p></td>
+<td><p>5</p></td>
+<td><p>6</p></td>
+<td><p>7</p></td>
+<td><p><em>0</em></p></td>
+<td><p>1</p></td>
+<td><p>2</p></td>
+<td><p>3</p></td>
+</tr>
+<tr><td><p>5</p></td>
+<td><p>5</p></td>
+<td><p>6</p></td>
+<td><p>7</p></td>
+<td><p><em>0</em></p></td>
+<td><p>1</p></td>
+<td><p>2</p></td>
+<td><p>3</p></td>
+<td><p>4</p></td>
+</tr>
+<tr><td><p>6</p></td>
+<td><p>6</p></td>
+<td><p>7</p></td>
+<td><p><em>0</em></p></td>
+<td><p>1</p></td>
+<td><p>2</p></td>
+<td><p>3</p></td>
+<td><p>4</p></td>
+<td><p>5</p></td>
+</tr>
+<tr><td><p>7</p></td>
+<td><p>7</p></td>
+<td><p><em>0</em></p></td>
+<td><p>1</p></td>
+<td><p>2</p></td>
+<td><p>3</p></td>
+<td><p>4</p></td>
+<td><p>5</p></td>
+<td><p>6</p></td>
+</tr>
+</tbody>
+</table>
+</div><div class="ld-slide" id="modular-arithmetic-modulo-8-1">
+<h2>Modular Arithmetic Modulo 8</h2>
+<p>Multiplication</p>
+<table>
+<thead>
+<tr><th class="head"><p>×</p></th>
+<th class="head"><p>0</p></th>
+<th class="head"><p>1</p></th>
+<th class="head"><p>2</p></th>
+<th class="head"><p>3</p></th>
+<th class="head"><p>4</p></th>
+<th class="head"><p>5</p></th>
+<th class="head"><p>6</p></th>
+<th class="head"><p>7</p></th>
+</tr>
+</thead>
+<tbody>
+<tr><td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+</tr>
+<tr><td><p>1</p></td>
+<td><p>0</p></td>
+<td><p><em>1</em></p></td>
+<td><p>2</p></td>
+<td><p>3</p></td>
+<td><p>4</p></td>
+<td><p>5</p></td>
+<td><p>6</p></td>
+<td><p>7</p></td>
+</tr>
+<tr><td><p>2</p></td>
+<td><p>0</p></td>
+<td><p>2</p></td>
+<td><p>4</p></td>
+<td><p>6</p></td>
+<td><p>0</p></td>
+<td><p>2</p></td>
+<td><p>4</p></td>
+<td><p>6</p></td>
+</tr>
+<tr><td><p>3</p></td>
+<td><p>0</p></td>
+<td><p>3</p></td>
+<td><p>6</p></td>
+<td><p><em>1</em></p></td>
+<td><p>4</p></td>
+<td><p>7</p></td>
+<td><p>2</p></td>
+<td><p>5</p></td>
+</tr>
+<tr><td><p>4</p></td>
+<td><p>0</p></td>
+<td><p>4</p></td>
+<td><p>0</p></td>
+<td><p>4</p></td>
+<td><p>0</p></td>
+<td><p>4</p></td>
+<td><p>0</p></td>
+<td><p>4</p></td>
+</tr>
+<tr><td><p>5</p></td>
+<td><p>0</p></td>
+<td><p>5</p></td>
+<td><p>2</p></td>
+<td><p>7</p></td>
+<td><p>4</p></td>
+<td><p><em>1</em></p></td>
+<td><p>6</p></td>
+<td><p>3</p></td>
+</tr>
+<tr><td><p>6</p></td>
+<td><p>0</p></td>
+<td><p>6</p></td>
+<td><p>4</p></td>
+<td><p>2</p></td>
+<td><p>0</p></td>
+<td><p>6</p></td>
+<td><p>4</p></td>
+<td><p>2</p></td>
+</tr>
+<tr><td><p>7</p></td>
+<td><p>0</p></td>
+<td><p>7</p></td>
+<td><p>6</p></td>
+<td><p>5</p></td>
+<td><p>4</p></td>
+<td><p>3</p></td>
+<td><p>2</p></td>
+<td><p><em>1</em></p></td>
+</tr>
+</tbody>
+</table>
+<!-- Generator script:
+for i in range(0,8):
+print(str(i)+", ",end="")
+for j in range(0,8):
+    v = (i*j) % 8
+    if v == 1:
+        v = "*"+str(v)+"*"
+    else:
+        v = str(v)
+    print(v+",",end="")
+print() -->
+</div><div class="ld-slide" id="modular-arithmetic-modulo-8-2">
+<h2>Modular Arithmetic Modulo 8</h2>
+<p>Additive and muliplicative inverse modulo 8.</p>
+<aside class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The negative/additive inverse of an integer x is the integer y such that <span class="math">\((x + y)\; mod\; 8 = 0\)</span>.</p>
+<p>The muliplicative inverse of an integer x is the integer y such that <span class="math">\((x \times y)\; mod\; 8 = 1\)</span>.</p>
+</aside>
+<table>
+<thead>
+<tr><th class="head"><p><span class="math">\(w\)</span></p></th>
+<th class="head"><p><span class="math">\(-w\)</span></p></th>
+<th class="head"><p><span class="math">\(w^{-1}\)</span></p></th>
+</tr>
+</thead>
+<tbody>
+<tr><td><p>0</p></td>
+<td><p>0</p></td>
+<td><p><span class="math">\(-\)</span></p></td>
+</tr>
+<tr><td><p>1</p></td>
+<td><p>7</p></td>
+<td><p>1</p></td>
+</tr>
+<tr><td><p>2</p></td>
+<td><p>6</p></td>
+<td><p><span class="math">\(-\)</span></p></td>
+</tr>
+<tr><td><p>3</p></td>
+<td><p>5</p></td>
+<td><p>3</p></td>
+</tr>
+<tr><td><p>4</p></td>
+<td><p>4</p></td>
+<td><p><span class="math">\(-\)</span></p></td>
+</tr>
+<tr><td><p>5</p></td>
+<td><p>3</p></td>
+<td><p>5</p></td>
+</tr>
+<tr><td><p>6</p></td>
+<td><p>2</p></td>
+<td><p><span class="math">\(-\)</span></p></td>
+</tr>
+<tr><td><p>7</p></td>
+<td><p>1</p></td>
+<td><p>7</p></td>
+</tr>
+</tbody>
+</table>
+</div><div class="ld-slide" id="properties-of-modular-arithmetic-for-integers-in-z-n">
+<h2>Properties of Modular Arithmetic for Integers in <span class="math">\(Z_n\)</span></h2>
+<dl class="field-list">
+<dt>Commutative Laws<span class="colon">:</span></dt>
+<dd><p><span class="math">\((w + x)\; mod\; n = (x + w)\; mod\; n\)</span></p>
+<p><span class="math">\((w \times x)\; mod\; n = (x \times w)\; mod\; n\)</span></p>
+</dd>
+</dl>
+<dl class="incremental field-list">
+<dt>Associative Laws<span class="colon">:</span></dt>
+<dd><p><span class="math">\([(w + x) + y]\; mod\; n = [w + (x + y)]\; mod\; n\)</span></p>
+<p><span class="math">\([(w \times x) \times y]\; mod\; n = [w \times (x \times y)]\; mod\; n\)</span></p>
+</dd>
+</dl>
+<dl class="incremental field-list simple">
+<dt>Distributive Law<span class="colon">:</span></dt>
+<dd><p><span class="math">\([w \times (x + y)]\; mod\; n = [(w \times x) + (w \times y)]\; mod\; n\)</span></p>
+</dd>
+</dl>
+<dl class="incremental field-list simple">
+<dt>Identities<span class="colon">:</span></dt>
+<dd><p><span class="math">\((0 + w)\; mod\; n = w\; mod\; n\)</span>
+<span class="math">\((1 \times w)\; mod\; n = w\; mod\; n\)</span></p>
+</dd>
+</dl>
+<dl class="incremental field-list simple">
+<dt>Additive Inverse (-w)<span class="colon">:</span></dt>
+<dd><p>For each <span class="math">\(w \in Z_n\)</span> there exists a zu such that <span class="math">\(w + z \equiv 0\; mod\; n\)</span></p>
+</dd>
+</dl>
+</div><div class="ld-slide" id="prime-numbers">
+<h2>Prime Numbers</h2>
+<ul class="incremental simple">
+<li><p>Prime numbers only have divisors of 1 and itself.</p></li>
+<li><p>They cannot be written as a product of other numbers</p></li>
+<li><p>Prime numbers are central to number theory</p></li>
+<li><p>Any integer a &gt; 1 can be factored in a unique way as: <span class="math">\(a=p_1^{a_1} \times p_2^{a_2} \times \dots \times p_t^{a_1}\)</span>  where <span class="math">\(p_1 &lt; p_2 &lt; . . . &lt; p_t\)</span> are prime numbers and where each <span class="math">\(a_i\)</span> is a positive integer</p></li>
+<li><p>This is known as the fundamental theorem of arithmetic.</p></li>
+</ul>
+<aside class="admonition incremental">
+<p class="admonition-title">Note</p>
+<div class="math">
+\begin{equation*}
+a = \displaystyle \prod_{p \in P} p^{a_p}\qquad where\; each\; a_p \geq 0
+\end{equation*}
+</div>
+</aside>
+</div><div class="ld-slide" id="fermat-s-theorem">
+<h2>Fermat's theorem</h2>
+<aside class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Important in public-key cryptography.</p>
+</aside>
+<p>States the following:</p>
+<ul class="simple">
+<li><p>If p is prime and a is a positive integer not divisible by p then <span class="math">\(a^{p-1} \equiv 1 (mod\;p)\)</span></p></li>
+</ul>
+<p class="incremental">Alternative form:</p>
+<ul class="incremental simple">
+<li><p>If p is prime and a is a positive integer then <span class="math">\(a^p \equiv a(mod\; p)\)</span></p></li>
+</ul>
+</div><div class="ld-slide" id="some-values-of-euler-s-totient-function-phi-n">
+<h2>Some values of Euler's Totient Function <span class="math">\(\phi(n)\)</span></h2>
+<p>Euler's totient function (<span class="math">\(\phi(n)\)</span>.) is defined as the number of positive integers less than n and relatively prime to n; by convention <span class="math">\(\phi(1) = 1\)</span>.</p>
+<table>
+<thead>
+<tr><th class="head"><p>𝜑(n)</p></th>
+<th class="head"><p>+0</p></th>
+<th class="head"><p>+1</p></th>
+<th class="head"><p>+2</p></th>
+<th class="head"><p>+3</p></th>
+<th class="head"><p>+4</p></th>
+<th class="head"><p>+5</p></th>
+<th class="head"><p>+6</p></th>
+<th class="head"><p>+7</p></th>
+<th class="head"><p>+8</p></th>
+<th class="head"><p>+9</p></th>
+</tr>
+</thead>
+<tbody>
+<tr><td><p>0+</p></td>
+<td><p>/</p></td>
+<td><p>1</p></td>
+<td><p>1</p></td>
+<td><p>2</p></td>
+<td><p>2</p></td>
+<td><p>4</p></td>
+<td><p>2</p></td>
+<td><p>6</p></td>
+<td><p>4</p></td>
+<td><p>6</p></td>
+</tr>
+<tr><td><p>10+</p></td>
+<td><p>4</p></td>
+<td><p>10</p></td>
+<td><p>4</p></td>
+<td><p>12</p></td>
+<td><p>6</p></td>
+<td><p>8</p></td>
+<td><p>8</p></td>
+<td><p>16</p></td>
+<td><p>6</p></td>
+<td><p>18</p></td>
+</tr>
+<tr><td><p>20+</p></td>
+<td><p>8</p></td>
+<td><p>12</p></td>
+<td><p>10</p></td>
+<td><p>22</p></td>
+<td><p>8</p></td>
+<td><p>20</p></td>
+<td><p>12</p></td>
+<td><p>18</p></td>
+<td><p>12</p></td>
+<td><p>28</p></td>
+</tr>
+<tr><td><p>30+</p></td>
+<td><p>8</p></td>
+<td><p>30</p></td>
+<td><p>16</p></td>
+<td><p>20</p></td>
+<td><p>16</p></td>
+<td><p>24</p></td>
+<td><p>12</p></td>
+<td><p>36</p></td>
+<td><p>18</p></td>
+<td><p>24</p></td>
+</tr>
+<tr><td><p>40+</p></td>
+<td><p>16</p></td>
+<td><p>40</p></td>
+<td><p>12</p></td>
+<td><p>42</p></td>
+<td><p>20</p></td>
+<td><p>24</p></td>
+<td><p>22</p></td>
+<td><p>46</p></td>
+<td><p>16</p></td>
+<td><p>42</p></td>
+</tr>
+<tr><td><p>50+</p></td>
+<td><p>20</p></td>
+<td><p>32</p></td>
+<td><p>24</p></td>
+<td><p>52</p></td>
+<td><p>18</p></td>
+<td><p>40</p></td>
+<td><p>24</p></td>
+<td><p>36</p></td>
+<td><p>28</p></td>
+<td><p>58</p></td>
+</tr>
+<tr><td><p>60+</p></td>
+<td><p>16</p></td>
+<td><p>60</p></td>
+<td><p>30</p></td>
+<td><p>36</p></td>
+<td><p>32</p></td>
+<td><p>48</p></td>
+<td><p>20</p></td>
+<td><p>66</p></td>
+<td><p>32</p></td>
+<td><p>44</p></td>
+</tr>
+<tr><td><p>70+</p></td>
+<td><p>24</p></td>
+<td><p>70</p></td>
+<td><p>24</p></td>
+<td><p>72</p></td>
+<td><p>36</p></td>
+<td><p>40</p></td>
+<td><p>36</p></td>
+<td><p>60</p></td>
+<td><p>24</p></td>
+<td><p>78</p></td>
+</tr>
+<tr><td><p>80+</p></td>
+<td><p>32</p></td>
+<td><p>54</p></td>
+<td><p>40</p></td>
+<td><p>82</p></td>
+<td><p>24</p></td>
+<td><p>64</p></td>
+<td><p>42</p></td>
+<td><p>56</p></td>
+<td><p>40</p></td>
+<td><p>88</p></td>
+</tr>
+<tr><td><p>90+</p></td>
+<td><p>24</p></td>
+<td><p>72</p></td>
+<td><p>44</p></td>
+<td><p>60</p></td>
+<td><p>46</p></td>
+<td><p>72</p></td>
+<td><p>32</p></td>
+<td><p>96</p></td>
+<td><p>42</p></td>
+<td><p>60</p></td>
+</tr>
+</tbody>
+</table>
+<p>cf. <a class="reference external" href="https://de.wikipedia.org/wiki/Eulersche_Phi-Funktion">https://de.wikipedia.org/wiki/Eulersche_Phi-Funktion</a></p>
+</div><div class="ld-slide" id="euler-s-theorem">
+<h2>Euler's Theorem</h2>
+<p>States that for every a and n that are relatively prime:</p>
+<div class="math">
+\begin{equation*}
+a^{\phi(n)} \equiv 1(mod\; n)
+\end{equation*}
+</div>
+<p>An alternative form is:</p>
+<div class="math">
+\begin{equation*}
+a^{\phi(n)+1} \equiv a (mod\; n)
+\end{equation*}
+</div>
+</div><div class="ld-slide" id="miller-rabin-algorithm">
+<h2>Miller-Rabin Algorithm</h2>
+<ul class="simple">
+<li><p>Many cryptographic algorithms require one or more very large prime numbers at random.</p></li>
+<li><p>The Miller-Rabin primality test is a probabilistic primality test that is fast and simple.</p></li>
+<li><p>Background: Any positive odd integer <span class="math">\(n \geq 3\)</span> can be expressed as <span class="math">\(n-1 = 2^kq \qquad with\; k &gt; 0, q\; odd\)</span></p></li>
+</ul>
+</div><div class="ld-slide" id="miller-rabin-algorithm-1">
+<h2>Miller-Rabin Algorithm</h2>
+<pre class="code pseudocode literal-block"><code><span class="name variable">TEST</span><span class="punctuation">(</span><span class="name variable">n</span><span class="punctuation">,</span> <span class="name variable">k</span><span class="punctuation">)</span> <span class="comment"># n &gt; 2, an odd integer to be tested for primality
+</span>           <span class="comment"># k, the number of rounds of testing to perform
+</span>
+<span class="name variable">let</span> <span class="name variable">s</span> <span class="operator">&gt;</span> <span class="literal number integer">0</span> <span class="name variable">and</span> <span class="name variable">d</span> <span class="name variable">odd</span> <span class="operator">&gt;</span> <span class="literal number integer">0</span> <span class="name variable">such</span> <span class="name variable">that</span> <span class="name variable">n</span><span class="error">−</span><span class="literal number integer">1</span> <span class="operator">=</span> <span class="name builtin">pow</span><span class="punctuation">(</span><span class="literal number integer">2</span><span class="punctuation">,</span><span class="name variable">s</span><span class="punctuation">)</span><span class="operator">*</span><span class="name variable">d</span>
+<span class="name variable">repeat</span> <span class="name variable">k</span> <span class="name variable">times</span><span class="punctuation">:</span>
+    <span class="name variable">a</span> <span class="operator">←</span> <span class="name variable">random</span><span class="punctuation">(</span><span class="literal number integer">2</span><span class="punctuation">,</span> <span class="name variable">n</span><span class="error">−</span><span class="literal number integer">2</span><span class="punctuation">)</span>
+    <span class="name variable">x</span> <span class="operator">←</span> <span class="name builtin">pow</span><span class="punctuation">(</span><span class="name variable">a</span><span class="punctuation">,</span><span class="name variable">d</span><span class="punctuation">)</span> <span class="operator">mod</span> <span class="name variable">n</span>
+    <span class="name variable">repeat</span> <span class="name variable">s</span> <span class="name variable">times</span><span class="punctuation">:</span>
+        <span class="name variable">y</span> <span class="operator">←</span> <span class="name variable">sqr</span><span class="punctuation">(</span><span class="name variable">x</span><span class="punctuation">)</span> <span class="operator">mod</span> <span class="name variable">n</span>
+        <span class="name variable">if</span> <span class="name variable">y</span> <span class="operator">=</span> <span class="literal number integer">1</span> <span class="name variable">and</span> <span class="name variable">x</span> <span class="operator">≠</span> <span class="literal number integer">1</span> <span class="name variable">and</span> <span class="name variable">x</span> <span class="operator">≠</span> <span class="name variable">n</span><span class="error">−</span><span class="literal number integer">1</span> <span class="name variable">then</span> <span class="name variable">return</span> <span class="error">“</span><span class="name variable">composite</span><span class="error">”</span>
+        <span class="name variable">x</span> <span class="operator">←</span> <span class="name variable">y</span>
+    <span class="name variable">if</span> <span class="name variable">y</span> <span class="operator">≠</span> <span class="literal number integer">1</span> <span class="name variable">then</span> <span class="name variable">return</span> <span class="error">“</span><span class="name variable">composite</span><span class="error">”</span>
+<span class="name variable">return</span> <span class="error">“</span><span class="name variable">probably</span> <span class="name variable">prime</span><span class="error">”</span></code></pre>
+</div><div class="ld-slide" id="deterministic-primality-algorithm">
+<h2>Deterministic Primality Algorithm</h2>
+<ul class="incremental simple">
+<li><p>Prior to 2002 there was no known method of efficiently proving the primality of very large numbers.</p></li>
+<li><p>All of the algorithms in use produced a probabilistic result</p></li>
+<li><p>In 2002 Agrawal, Kayal, and Saxena developed an algorithm that efficiently determines whether a given large number is prime:
+- Known as the AKS algorithm.
+- Does not appear to be as efficient as the Miller-Rabin algorithm.</p></li>
+</ul>
+</div><div class="ld-slide" id="chinese-remainder-theorem-crt">
+<h2>Chinese Remainder Theorem (CRT)</h2>
+<aside class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Provides a way to manipulate (potentially very large) numbers mod M in terms of tuples of smaller numbers</p>
+<blockquote>
+<ul class="simple">
+<li><p>This can be useful when M is 150 digits or more</p></li>
+<li><p>However, it is necessary to know beforehand the factorization of M</p></li>
+</ul>
+</blockquote>
+</aside>
+<ul class="simple">
+<li><p>Believed to have been discovered by the Chinese mathematician Sun-Tsu in around 100 A.D.</p></li>
+<li><p>One of the most useful results of number theory</p></li>
+<li><p>Says it is possible to reconstruct integers in a certain range from their residues modulo a set of pairwise relatively prime moduli</p></li>
+<li><p>Can be stated in several ways</p></li>
+</ul>
 </div>
 </body>
 </html>
