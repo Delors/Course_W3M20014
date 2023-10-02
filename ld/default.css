@@ -47,3 +47,10 @@ blockquote {
     border-radius: 15px;
     background-color: rgba(55,55,55,0.075);
 }
+
+.admonition.note {
+    position: absolute;
+    right: 0px;
+    width: 40%;
+    margin-right: 45px;
+}
