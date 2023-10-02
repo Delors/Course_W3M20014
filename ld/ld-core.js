@@ -234,9 +234,13 @@ function jumpToSlide() {
     const slideNo = Number(ld_goto_number.innerText) - 1; /* users number the slides starting with 1 */
     ld_goto_number.innerText = "";
     document.getElementById("ld-jump-target-pane").style.display = "none";
-    if (slideNo >= 0 && slideNo <= lastSlideNo){
+    if (slideNo >= 0) {
         hideSlide(currentSlideNo);
-        currentSlideNo = slideNo;
+        if (slideNo > lastSlideNo){
+            currentSlideNo = lastSlideNo;
+        } else {
+            currentSlideNo = slideNo;
+        }
         showSlide(currentSlideNo);
     }
 }
