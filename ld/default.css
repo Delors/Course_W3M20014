@@ -57,3 +57,7 @@ blockquote {
 .admonition-definition {
     background-color: rgb(157, 255, 204);
 }
+
+pre.code {
+    margin:0;
+}
