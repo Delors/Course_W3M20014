@@ -99,7 +99,7 @@ function getCurrentSlide() {
 }
 
 function resetSlideProgress(slide) {
-    const steps = slide.querySelectorAll(":scope ul.incremental>li, :scope :not(ul).incremental");
+    const steps = slide.querySelectorAll(":scope :is(ol,ul).incremental>li, :scope :not( :is(ol,ul)).incremental");
     const stepsCount = steps.length;
     for (var s = 0; s < stepsCount; s++) {
         steps[s].style.visibility = "hidden"
@@ -123,14 +123,20 @@ window.addEventListener("load", (event) => {
         resetSlideProgress(main_slide);
         ld_main_pane.appendChild(main_slide);
     };
-    const ld_initial_slide_no = document.querySelector('meta[name="ld_initial_slide_no"]');    
+    const ld_initial_slide_no = document.querySelector('meta[name="first-slide"]');    
+    console.log(ld_initial_slide_no);
     if (ld_initial_slide_no) {
         try {
-            currentSlideNo = Number(ld_initial_slide_no.content)-1
-            if (currentSlideNo > lastSlideNo) {
+            if (ld_initial_slide_no.content == "last") {
                 currentSlideNo = lastSlideNo;
-            } else if (currentSlideNo < 0) {
-                currentSlideNo = 0;
+                console.log("setting last slide no"+currentSlideNo)
+            } else {
+                currentSlideNo = Number(ld_initial_slide_no.content)-1
+                if (currentSlideNo > lastSlideNo) {
+                    currentSlideNo = lastSlideNo;
+                } else if (currentSlideNo < 0) {
+                    currentSlideNo = 0;
+                }
             }
         } catch (error) {
             console.log(error)
@@ -182,11 +188,11 @@ function hideSlide(slideNo) {
 }
 function advancePresentation() {
     const slide = getCurrentSlide();
-    const steps = slide.querySelectorAll(':scope ul.incremental>li, :scope :not(ul).incremental');    
+    const steps = slide.querySelectorAll(':scope :is(ul,ol).incremental>li, :scope :not( :is(ul,ol)).incremental');    
     const stepsCount = steps.length;
     for (var s = 0; s < stepsCount; s++) {
         if (steps[s].style.visibility == "hidden") {
-            steps[s].style.visibility="visible";
+            steps[s].style.visibility = "visible";
             return;
         } 
     }
