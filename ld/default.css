@@ -50,6 +50,7 @@ blockquote {
 
 .admonition.note {
     position: absolute;
+    background-color: rgb(249, 249, 176);
     right: 0px;
     width: 40%;
     margin-right: 45px;
