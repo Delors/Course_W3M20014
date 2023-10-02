@@ -49,9 +49,7 @@ blockquote {
 }
 
 .admonition.note {
-    position: absolute;
-    background-color: rgb(249, 249, 176);
-    right: 0px;
+    float: right;
+    background-color: rgb(255, 255, 203);
     width: 40%;
-    margin-right: 45px;
 }
