@@ -159,11 +159,7 @@ window.addEventListener("load", (event) => {
     /* the following element will be added when the "DOMConentIsLoaded" */ 
     document.getElementById("ld-main-pane").addEventListener("click", (event) => {     
         /* let's determine if we have clicked on the left or right part */
-        const left = event.target.getBoundingClientRect().left
-        const right = event.target.getBoundingClientRect().right
-        const width = right - left;
-        const relative_x = event.clientX - left;
-        if (relative_x <= width/2) {
+        if (event.pageX < (window.innerWidth / 2)) {
             moveToPreviousSlide();
         } else {
             advancePresentation(); 
