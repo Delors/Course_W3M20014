@@ -444,3 +444,52 @@ Example of Vigenère Cipher
         ciphertext: ZICVTWQNGRZGVTWAVZHCQYGLMGJ
 
     
+Vigenère Autokey System
+--------------------------
+
+- A keyword is concatenated with the plaintext itself to provide a running key.
+  
+.. admonition:: Example
+    :class: incremental
+
+    :: 
+
+        key:        deceptivewearediscoveredsav 
+        plaintext:  wearediscoveredsaveyourself
+        ciphertext: ZICVTWQNGKZEIIGASXSTSLVVWLA
+
+.. class:: incremental
+
+    Even this scheme is vulnerable to cryptanalysis, because the key and the plaintext share the same frequency distribution of letters, a statistical technique can be applied.
+
+
+Vernam Cipher
+-------------
+
+TODO
+
+
+One-Time Pad
+------------
+- Improvement to Vernam cipher proposed by an Army Signal Corp officer, Joseph Mauborgne
+- Use a random key that is as long as the message so that the key need not be repeated
+- Key is used to encrypt and decrypt a single message and then is discarded
+- Each new message requires a new key of the same length as the new message
+- Scheme is unbreakable
+  - Produces random output that bears no statistical relationship to the plaintext
+  - Because the ciphertext contains no information whatsoever about the plaintext, there is simply no way to break the code
+
+
+Difficulties when using a One-Time Pad
+--------------------------------------
+
+- The one-time pad offers complete security but, in practice, has two fundamental difficulties:
+  
+  1. There is the practical problem of making large quantities of random keys
+     Any heavily used system might require millions of random characters on a regular basis
+  2. Mammoth key distribution problem.
+     For every message to be sent, a key of equal length is needed by both sender and receiver
+
+- Because of these difficulties, the one-time pad is of limited utility; useful primarily for low-bandwidth channels requiring very high security
+
+- The one-time pad is the only cryptosystem that exhibits perfect secrecy 
