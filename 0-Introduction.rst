@@ -19,7 +19,7 @@ Overview
 
 1. `Introduction to Number Theory <1-Introduction%20to%20Number%20Theory.rst.html>`__
 2. `Classical Encryption Techniques <2-Classical%20Encryption%20Techniques.rst.html>`__
-3. Block Ciphers and the Data Encryption Standard
+3. `Block Ciphers and the Data Encryption Standard <3-Block%20Ciphers.rst.html>`__
 4. Finite Fields
 5. Advanced Encryption Standard (AES)
 6. Block Cipher Operation
