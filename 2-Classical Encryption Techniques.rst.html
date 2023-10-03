@@ -625,7 +625,7 @@ a { text-decoration: none; }
 <dd class="lecturer"><p><strong>Prof. Dr. Michael Eichberg</strong></p>
 </dd>
 <dt class="version">Version<span class="colon">:</span></dt>
-<dd class="version">2023-10-02</dd>
+<dd class="version">2023-10-03</dd>
 </dl>
 <!-- :first-slide: last is only used while creating the slides! -->
 <img alt="DHBW CAS Logo" class="logo" src="DHBW_CAS_LOGO.svg" />
@@ -1408,6 +1408,9 @@ Using the keyword MONARCHY:</p>
 <li><p>In this scheme the set of related monoalphabetic substitution rules consists of the 26 Caesar ciphers with shifts of 0 through 25</p></li>
 <li><p>Each cipher is denoted by a key letter which is the ciphertext letter that substitutes for the plaintext letter a</p></li>
 </ul>
+</div><div class="ld-slide" id="vigenere-cipher-1">
+<h2>Vigenère Cipher</h2>
+<p>TODO add table</p>
 </div><div class="ld-slide" id="example-of-vigenere-cipher">
 <h2>Example of Vigenère Cipher</h2>
 <ul class="simple">
@@ -1421,6 +1424,46 @@ Using the keyword MONARCHY:</p>
 plaintext:  wearediscoveredsaveyourself
 ciphertext: ZICVTWQNGRZGVTWAVZHCQYGLMGJ</pre>
 </aside>
+</div><div class="ld-slide" id="vigenere-autokey-system">
+<h2>Vigenère Autokey System</h2>
+<ul class="simple">
+<li><p>A keyword is concatenated with the plaintext itself to provide a running key.</p></li>
+</ul>
+<aside class="admonition incremental">
+<p class="admonition-title">Example</p>
+<pre class="literal-block">key:        deceptivewearediscoveredsav
+plaintext:  wearediscoveredsaveyourself
+ciphertext: ZICVTWQNGKZEIIGASXSTSLVVWLA</pre>
+</aside>
+<p class="incremental">Even this scheme is vulnerable to cryptanalysis, because the key and the plaintext share the same frequency distribution of letters, a statistical technique can be applied.</p>
+</div><div class="ld-slide" id="vernam-cipher">
+<h2>Vernam Cipher</h2>
+<p>TODO</p>
+</div><div class="ld-slide" id="one-time-pad">
+<h2>One-Time Pad</h2>
+<ul class="simple">
+<li><p>Improvement to Vernam cipher proposed by an Army Signal Corp officer, Joseph Mauborgne</p></li>
+<li><p>Use a random key that is as long as the message so that the key need not be repeated</p></li>
+<li><p>Key is used to encrypt and decrypt a single message and then is discarded</p></li>
+<li><p>Each new message requires a new key of the same length as the new message</p></li>
+<li><p>Scheme is unbreakable
+- Produces random output that bears no statistical relationship to the plaintext
+- Because the ciphertext contains no information whatsoever about the plaintext, there is simply no way to break the code</p></li>
+</ul>
+</div><div class="ld-slide" id="difficulties-when-using-a-one-time-pad">
+<h2>Difficulties when using a One-Time Pad</h2>
+<ul class="simple">
+<li><p>The one-time pad offers complete security but, in practice, has two fundamental difficulties:</p>
+<ol class="arabic simple">
+<li><p>There is the practical problem of making large quantities of random keys
+Any heavily used system might require millions of random characters on a regular basis</p></li>
+<li><p>Mammoth key distribution problem.
+For every message to be sent, a key of equal length is needed by both sender and receiver</p></li>
+</ol>
+</li>
+<li><p>Because of these difficulties, the one-time pad is of limited utility; useful primarily for low-bandwidth channels requiring very high security</p></li>
+<li><p>The one-time pad is the only cryptosystem that exhibits perfect secrecy</p></li>
+</ul>
 </div>
 </body>
 </html>
