@@ -624,7 +624,7 @@ a { text-decoration: none; }
 <dd class="lecturer"><p><strong>Prof. Dr. Michael Eichberg</strong></p>
 </dd>
 <dt class="version">Version<span class="colon">:</span></dt>
-<dd class="version">2023-10-02</dd>
+<dd class="version">2023-10-03</dd>
 </dl>
 <img alt="DHBW CAS Logo" class="logo" src="DHBW_CAS_LOGO.svg" />
 </div>
@@ -857,7 +857,7 @@ a =  \left\lfloor a / n \right\rfloor \times n + (a\; mod\;  n)
 </aside>
 <aside class="admonition incremental">
 <p class="admonition-title">Note</p>
-<p>The operator <span class="math">\(mod\)</span> is used as a binary operator that produces a remainder and as a congruence relation that shows the equivalence of two integers.</p>
+<p>The operator <span class="math">\(mod\)</span> is used (a) as a binary operator that produces a remainder and (b) as a congruence relation that shows the equivalence of two integers.</p>
 </aside>
 </div><div class="ld-slide" id="properties-of-congruence">
 <h2>Properties of Congruence</h2>
@@ -873,7 +873,7 @@ a =  \left\lfloor a / n \right\rfloor \times n + (a\; mod\;  n)
 <p>To demonstrate the first point, if <span class="math">\(n|(a - b)\)</span>, then <span class="math">\((a - b) = kn\)</span> for some <span class="math">\(k\)</span></p>
 <ul class="simple">
 <li><p>So we can write <span class="math">\(a=b+kn\)</span></p></li>
-<li><p>Therefore, (a; mod; n) = (remainder when b + kn is divided by n) = (remainder when b is divided by n) = (b; mod; n)</p></li>
+<li><p>Therefore, <span class="math">\((a\; mod\; n)\)</span> = (remainder when <span class="math">\(b + kn\)</span> is divided by n) = (remainder when b is divided by n) = <span class="math">\((b\; mod\; n)\)</span></p></li>
 </ul>
 <aside class="admonition incremental">
 <p class="admonition-title">Example</p>
@@ -892,13 +892,25 @@ a =  \left\lfloor a / n \right\rfloor \times n + (a\; mod\;  n)
 </ol>
 </div><div class="ld-slide" id="modular-arithmetic-first-property">
 <h2>Modular Arithmetic (First Property)</h2>
-<p>Define <span class="math">\((a\; mod\; n) = r_a\)</span> and <span class="math">\((b\; mod\; n) = r_b\)</span>. Then we can write <span class="math">\(a = r_a + jn`\)</span> for some integer j and <span class="math">\(b = r_b + kn\)</span> for some integer k
-Then:</p>
+<p>Define <span class="math">\((a\; mod\; n) = r_a\)</span> and <span class="math">\((b\; mod\; n) = r_b\)</span>. Then we can write <span class="math">\(a = r_a + jn\)</span> for some integer j and <span class="math">\(b = r_b + kn\)</span> for some integer k.</p>
+<p>Then:</p>
 <div class="math">
 \begin{equation*}
-(a + b)\; mod\; n = (ra + jn + rb + kn)\; mod\; n
-= (ra + rb + (k + j)n)\; mod\; n
-= (ra + rb)\; mod\; n
+(a + b)\; mod\; n = (r_a + jn + r_b + kn)\; mod\; n
+\end{equation*}
+</div>
+<div class="math">
+\begin{equation*}
+= (r_a + r_b + (k + j)n)\; mod\; n
+\end{equation*}
+</div>
+<div class="math">
+\begin{equation*}
+= (r_a + r_b)\; mod\; n
+\end{equation*}
+</div>
+<div class="math">
+\begin{equation*}
 = [(a\; mod\; n) + (b\; mod\; n)]\; mod\; n
 \end{equation*}
 </div>
@@ -1160,7 +1172,7 @@ print() -->
 </div><div class="ld-slide" id="modular-arithmetic-modulo-8-2">
 <h2>Modular Arithmetic Modulo 8</h2>
 <p>Additive and muliplicative inverse modulo 8.</p>
-<aside class="admonition note">
+<aside class="admonition smaller note">
 <p class="admonition-title">Note</p>
 <p>The negative/additive inverse of an integer x is the integer y such that <span class="math">\((x + y)\; mod\; 8 = 0\)</span>.</p>
 <p>The muliplicative inverse of an integer x is the integer y such that <span class="math">\((x \times y)\; mod\; 8 = 1\)</span>.</p>
@@ -1451,9 +1463,12 @@ a^{\phi(n)+1} \equiv a (mod\; n)
 <ul class="incremental simple">
 <li><p>Prior to 2002 there was no known method of efficiently proving the primality of very large numbers.</p></li>
 <li><p>All of the algorithms in use produced a probabilistic result</p></li>
-<li><p>In 2002 Agrawal, Kayal, and Saxena developed an algorithm that efficiently determines whether a given large number is prime:
-- Known as the AKS algorithm.
-- Does not appear to be as efficient as the Miller-Rabin algorithm.</p></li>
+<li><p>In 2002 Agrawal, Kayal, and Saxena developed an algorithm that efficiently determines whether a given large number is prime:</p>
+<ul>
+<li><p>Known as the AKS algorithm.</p></li>
+<li><p>Does not appear to be as efficient as the Miller-Rabin algorithm.</p></li>
+</ul>
+</li>
 </ul>
 </div><div class="ld-slide" id="chinese-remainder-theorem-crt">
 <h2>Chinese Remainder Theorem (CRT)</h2>

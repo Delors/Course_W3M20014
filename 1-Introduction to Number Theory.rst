@@ -262,7 +262,7 @@ Modular Arithmetic (Congruent modulo :math:`n`)
 .. admonition:: Note
     :class: incremental
 
-    The operator :math:`mod` is used as a binary operator that produces a remainder and as a congruence relation that shows the equivalence of two integers.
+    The operator :math:`mod` is used (a) as a binary operator that produces a remainder and (b) as a congruence relation that shows the equivalence of two integers.
 
 
 Properties of Congruence
@@ -282,7 +282,7 @@ Properties of Congruence (Explained)
 
     - So we can write :math:`a=b+kn`
 
-    - Therefore, (a\; mod\; n) = (remainder when b + kn is divided by n) = (remainder when b is divided by n) = (b\; mod\; n)
+    - Therefore, :math:`(a\; mod\; n)` = (remainder when :math:`b + kn` is divided by n) = (remainder when b is divided by n) = :math:`(b\; mod\; n)`
 
     .. admonition:: Example
         :class: incremental
@@ -306,14 +306,18 @@ Modular arithmetic exhibits the following properties:
 Modular Arithmetic (First Property)
 -----------------------------------
 
-Define :math:`(a\; mod\; n) = r_a` and :math:`(b\; mod\; n) = r_b`. Then we can write :math:`a = r_a + jn`` for some integer j and :math:`b = r_b + kn` for some integer k 
+Define :math:`(a\; mod\; n) = r_a` and :math:`(b\; mod\; n) = r_b`. Then we can write :math:`a = r_a + jn` for some integer j and :math:`b = r_b + kn` for some integer k.
+
 Then:
 
 .. math:: 
 
-    (a + b)\; mod\; n = (ra + jn + rb + kn)\; mod\; n
-    = (ra + rb + (k + j)n)\; mod\; n
-    = (ra + rb)\; mod\; n
+    (a + b)\; mod\; n = (r_a + jn + r_b + kn)\; mod\; n
+
+    = (r_a + r_b + (k + j)n)\; mod\; n
+
+    = (r_a + r_b)\; mod\; n
+
     = [(a\; mod\; n) + (b\; mod\; n)]\; mod\; n
 
 
@@ -407,7 +411,8 @@ Modular Arithmetic Modulo 8
 
 Additive and muliplicative inverse modulo 8.
 
-.. note:: 
+.. note::
+    :class: smaller 
 
     The negative/additive inverse of an integer x is the integer y such that :math:`(x + y)\; mod\; 8 = 0`.  
 
@@ -576,6 +581,7 @@ Deterministic Primality Algorithm
   - Prior to 2002 there was no known method of efficiently proving the primality of very large numbers.
   - All of the algorithms in use produced a probabilistic result
   - In 2002 Agrawal, Kayal, and Saxena developed an algorithm that efficiently determines whether a given large number is prime:
+  
     - Known as the AKS algorithm.
     - Does not appear to be as efficient as the Miller-Rabin algorithm.
 
@@ -593,5 +599,5 @@ Chinese Remainder Theorem (CRT)
 - Believed to have been discovered by the Chinese mathematician Sun-Tsu in around 100 A.D.
 - One of the most useful results of number theory
 - Says it is possible to reconstruct integers in a certain range from their residues modulo a set of pairwise relatively prime moduli
-- Can be stated in several ways
+- Can be stated in several ways.
   
