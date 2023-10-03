@@ -74,3 +74,24 @@ pre.code {
     font-size: 30px;
     font-family: monospace;
 }
+
+table.compact {
+    line-height: 1;
+    padding: 0;
+    margin: 0;
+}
+
+table.compact td {
+    border: 0;
+    padding: 0;
+}
+
+.enable-copy-to-clipboard {
+    padding: 25px;
+    border-radius: 15px;
+    background-color: rgb(255, 235, 211);
+}
+
+.enable-copy-to-clipboard::before {
+    content: "📋";
+}
