@@ -418,13 +418,51 @@ Vigenère Cipher
 
 - Best known and one of the simplest polyalphabetic substitution ciphers
 - In this scheme the set of related monoalphabetic substitution rules consists of the 26 Caesar ciphers with shifts of 0 through 25
-- Each cipher is denoted by a key letter which is the ciphertext letter that substitutes for the plaintext letter a
+- Each cipher is denoted by a key letter which is the ciphertext letter that substitutes for the plaintext letter
 
-Vigenère Cipher
----------------
+Vigenère-Tableau
+----------------
 
-TODO add table
+.. note::
+    :class: smaller
 
+    :header: plaintext letter
+    :1. column: key letter
+    :tableau: ciphertext letter
+
+.. csv-table::
+    :delim: space
+    :class: small compact
+
+    / **a** **b** **c** **d** **e** **f** **g** **h** **i** **j** **k** **l** **m** **n** **o** **p** **q** **r** **s** **t** **u** **v** **w** **x** **y** **z** 
+    **A** A B C D E F G H I J K L M N O P Q R S T U V W X Y Z 
+    **B** B C D E F G H I J K L M N O P Q R S T U V W X Y Z A 
+    **C** C D E F G H I J K L M N O P Q R S T U V W X Y Z A B 
+    **D** D E F G H I J K L M N O P Q R S T U V W X Y Z A B C 
+    **E** E F G H I J K L M N O P Q R S T U V W X Y Z A B C D 
+    **F** F G H I J K L M N O P Q R S T U V W X Y Z A B C D E 
+    **G** G H I J K L M N O P Q R S T U V W X Y Z A B C D E F 
+    **H** H I J K L M N O P Q R S T U V W X Y Z A B C D E F G 
+    **I** I J K L M N O P Q R S T U V W X Y Z A B C D E F G H 
+    **J** J K L M N O P Q R S T U V W X Y Z A B C D E F G H I 
+    **K** K L M N O P Q R S T U V W X Y Z A B C D E F G H I J 
+    **L** L M N O P Q R S T U V W X Y Z A B C D E F G H I J K 
+    **M** M N O P Q R S T U V W X Y Z A B C D E F G H I J K L 
+    **N** N O P Q R S T U V W X Y Z A B C D E F G H I J K L M 
+    **O** O P Q R S T U V W X Y Z A B C D E F G H I J K L M N 
+    **P** P Q R S T U V W X Y Z A B C D E F G H I J K L M N O 
+    **Q** Q R S T U V W X Y Z A B C D E F G H I J K L M N O P 
+    **R** R S T U V W X Y Z A B C D E F G H I J K L M N O P Q 
+    **S** S T U V W X Y Z A B C D E F G H I J K L M N O P Q R 
+    **T** T U V W X Y Z A B C D E F G H I J K L M N O P Q R S 
+    **U** U V W X Y Z A B C D E F G H I J K L M N O P Q R S T 
+    **V** V W X Y Z A B C D E F G H I J K L M N O P Q R S T U 
+    **W** W X Y Z A B C D E F G H I J K L M N O P Q R S T U V 
+    **X** X Y Z A B C D E F G H I J K L M N O P Q R S T U V W 
+    **Y** Y Z A B C D E F G H I J K L M N O P Q R S T U V W X 
+    **Z** Z A B C D E F G H I J K L M N O P Q R S T U V W X Y
+
+Let's assume the key is `D`, the plaintext character is `b` then the ciphertext letter is `E`.
 
 Example of Vigenère Cipher
 --------------------------
@@ -493,3 +531,87 @@ Difficulties when using a One-Time Pad
 - Because of these difficulties, the one-time pad is of limited utility; useful primarily for low-bandwidth channels requiring very high security
 
 - The one-time pad is the only cryptosystem that exhibits perfect secrecy 
+
+
+Rail Fence Cipher
+-----------------
+
+- Simplest transposition cipher
+- Plaintext is written down as a sequence of diagonals and then read off as a sequence of rows
+
+.. admonition:: Example
+    :class: incremental
+
+    To encipher the message “meet me after the toga party” with a rail fence of depth 2 (key), we would write:
+    
+    ::
+
+        m e m a t r h t g p r y
+         e t e f e t e o a a t
+
+    Encrypted message is: MEMATRHTGPRYETEFETEOAAT
+
+
+Row Transposition Cipher
+------------------------
+
+- Is a more complex transposition.
+- Write the message in a rectangle, row by row, and read the message off, column by column, but permute the order of the columns.
+- The order of the columns then becomes the key to the algorithm
+
+.. admonition:: Example
+    :class: incremental
+
+    ::
+
+        Key:        4312567 
+        Plaintext:  attackp
+                    ostpone 
+                    duntilt 
+                    woamxyz
+    
+    Ciphertext: TTNAAPTMTSUOAODWCOIXKNLYPETZ
+
+
+Steganography
+-------------
+
+.. class:: smaller enable-copy-to-clipboard
+
+    Dear Friend ; We know you are interested in receiving cutting-edge announcement . If you are not interested in our publications and wish to be removed from our lists, simply do NOT respond and ignore this mail . This mail is being sent in compliance with Senate bill 1626 ; Title 4 , Section 305 . This is a ligitimate business proposal ! Why work for somebody else when you can become rich in 96 months . Have you ever noticed nobody is getting any younger & nobody is getting any younger . Well, now is your chance to capitalize on  this ! We will help you decrease perceived waiting time by 170% and use credit cards on your website ! You are guaranteed to succeed because we take all the risk ! But don't believe us . Mrs Anderson of Indiana tried us and says "I was skeptical but it worked for me" . We assure you that we operate within all applicable laws . You will blame yourself forever if you don't order now . Sign up a friend and you'll get a discount of 10% ! Thank-you for your serious consideration of our offer ! 
+
+Use Spammimic https://www.spammimic.com/ to unhide the message.
+
+..
+    The encoded message is: "Success!"
+
+Other Steganography Techniques
+------------------------------
+
+**Character marking**
+
+Selected letters of printed or typewritten text are over-written in pencil. The marks are not visible unless the paper is held at an angle to bright light.
+
+**Invisible ink**
+
+A number of substances can be used for writing but leave no visible trace until heat or some chemical is applied to the paper.
+
+**Pin punctures**
+
+Small pin punctures on selected letters are ordinarily not visible unless the paper is held up in front of a light.
+
+...
+
+
+Steganography vs. Encryption
+----------------------------
+
+Steganography has a number of *drawbacks* when compared to encryption:
+
+- It requires a lot of overhead to hide a relatively few bits of information
+- Once the system is discovered, it becomes virtually worthless
+
+The *advantage* of steganography:
+
+- It can be employed by parties who have something to lose should the fact of their secret communication (not necessarily the content) be discovered.
+- Encryption flags traffic as important or secret or may identify the sender or receiver as someone with something to hide.
