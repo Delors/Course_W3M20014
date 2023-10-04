@@ -95,3 +95,15 @@ table.compact td {
 .enable-copy-to-clipboard::before {
     content: "📋";
 }
+
+
+span.ger { 
+    color: gray;
+    font-style: italic;
+}
+span.ger::before { 
+    content: "(dt. ";
+}
+span.ger::after { 
+    content: ")";
+}
