@@ -173,7 +173,11 @@ function setPaneScale() {
 window.addEventListener("load", (event) => {
     setPaneScale();
     /* the following element will be added when the "DOMConentIsLoaded" */ 
-    document.getElementById("ld-main-pane").addEventListener("click", (event) => {     
+    document.getElementById("ld-main-pane").addEventListener("click", (event) => {  
+        if(window.getSelection().anchorNode != null) {
+            return;
+        }
+        
         /* let's determine if we have clicked on the left or right part */
         if (event.pageX < (window.innerWidth / 2)) {
             moveToPreviousSlide();
