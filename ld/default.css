@@ -86,14 +86,27 @@ table.compact td {
     padding: 0;
 }
 
+/* fix for an rst2ld issue related to the csv tables */
+table.align-center tr{
+    text-align: center;
+}
+
 .enable-copy-to-clipboard {
     padding: 25px;
     border-radius: 15px;
     background-color: rgb(255, 235, 211);
+    user-select: initial;
+    -webkit-user-select: initial;
 }
-
 .enable-copy-to-clipboard::before {
-    content: "📋";
+    content: "Select and copy to clipboard:";
+    color: white;
+    background-color: gray;
+    border-radius: 8px;
+    user-select: none;
+    -webkit-user-select: none;
+    padding-left: 24px;
+    padding-right: 24px;
 }
 
 
