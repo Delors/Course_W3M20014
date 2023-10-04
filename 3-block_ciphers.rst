@@ -70,7 +70,9 @@ Stream Cipher vs. Block Cipher
 General n-bit-n-bit Block Substitution (n = 4)
 -----------------------------------------------
 
-
+.. image:: 3-4_bit_block_substitution.svg
+    :align: center
+    :width: 1400px
 
 
 Encryption and Decryption Tables for Substitution Cipher
@@ -191,7 +193,7 @@ Diffusion and Confusion
 
 .. admonition:: Diffusion
 
-    - The statistical structure of the plaintext is dissipated into long-range statistics of the ciphertext
+    - The statistical structure of the plaintext is dissipated into long-range statistics of the ciphertext; i.e., makes the statistical relationship between the plaintext and ciphertext as complex as possible.
     - This is achieved by having each plaintext digit affect the value of many ciphertext digits.
     - Diffusion can be achieved, e.g., by permutations.
 
