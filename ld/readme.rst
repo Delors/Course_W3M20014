@@ -79,7 +79,7 @@ ___________________________________
 
     - if content is an int then the corresponding slide will be shown. (The first slide has the value 1).
     - if content is "`last`" the last slide will be shown.
-    - if content is "`last-viewed`" the last viewed slide will be shown. Uses the browser's local storage for storing the slide number; may not work in all situations.
+    - if content is "`last-viewed`" the last viewed slide will be shown. Uses the browser's local storage for storing the slide number; may not work in all situations. Requires that the document has a unique id. The id can be set using: :code: <meta name="id" content="(unique id)">`.
 
 .. note:: 
 

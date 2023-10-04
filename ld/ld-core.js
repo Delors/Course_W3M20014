@@ -23,8 +23,10 @@
 // TODO read these values from the DOM if possible.
 const slideWidth = 1920;
 /* if 16:9 is desired:*/ // const slideHeight = 1080;
-/* if 16:10 is desired (default):*/ 
+/* if 16:10 is desired (default):*/
 const slideHeight = 1200;
+
+var documentId = null;
 
 /*  Simple helper functions. 
 */
@@ -39,6 +41,14 @@ function togglePane(ld_pane) {
     }
 }
 
+function uniqueId(id) {
+    if (documentId != null) {
+        return "ld-" + documentId + "-" + id;
+    } else {
+        throw new Error("no document id available")
+    }
+}
+
 /*  ---------------------------------------------------------------------------
     Setup base structure!
 
@@ -47,6 +57,12 @@ function togglePane(ld_pane) {
     the elements that realizes LectureDoc's core functionality.
 */
 window.addEventListener("DOMContentLoaded", (event) => {
+    try {
+        documentId = document.querySelector('meta[name="id"]').content;
+    } catch (error) {
+        console.error("failed reading the document id", error);
+    }
+
     const root = document.querySelector(":root");
     root.style.setProperty("--ld-slide-width", slideWidth + "px");
     root.style.setProperty("--ld-slide-height", slideHeight + "px");
@@ -132,8 +148,12 @@ window.addEventListener("load", (event) => {
             if (ld_initial_slide_no.content == "last") {
                 currentSlideNo = lastSlideNo;
             } else if (ld_initial_slide_no.content == "last-viewed") {
-                try {
-                    const lastViewed = localStorage.getItem("ldCurrentSlideNo")
+                // Remember that we can't use local storage meaningfully when
+                // the documentId is null; we don't want multiple slide sets
+                // to share the same state! That's why we test for 
+                // documentId != null.
+                if (documentId) {
+                    const lastViewed = localStorage.getItem(uniqueId("current-slide-no"));
                     if (lastViewed) {
                         if (lastViewed > lastSlideNo) {
                             lastViewed = lastSlideNo;
@@ -141,11 +161,9 @@ window.addEventListener("load", (event) => {
                             currentSlideNo = lastViewed;
                         }
                     }
-                } catch (error) {
-                    console.log("failed reading local storage: " + error)
-                    // this will also happen when the presentation is 
-                    // opened for the first time - hence, we will go to
-                    // the first slide
+                } else {
+                    console.info("the document has no id using first-slide is not possible");
+                    currentSlideNo = 0;
                 }
             } else {
                 currentSlideNo = Number(ld_initial_slide_no.content) - 1
@@ -156,9 +174,10 @@ window.addEventListener("load", (event) => {
                 }
             }
         } catch (error) {
-            console.log(error)
+            console.error(error)
         }
     }
+    console.info("the first slide is: " + currentSlideNo);
     showSlide(currentSlideNo);
 
     /*  Initialize the span element which shows the  
@@ -208,7 +227,9 @@ function showSlide(slideNo) {
     const slide_id = "ld-slide-no-" + slideNo;
     console.info("trying to show: " + slide_id + " / " + lastSlideNo);
     document.getElementById(slide_id).style.display = "block";
-    localStorage.setItem("ldCurrentSlideNo", slideNo);
+    if (documentId) {
+        localStorage.setItem(uniqueId("current-slide-no"), slideNo);
+    }
 }
 function hideSlide(slideNo) {
     const ld_slide = document.getElementById("ld-slide-no-" + slideNo)
