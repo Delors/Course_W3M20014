@@ -76,7 +76,10 @@ ___________________________________
 
         <meta name="first-slide" content="5">
 
-    You can either specify the number of the slide to show or specify `last`. The latter is particularly useful when creating new slides.
+
+    - if content is an int then the corresponding slide will be shown. (The first slide has the value 1).
+    - if content is "`last`" the last slide will be shown.
+    - if content is "`last-viewed`" the last viewed slide will be shown. Uses the browser's local storage for storing the slide number; may not work in all situations.
 
 .. note:: 
 

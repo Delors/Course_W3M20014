@@ -124,12 +124,22 @@ window.addEventListener("load", (event) => {
         ld_main_pane.appendChild(main_slide);
     };
     const ld_initial_slide_no = document.querySelector('meta[name="first-slide"]');    
-    console.log(ld_initial_slide_no);
     if (ld_initial_slide_no) {
         try {
             if (ld_initial_slide_no.content == "last") {
                 currentSlideNo = lastSlideNo;
-                console.log("setting last slide no"+currentSlideNo)
+            } else if (ld_initial_slide_no.content == "last-viewed") {
+                try {
+                    const lastViewed = localStorage.getItem("ldCurrentSlideNo")
+                    if (lastViewed) {
+                        currentSlideNo = lastViewed
+                    }
+                } catch (error) {
+                    console.log("failed reading local storage: "+error)
+                    // this will also happen when the presentation is 
+                    // opened for the first time - hence, we will go to
+                    // the first slide
+                }
             } else {
                 currentSlideNo = Number(ld_initial_slide_no.content)-1
                 if (currentSlideNo > lastSlideNo) {
@@ -179,6 +189,7 @@ document.defaultView.addEventListener("resize", (event) => setPaneScale());
 */
 function showSlide(slideNo) {
     document.getElementById("ld-slide-no-" + slideNo).style.display = "block";
+    localStorage.setItem("ldCurrentSlideNo",slideNo);
 }
 function hideSlide(slideNo) {
     const ld_slide = document.getElementById("ld-slide-no-" + slideNo)
