@@ -2,7 +2,7 @@
     :author: Michael Eichberg
     :keywords: Cryptography
     :description lang=en: IT-Security Cryptography and Secure Communications
-    :first-slide: last-viewed
+
 
 IT-Security Cryptography and Secure Communications
 ==================================================

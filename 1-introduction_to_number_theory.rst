@@ -4,6 +4,7 @@
     :keywords: Number Theory
     :description lang=en: Introduction to Number Theory
     :description lang=de: Einführung in die Zahlentheorie
+    :id: 2023_10-W3M20014-introduction_to_number_theory
     :first-slide: last-viewed
 
 .. |date| date::

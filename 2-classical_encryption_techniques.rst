@@ -3,6 +3,7 @@
     :keywords: Encryption
     :description lang=en: Classical Encryption Techniques
     :description lang=de: Klassische Verschlüsselungsmethoden
+    :id: 2023_10-W3M20014-classical_encryption
     :first-slide: last-viewed
 
 .. |date| date::
@@ -377,24 +378,44 @@ Playfair Cipher
 Playfair Key Matrix
 -------------------
 
-Fill in letters of keyword (minus duplicates) from left to right and from top to bottom, then fill in the remainder of the matrix with the remaining letters in alphabetic order
+Fill in letters of keyword (minus duplicates) from left to right and from top to bottom, then fill in the remainder of the matrix with the remaining letters in alphabetic order. The letters I and J count as one letter.
+
 Using the keyword MONARCHY:
 
 
 .. csv-table:: 
     :delim: space
 
-    M O N A R
-    C H Y B D
+    *M* *O* *N* *A* *R*
+    *C* *H* *Y* B D
     E F G I/J K
     L P Q S T
     U V W X Z
 
 
-Playfair Example
-----------------
+Playfair Encryption
+-------------------
 
-TODO
+Enryption is done on each pair of letters of the plaintext.
+
+.. note::
+    :class: smaller
+
+    .. csv-table:: 
+        :delim: space
+
+        M O N A R
+        C H Y B D
+        E F G I/J K
+        L P Q S T
+        U V W X Z
+
+.. class:: smaller
+
+  1. If both letters are the same (or only one letter is left), add an "X" after the first letter. Encrypt the new pair and continue. (e.g., `ballon` would be encryped as `ba lx lo on`)
+  2. If the letters appear on the same row, replace them with the letters to their immediate right respectively (wrap around if necessary). (e.g., `ar` is encrypted as `RM`)
+  3. If the letters appear on the same column, replace them with the letters immediately below respectively (wrap around if necessary). (e.g., `mu` is encrypted as `CM`)
+  4. If the letters are not on the same row or column, replace them with the letters on the same row respectively but at the other pair of corners of the rectangle defined by the original pair. (e.g., `hs` is encrypted as `BP` and `ea` as `IM`)
 
 
 

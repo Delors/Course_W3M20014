@@ -3,6 +3,7 @@
     :keywords: Block Ciphers
     :description lang=en: Block Ciphers
     :description lang=de: Blockverschlüsselung
+    :id: 2023_10-W3M20014-block_ciphers
     :first-slide: last-viewed
 
 .. |date| date::

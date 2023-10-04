@@ -9,6 +9,7 @@
 <meta content="Classical Encryption Techniques" lang="en" name="description" xml:lang="en" />
 <meta content="Klassische Verschlüsselungsmethoden" lang="de" name="description" xml:lang="de" />
 <meta content="last-viewed" name="first-slide" />
+<meta content="2023_10-W3M20014-classical_encryption" name="id" />
 <title>Classical Encryption Techniques</title>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@3.0.1/es5/tex-mml-chtml.js?config=TeX-AMS_CHTML"></script>
 <link rel="stylesheet" href="ld/normalize.css" type="text/css" />
@@ -1337,8 +1338,47 @@ p = D(k,C) = (C - k)\; mod\; 26
 </ul>
 </div><div class="ld-slide" id="playfair-key-matrix">
 <h2>Playfair Key Matrix</h2>
-<p>Fill in letters of keyword (minus duplicates) from left to right and from top to bottom, then fill in the remainder of the matrix with the remaining letters in alphabetic order
-Using the keyword MONARCHY:</p>
+<p>Fill in letters of keyword (minus duplicates) from left to right and from top to bottom, then fill in the remainder of the matrix with the remaining letters in alphabetic order. The letters I and J count as one letter.</p>
+<p>Using the keyword MONARCHY:</p>
+<table>
+<tbody>
+<tr><td><p><em>M</em></p></td>
+<td><p><em>O</em></p></td>
+<td><p><em>N</em></p></td>
+<td><p><em>A</em></p></td>
+<td><p><em>R</em></p></td>
+</tr>
+<tr><td><p><em>C</em></p></td>
+<td><p><em>H</em></p></td>
+<td><p><em>Y</em></p></td>
+<td><p>B</p></td>
+<td><p>D</p></td>
+</tr>
+<tr><td><p>E</p></td>
+<td><p>F</p></td>
+<td><p>G</p></td>
+<td><p>I/J</p></td>
+<td><p>K</p></td>
+</tr>
+<tr><td><p>L</p></td>
+<td><p>P</p></td>
+<td><p>Q</p></td>
+<td><p>S</p></td>
+<td><p>T</p></td>
+</tr>
+<tr><td><p>U</p></td>
+<td><p>V</p></td>
+<td><p>W</p></td>
+<td><p>X</p></td>
+<td><p>Z</p></td>
+</tr>
+</tbody>
+</table>
+</div><div class="ld-slide" id="playfair-encryption">
+<h2>Playfair Encryption</h2>
+<p>Enryption is done on each pair of letters of the plaintext.</p>
+<aside class="admonition smaller note">
+<p class="admonition-title">Note</p>
 <table>
 <tbody>
 <tr><td><p>M</p></td>
@@ -1373,9 +1413,13 @@ Using the keyword MONARCHY:</p>
 </tr>
 </tbody>
 </table>
-</div><div class="ld-slide" id="playfair-example">
-<h2>Playfair Example</h2>
-<p>TODO</p>
+</aside>
+<ol class="arabic simple smaller">
+<li><p>If both letters are the same (or only one letter is left), add an &quot;X&quot; after the first letter. Encrypt the new pair and continue. (e.g., <cite>ballon</cite> would be encryped as <cite>ba lx lo on</cite>)</p></li>
+<li><p>If the letters appear on the same row, replace them with the letters to their immediate right respectively (wrap around if necessary). (e.g., <cite>ar</cite> is encrypted as <cite>RM</cite>)</p></li>
+<li><p>If the letters appear on the same column, replace them with the letters immediately below respectively (wrap around if necessary). (e.g., <cite>mu</cite> is encrypted as <cite>CM</cite>)</p></li>
+<li><p>If the letters are not on the same row or column, replace them with the letters on the same row respectively but at the other pair of corners of the rectangle defined by the original pair. (e.g., <cite>hs</cite> is encrypted as <cite>BP</cite> and <cite>ea</cite> as <cite>IM</cite>)</p></li>
+</ol>
 </div><div class="ld-slide" id="hill-cipher">
 <h2>Hill Cipher</h2>
 <ul class="simple">
