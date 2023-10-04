@@ -4,6 +4,7 @@
     :keywords: Number Theory
     :description lang=en: Introduction to Number Theory
     :description lang=de: Einführung in die Zahlentheorie
+    :first-slide: last-viewed
 
 .. |date| date::
 
@@ -13,11 +14,10 @@
 Introduction to Number Theory
 =============================
 
-:Book: *Cryptography and Network Security - Principles and Practice, 8th Edition, William Stallings*
 :Lecturer: **Prof. Dr. Michael Eichberg**
 :Version: |date|
 
-.. image:: DHBW_CAS_LOGO.svg
+.. image:: logo.svg
     :alt: DHBW CAS Logo
     :scale: 4
     :class: logo
@@ -99,8 +99,8 @@ Given any positive integer :math:`n` and any nonnegative integer :math:`a`, if w
     :class: incremental
     
 
-Division Algorithm
-------------------
+Division Algorithm for negative `a`
+-----------------------------------
 
 
 .. image:: 1-division_algorithm_negative_a.png
@@ -186,7 +186,7 @@ Computing the GCD using the Euclidean algorithm.
     .. raw:: html
        <iframe src="Test/gcd animation/Standard/Standard.html" style="margin:auto;position:relative;width:600px;height:400px;overflow:hidden;" title="W3Schools Free Online Web Tutorials"></iframe>
 
-.. image:: 1-Euclidean_algorithm.svg
+.. image:: 1-euclidean_algorithm.svg
     :width: 1600
 
 
@@ -196,7 +196,7 @@ Greatest Common Divisor (:ab:`GCD`)
 Example of computing the GCD using the Euclidean algorithm.
 
 
-.. image:: 1-Euclidean_algorithm_example.png
+.. image:: 1-euclidean_algorithm_example.png
     :width: 600
 
 
@@ -356,11 +356,17 @@ Modular Arithmetic (Examples of Properties)
 Modular Arithmetic Modulo 8
 ---------------------------
 
-Definition
+.. note:: 
+    
+    Definition
 
-.. math:: 
+    .. math:: 
 
-    Z_n = {0,1,...,(n-1)}
+        Z_n = {0,1,...,(n-1)}
+
+    .. math:: 
+
+        Z_8 = {0,1,2,3,4,5,6,7}
 
 Addition
 
@@ -487,8 +493,8 @@ Prime Numbers
         a = \displaystyle \prod_{p \in P} p^{a_p}\qquad where\; each\; a_p \geq 0
 
 
-Fermat's theorem
-----------------
+Fermat's (little) theorem
+-------------------------
 
 .. admonition:: Note
     :class: note

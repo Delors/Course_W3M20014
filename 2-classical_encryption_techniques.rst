@@ -3,23 +3,21 @@
     :keywords: Encryption
     :description lang=en: Classical Encryption Techniques
     :description lang=de: Klassische Verschlüsselungsmethoden
-    :first-slide: last
-
-.. :first-slide: last is only used while creating the slides!
+    :first-slide: last-viewed
 
 .. |date| date::
 
 .. role:: incremental
+.. role:: ger
 
 
 Classical Encryption Techniques
 ===============================
 
-:Book: *Cryptography and Network Security - Principles and Practice, 8th Edition, William Stallings*
 :Lecturer: **Prof. Dr. Michael Eichberg**
 :Version: |date|
 
-.. image:: DHBW_CAS_LOGO.svg
+.. image:: logo.svg
     :alt: DHBW CAS Logo
     :scale: 4
     :class: logo
@@ -28,9 +26,19 @@ Classical Encryption Techniques
 Definitions
 -----------
 
-:Plaintext: An original message.
-:Ciphertext: The coded (encrypted) message.
+:Plaintext: 
+    :ger:`Klartext`
+
+    An original message.
+
+:Ciphertext: 
+    :ger:`Geheimtext oder Chiffretext oder Krytogramm`
+
+    The coded (encrypted) message.
+
+
 :Encryption(Enciphering): The process of converting from plaintext to ciphertext.
+
 :Decryption(Deciphering): Restoring the plaintext from ciphertext.
 
 
@@ -46,7 +54,9 @@ Definitions
 Simplified Model of Symmetric Encryption
 ----------------------------------------
 
-TODO
+.. image:: 2-simplified_model_of_symmetric_encryption.svg
+    :alt: Simplified model of symmetric encryption
+    :align: center
 
 
 Symmetric Cipher Model
@@ -62,7 +72,9 @@ There are two requirements for secure use of conventional encryption:
 Model of Symmetric Cryptosystem
 -------------------------------
 
-TODO
+.. image:: 2-model_of_symmetric_cryptosystem.svg
+    :alt: Model of symmetric cryptosystem
+    :align: center
 
 
 
@@ -328,7 +340,7 @@ Monoalphabetic Cipher
 English Letter Frequency
 -------------------------
 
-.. image:: 2-English_letter_frequency_(alphabetic).svg
+.. image:: 2-english_letter_frequency.svg
     :width: 1200px
     :alt: English letter frequency (alphabetic)
 
@@ -432,6 +444,7 @@ Vigenère-Tableau
 
 .. csv-table::
     :delim: space
+    :align: center
     :class: small compact
 
     / **a** **b** **c** **d** **e** **f** **g** **h** **i** **j** **k** **l** **m** **n** **o** **p** **q** **r** **s** **t** **u** **v** **w** **x** **y** **z** 
@@ -504,40 +517,49 @@ Vigenère Autokey System
 Vernam Cipher
 -------------
 
-TODO
+.. image:: 2-vernam_cipher.svg
+    :alt: Vernam Cipher
+    :align: center
 
 
 One-Time Pad
 ------------
-- Improvement to Vernam cipher proposed by an Army Signal Corp officer, Joseph Mauborgne
-- Use a random key that is as long as the message so that the key need not be repeated
-- Key is used to encrypt and decrypt a single message and then is discarded
-- Each new message requires a new key of the same length as the new message
-- Scheme is unbreakable
-  - Produces random output that bears no statistical relationship to the plaintext
-  - Because the ciphertext contains no information whatsoever about the plaintext, there is simply no way to break the code
+
+.. class:: incremental
+
+  - Improvement to Vernam cipher proposed by an Army Signal Corp officer, Joseph Mauborgne
+  - Use a random key that is as long as the message so that the key need not be repeated
+  - Key is used to encrypt and decrypt a single message and then is discarded
+  - Each new message requires a new key of the same length as the new message
+  - Scheme is unbreakable
+    - Produces random output that bears no statistical relationship to the plaintext
+    - Because the ciphertext contains no information whatsoever about the plaintext, there is simply no way to break the code
 
 
 Difficulties when using a One-Time Pad
 --------------------------------------
 
-- The one-time pad offers complete security but, in practice, has two fundamental difficulties:
-  
-  1. There is the practical problem of making large quantities of random keys
-     Any heavily used system might require millions of random characters on a regular basis
-  2. Mammoth key distribution problem.
-     For every message to be sent, a key of equal length is needed by both sender and receiver
+.. class:: incremental
 
-- Because of these difficulties, the one-time pad is of limited utility; useful primarily for low-bandwidth channels requiring very high security
+  - The one-time pad offers complete security but, in practice, has two fundamental difficulties:
 
-- The one-time pad is the only cryptosystem that exhibits perfect secrecy 
+    .. class:: incremental
+
+      1. There is the practical problem of making large quantities of random keys
+         Any heavily used system might require millions of random characters on a regular basis
+      2. Mammoth key distribution problem.
+         For every message to be sent, a key of equal length is needed by both sender and receiver
+
+  - Because of these difficulties, the one-time pad is of limited utility; useful primarily for low-bandwidth channels requiring very high security
+
+  - The one-time pad is the only cryptosystem that exhibits perfect secrecy 
 
 
 Rail Fence Cipher
 -----------------
 
-- Simplest transposition cipher
-- Plaintext is written down as a sequence of diagonals and then read off as a sequence of rows
+- Simplest transposition :ger:`Vertauschung` cipher.
+- Plaintext is written down as a sequence of diagonals and then read off as a sequence of rows.
 
 .. admonition:: Example
     :class: incremental
@@ -557,7 +579,7 @@ Row Transposition Cipher
 
 - Is a more complex transposition.
 - Write the message in a rectangle, row by row, and read the message off, column by column, but permute the order of the columns.
-- The order of the columns then becomes the key to the algorithm
+- The order of the columns then becomes the key to the algorithm.
 
 .. admonition:: Example
     :class: incremental

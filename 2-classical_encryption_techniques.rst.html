@@ -8,7 +8,7 @@
 <meta content="Encryption" name="keywords" />
 <meta content="Classical Encryption Techniques" lang="en" name="description" xml:lang="en" />
 <meta content="Klassische Verschlüsselungsmethoden" lang="de" name="description" xml:lang="de" />
-<meta content="last" name="first-slide" />
+<meta content="last-viewed" name="first-slide" />
 <title>Classical Encryption Techniques</title>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@3.0.1/es5/tex-mml-chtml.js?config=TeX-AMS_CHTML"></script>
 <link rel="stylesheet" href="ld/normalize.css" type="text/css" />
@@ -618,26 +618,24 @@ a { text-decoration: none; }
 <div class="ld-slide" id="slide0">
 <h1 class="title">Classical Encryption Techniques</h1>
 <dl class="docinfo simple">
-<dt class="book">Book<span class="colon">:</span></dt>
-<dd class="book"><p><em>Cryptography and Network Security - Principles and Practice, 8th Edition, William Stallings</em></p>
-</dd>
 <dt class="lecturer">Lecturer<span class="colon">:</span></dt>
 <dd class="lecturer"><p><strong>Prof. Dr. Michael Eichberg</strong></p>
 </dd>
 <dt class="version">Version<span class="colon">:</span></dt>
-<dd class="version">2023-10-03</dd>
+<dd class="version">2023-10-04</dd>
 </dl>
-<!-- :first-slide: last is only used while creating the slides! -->
-<img alt="DHBW CAS Logo" class="logo" src="DHBW_CAS_LOGO.svg" />
+<img alt="DHBW CAS Logo" class="logo" src="logo.svg" />
 </div>
 <div class="ld-slide" id="definitions">
 <h2>Definitions</h2>
-<dl class="field-list simple">
+<dl class="field-list">
 <dt>Plaintext<span class="colon">:</span></dt>
-<dd><p>An original message.</p>
+<dd><p><span class="ger">Klartext</span></p>
+<p>An original message.</p>
 </dd>
 <dt>Ciphertext<span class="colon">:</span></dt>
-<dd><p>The coded (encrypted) message.</p>
+<dd><p><span class="ger">Geheimtext oder Chiffretext oder Krytogramm</span></p>
+<p>The coded (encrypted) message.</p>
 </dd>
 <dt>Encryption(Enciphering)<span class="colon">:</span></dt>
 <dd><p>The process of converting from plaintext to ciphertext.</p>
@@ -664,7 +662,7 @@ a { text-decoration: none; }
 </dl>
 </div><div class="ld-slide" id="simplified-model-of-symmetric-encryption">
 <h2>Simplified Model of Symmetric Encryption</h2>
-<p>TODO</p>
+<img alt="Simplified model of symmetric encryption" class="align-center" src="2-simplified_model_of_symmetric_encryption.svg" />
 </div><div class="ld-slide" id="symmetric-cipher-model">
 <h2>Symmetric Cipher Model</h2>
 <p>There are two requirements for secure use of conventional encryption:</p>
@@ -674,7 +672,7 @@ a { text-decoration: none; }
 </ol>
 </div><div class="ld-slide" id="model-of-symmetric-cryptosystem">
 <h2>Model of Symmetric Cryptosystem</h2>
-<p>TODO</p>
+<img alt="Model of symmetric cryptosystem" class="align-center" src="2-model_of_symmetric_cryptosystem.svg" />
 </div><div class="ld-slide" id="cryptographic-systems-can-be-characterized-along-three-independent-dimensions">
 <h2>Cryptographic Systems can be Characterized along three independent dimensions.</h2>
 <aside class="admonition note">
@@ -1311,7 +1309,7 @@ p = D(k,C) = (C - k)\; mod\; 26
 </ul>
 </div><div class="ld-slide" id="english-letter-frequency">
 <h2>English Letter Frequency</h2>
-<img alt="English letter frequency (alphabetic)" src="2-English_letter_frequency_(alphabetic).svg" style="width: 1200px;" />
+<img alt="English letter frequency (alphabetic)" src="2-english_letter_frequency.svg" style="width: 1200px;" />
 </div><div class="ld-slide" id="monoalphabetic-ciphers">
 <h2>Monoalphabetic Ciphers</h2>
 <p>Easy to break because they reflect the frequency data of the original alphabet.</p>
@@ -1424,7 +1422,7 @@ Using the keyword MONARCHY:</p>
 </dd>
 </dl>
 </aside>
-<table class="small compact">
+<table class="align-center small compact">
 <tbody>
 <tr><td><p>/</p></td>
 <td><p><strong>a</strong></p></td>
@@ -2212,10 +2210,10 @@ ciphertext: ZICVTWQNGKZEIIGASXSTSLVVWLA</pre>
 <p class="incremental">Even this scheme is vulnerable to cryptanalysis, because the key and the plaintext share the same frequency distribution of letters, a statistical technique can be applied.</p>
 </div><div class="ld-slide" id="vernam-cipher">
 <h2>Vernam Cipher</h2>
-<p>TODO</p>
+<img alt="Vernam Cipher" class="align-center" src="2-vernam_cipher.svg" />
 </div><div class="ld-slide" id="one-time-pad">
 <h2>One-Time Pad</h2>
-<ul class="simple">
+<ul class="incremental simple">
 <li><p>Improvement to Vernam cipher proposed by an Army Signal Corp officer, Joseph Mauborgne</p></li>
 <li><p>Use a random key that is as long as the message so that the key need not be repeated</p></li>
 <li><p>Key is used to encrypt and decrypt a single message and then is discarded</p></li>
@@ -2226,9 +2224,9 @@ ciphertext: ZICVTWQNGKZEIIGASXSTSLVVWLA</pre>
 </ul>
 </div><div class="ld-slide" id="difficulties-when-using-a-one-time-pad">
 <h2>Difficulties when using a One-Time Pad</h2>
-<ul class="simple">
+<ul class="incremental simple">
 <li><p>The one-time pad offers complete security but, in practice, has two fundamental difficulties:</p>
-<ol class="arabic simple">
+<ol class="arabic simple incremental">
 <li><p>There is the practical problem of making large quantities of random keys
 Any heavily used system might require millions of random characters on a regular basis</p></li>
 <li><p>Mammoth key distribution problem.
@@ -2241,8 +2239,8 @@ For every message to be sent, a key of equal length is needed by both sender and
 </div><div class="ld-slide" id="rail-fence-cipher">
 <h2>Rail Fence Cipher</h2>
 <ul class="simple">
-<li><p>Simplest transposition cipher</p></li>
-<li><p>Plaintext is written down as a sequence of diagonals and then read off as a sequence of rows</p></li>
+<li><p>Simplest transposition <span class="ger">Vertauschung</span> cipher.</p></li>
+<li><p>Plaintext is written down as a sequence of diagonals and then read off as a sequence of rows.</p></li>
 </ul>
 <aside class="admonition incremental">
 <p class="admonition-title">Example</p>
@@ -2256,7 +2254,7 @@ For every message to be sent, a key of equal length is needed by both sender and
 <ul class="simple">
 <li><p>Is a more complex transposition.</p></li>
 <li><p>Write the message in a rectangle, row by row, and read the message off, column by column, but permute the order of the columns.</p></li>
-<li><p>The order of the columns then becomes the key to the algorithm</p></li>
+<li><p>The order of the columns then becomes the key to the algorithm.</p></li>
 </ul>
 <aside class="admonition incremental">
 <p class="admonition-title">Example</p>

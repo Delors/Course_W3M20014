@@ -8,6 +8,7 @@
 <meta content="Number Theory" name="keywords" />
 <meta content="Introduction to Number Theory" lang="en" name="description" xml:lang="en" />
 <meta content="Einführung in die Zahlentheorie" lang="de" name="description" xml:lang="de" />
+<meta content="last-viewed" name="first-slide" />
 <title>Introduction to Number Theory</title>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@3.0.1/es5/tex-mml-chtml.js?config=TeX-AMS_CHTML"></script>
 <link rel="stylesheet" href="ld/normalize.css" type="text/css" />
@@ -617,16 +618,13 @@ a { text-decoration: none; }
 <div class="ld-slide" id="slide0">
 <h1 class="title">Introduction to Number Theory</h1>
 <dl class="docinfo simple">
-<dt class="book">Book<span class="colon">:</span></dt>
-<dd class="book"><p><em>Cryptography and Network Security - Principles and Practice, 8th Edition, William Stallings</em></p>
-</dd>
 <dt class="lecturer">Lecturer<span class="colon">:</span></dt>
 <dd class="lecturer"><p><strong>Prof. Dr. Michael Eichberg</strong></p>
 </dd>
 <dt class="version">Version<span class="colon">:</span></dt>
-<dd class="version">2023-10-03</dd>
+<dd class="version">2023-10-04</dd>
 </dl>
-<img alt="DHBW CAS Logo" class="logo" src="DHBW_CAS_LOGO.svg" />
+<img alt="DHBW CAS Logo" class="logo" src="logo.svg" />
 </div>
 <div class="ld-slide" id="divisibility">
 <h2>Divisibility</h2>
@@ -675,8 +673,8 @@ a = qn + r \qquad 0 \leq r &lt; n; q = \left \lfloor{a/n} \right \rfloor
 \end{equation*}
 </div>
 <img alt="The relationship a=qn+r" class="incremental" src="1-division_algorithm.png" />
-</div><div class="ld-slide" id="division-algorithm-1">
-<h2>Division Algorithm</h2>
+</div><div class="ld-slide" id="division-algorithm-for-negative-a">
+<h2>Division Algorithm for negative <cite>a</cite></h2>
 <img alt="The relationship a=qn+r for negative a" src="1-division_algorithm_negative_a.png" />
 <aside class="admonition incremental">
 <p class="admonition-title">Example</p>
@@ -737,11 +735,11 @@ gcd(a,b) = max[k, such\,that\, k|a \, and \, k|b]
 <!-- To be done!!!
 .. raw:: html
    <iframe src="Test/gcd animation/Standard/Standard.html" style="margin:auto;position:relative;width:600px;height:400px;overflow:hidden;" title="W3Schools Free Online Web Tutorials"></iframe> -->
-<img alt="1-Euclidean_algorithm.svg" src="1-Euclidean_algorithm.svg" style="width: 1600px;" />
+<img alt="1-euclidean_algorithm.svg" src="1-euclidean_algorithm.svg" style="width: 1600px;" />
 </div><div class="ld-slide" id="greatest-common-divisor-gcd-4">
 <h2>Greatest Common Divisor (<abbr>GCD</abbr>)</h2>
 <p>Example of computing the GCD using the Euclidean algorithm.</p>
-<img alt="1-Euclidean_algorithm_example.png" src="1-Euclidean_algorithm_example.png" style="width: 600px;" />
+<img alt="1-euclidean_algorithm_example.png" src="1-euclidean_algorithm_example.png" style="width: 600px;" />
 </div><div class="ld-slide" id="euclidean-algorithm-1">
 <h2>Euclidean Algorithm</h2>
 <table style="width: 100%;">
@@ -956,12 +954,20 @@ a =  \left\lfloor a / n \right\rfloor \times n + (a\; mod\;  n)
 </aside>
 </div><div class="ld-slide" id="modular-arithmetic-modulo-8">
 <h2>Modular Arithmetic Modulo 8</h2>
+<aside class="admonition note">
+<p class="admonition-title">Note</p>
 <p>Definition</p>
 <div class="math">
 \begin{equation*}
 Z_n = {0,1,...,(n-1)}
 \end{equation*}
 </div>
+<div class="math">
+\begin{equation*}
+Z_8 = {0,1,2,3,4,5,6,7}
+\end{equation*}
+</div>
+</aside>
 <p>Addition</p>
 <table>
 <thead>
@@ -1266,8 +1272,8 @@ a = \displaystyle \prod_{p \in P} p^{a_p}\qquad where\; each\; a_p \geq 0
 \end{equation*}
 </div>
 </aside>
-</div><div class="ld-slide" id="fermat-s-theorem">
-<h2>Fermat's theorem</h2>
+</div><div class="ld-slide" id="fermat-s-little-theorem">
+<h2>Fermat's (little) theorem</h2>
 <aside class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Important in public-key cryptography.</p>
@@ -1486,7 +1492,7 @@ a^{\phi(n)+1} \equiv a (mod\; n)
 <li><p>Believed to have been discovered by the Chinese mathematician Sun-Tsu in around 100 A.D.</p></li>
 <li><p>One of the most useful results of number theory</p></li>
 <li><p>Says it is possible to reconstruct integers in a certain range from their residues modulo a set of pairwise relatively prime moduli</p></li>
-<li><p>Can be stated in several ways</p></li>
+<li><p>Can be stated in several ways.</p></li>
 </ul>
 </div>
 </body>
