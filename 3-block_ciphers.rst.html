@@ -626,8 +626,178 @@ a { text-decoration: none; }
 </dl>
 <img alt="DHBW CAS Logo" class="logo" src="logo.svg" />
 </div>
-<div class="ld-slide" id="todotododo">
-<h2>TODOTODODO</h2>
+<div class="ld-slide" id="stream-cipher">
+<h2>Stream Cipher</h2>
+<ul>
+<li><p>Encrypts a digital data stream one bit or one byte at a time. Examples: Autokeyed Vigenère cipher and  Vernam cipher</p></li>
+<li><p>In the ideal case, a one-time pad version of the Vernam cipher would be used, in which the keystream is as long as the plaintext bit stream.</p>
+<blockquote>
+<ul class="smaller simple">
+<li><p>If the cryptographic keystream is random, then this cipher is unbreakable by any means other than acquiring the keystream</p></li>
+</ul>
+<blockquote class="smaller">
+<ul class="smaller simple">
+<li><p>Keystream must be provided to both users in advance via some independent and secure channel</p></li>
+<li><p>This introduces insurmountable logistical problems if the intended data traffic is very large</p></li>
+</ul>
+</blockquote>
+</blockquote>
+</li>
+</ul>
+</div><div class="ld-slide" id="stream-cipher-1">
+<h2>Stream Cipher</h2>
+<ul class="simple">
+<li><dl class="simple">
+<dt>For practical reasons the bit- stream generator must be implemented as an algorithmic procedure so that the cryptographic bit stream can be produced by both users</dt>
+<dd><ul>
+<li><p>It must be computationally impractical to predict future portions of the bit stream based on previous portions of the bit stream.</p></li>
+<li><p>The two users need only share the generating key and each can produce the keystream.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</div><div class="ld-slide" id="block-cipher">
+<h2>Block Cipher</h2>
+<ul class="simple">
+<li><p>A block of plaintext is treated as a whole and used to produce a ciphertext block of equal length.</p></li>
+<li><p>Typically a block size of 64 or 128 bits is used.</p></li>
+<li><p>As with a stream cipher, the two users share a symmetric encryption key.</p></li>
+<li><p>The majority of network-based symmetric cryptographic applications make use of block ciphers.</p></li>
+</ul>
+</div><div class="ld-slide" id="stream-cipher-vs-block-cipher">
+<h2>Stream Cipher vs. Block Cipher</h2>
+<img alt="3-stream_cipher.svg" class="align-left" src="3-stream_cipher.svg" />
+<img alt="3-block_cipher.svg" class="align-right" src="3-block_cipher.svg" />
+</div><div class="ld-slide" id="general-n-bit-n-bit-block-substitution-n-4">
+<h2>General n-bit-n-bit Block Substitution (n = 4)</h2>
+</div><div class="ld-slide" id="encryption-and-decryption-tables-for-substitution-cipher">
+<h2>Encryption and Decryption Tables for Substitution Cipher</h2>
+<table class="align-center small">
+<caption>Encryption Table</caption>
+<tbody>
+<tr><td><p>Plaintext</p></td>
+<td><p>0000</p></td>
+<td><p>0001</p></td>
+<td><p>0010</p></td>
+<td><p>0011</p></td>
+<td><p>0100</p></td>
+<td><p>0101</p></td>
+<td><p>0110</p></td>
+<td><p>0111</p></td>
+<td><p>1000</p></td>
+<td><p>1001</p></td>
+<td><p>1010</p></td>
+<td><p>1011</p></td>
+<td><p>1100</p></td>
+<td><p>1101</p></td>
+<td><p>1110</p></td>
+<td><p>1111</p></td>
+</tr>
+<tr><td><p>Ciphertext</p></td>
+<td><p>1110</p></td>
+<td><p>0100</p></td>
+<td><p>1101</p></td>
+<td><p>0001</p></td>
+<td><p>0010</p></td>
+<td><p>1111</p></td>
+<td><p>1011</p></td>
+<td><p>1000</p></td>
+<td><p>0011</p></td>
+<td><p>1010</p></td>
+<td><p>0110</p></td>
+<td><p>1100</p></td>
+<td><p>0101</p></td>
+<td><p>1001</p></td>
+<td><p>0000</p></td>
+<td><p>0111</p></td>
+</tr>
+</tbody>
+</table>
+<table class="align-center small">
+<caption>Decryption Table</caption>
+<tbody>
+<tr><td><p>Ciphertext</p></td>
+<td><p>0000</p></td>
+<td><p>0001</p></td>
+<td><p>0010</p></td>
+<td><p>0011</p></td>
+<td><p>0100</p></td>
+<td><p>0101</p></td>
+<td><p>0110</p></td>
+<td><p>0111</p></td>
+<td><p>1000</p></td>
+<td><p>1001</p></td>
+<td><p>1010</p></td>
+<td><p>1011</p></td>
+<td><p>1100</p></td>
+<td><p>1101</p></td>
+<td><p>1110</p></td>
+<td><p>1111</p></td>
+</tr>
+<tr><td><p>Plaintext</p></td>
+<td><p>1110</p></td>
+<td><p>0011</p></td>
+<td><p>0100</p></td>
+<td><p>1000</p></td>
+<td><p>0001</p></td>
+<td><p>1100</p></td>
+<td><p>1010</p></td>
+<td><p>1111</p></td>
+<td><p>0111</p></td>
+<td><p>1101</p></td>
+<td><p>1001</p></td>
+<td><p>0110</p></td>
+<td><p>1011</p></td>
+<td><p>0010</p></td>
+<td><p>0000</p></td>
+<td><p>0101</p></td>
+</tr>
+</tbody>
+</table>
+</div><div class="ld-slide" id="feistel-cipher">
+<h2>Feistel Cipher</h2>
+<p>Feistel proposed the use of a cipher that alternates substitutions and permutations.</p>
+<aside class="admonition incremental">
+<p class="admonition-title">Substitutions</p>
+<p>Each plaintext element or group of elements is uniquely replaced by a corresponding ciphertext element or group of elements</p>
+</aside>
+<aside class="admonition incremental">
+<p class="admonition-title">Permutation</p>
+<p>No elements are added or deleted or replaced in the sequence, rather the order in which the elements appear in the sequence is changed</p>
+</aside>
+</div><div class="ld-slide" id="feistel-cipher-background">
+<h2>Feistel Cipher - Background</h2>
+<ul class="simple">
+<li><p>This is a practical application of a proposal by Claude Shannon to develop a product cipher that alternates confusion and diffusion functions.</p></li>
+<li><p>It is the structure used by many significant symmetric block ciphers currently in use</p></li>
+</ul>
+</div><div class="ld-slide" id="diffusion-and-confusion">
+<h2>Diffusion and Confusion</h2>
+<ul class="simple">
+<li><p>Terms introduced by Claude Shannon to capture the two basic building blocks for any cryptographic system.</p></li>
+<li><p>Shannon’s concern was to thwart cryptanalysis based on statistical analysis.</p></li>
+</ul>
+</div><div class="ld-slide" id="diffusion-and-confusion-1">
+<h2><strong>Diffusion</strong> and Confusion</h2>
+<aside class="admonition admonition-diffusion">
+<p class="admonition-title">Diffusion</p>
+<ul class="simple">
+<li><p>The statistical structure of the plaintext is dissipated into long-range statistics of the ciphertext</p></li>
+<li><p>This is achieved by having each plaintext digit affect the value of many ciphertext digits.</p></li>
+<li><p>Diffusion can be achieved, e.g., by permutations.</p></li>
+</ul>
+</aside>
+</div><div class="ld-slide" id="diffusion-and-confusion-2">
+<h2>Diffusion and <strong>Confusion</strong></h2>
+<aside class="admonition admonition-confusion">
+<p class="admonition-title">Confusion</p>
+<ul class="simple">
+<li><p>Seeks to make the relationship between the statistics of the ciphertext and the value of the encryption key as complex as possible</p></li>
+<li><p>Even if the attacker can get some handle on the statistics of the ciphertext, the way in which the key was used to produce that ciphertext is so complex as to make it difficult to deduce the key</p></li>
+<li><p>Confusion can be realized, e.g., by substitutions.</p></li>
+</ul>
+</aside>
 </div>
 </body>
 </html>
