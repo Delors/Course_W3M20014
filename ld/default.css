@@ -120,3 +120,11 @@ span.ger::before {
 span.ger::after { 
     content: ")";
 }
+
+
+.two-column {
+    column-count: 2;
+    column-gap: 96px;
+    column-rule: 2px solid gray;
+    width: 100%;
+}
