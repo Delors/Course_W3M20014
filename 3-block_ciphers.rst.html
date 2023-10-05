@@ -622,7 +622,7 @@ a { text-decoration: none; }
 <dd class="lecturer"><p><strong>Prof. Dr. Michael Eichberg</strong></p>
 </dd>
 <dt class="version">Version<span class="colon">:</span></dt>
-<dd class="version">2023-10-04</dd>
+<dd class="version">2023-10-05</dd>
 </dl>
 <img alt="DHBW CAS Logo" class="logo" src="logo.svg" />
 </div>
@@ -784,7 +784,7 @@ a { text-decoration: none; }
 <aside class="admonition admonition-diffusion">
 <p class="admonition-title">Diffusion</p>
 <ul class="simple">
-<li><p>The statistical structure of the plaintext is dissipated into long-range statistics of the ciphertext</p></li>
+<li><p>The statistical structure of the plaintext is dissipated into long-range statistics of the ciphertext; i.e., makes the statistical relationship between the plaintext and ciphertext as complex as possible.</p></li>
 <li><p>This is achieved by having each plaintext digit affect the value of many ciphertext digits.</p></li>
 <li><p>Diffusion can be achieved, e.g., by permutations.</p></li>
 </ul>
@@ -799,6 +799,36 @@ a { text-decoration: none; }
 <li><p>Confusion can be realized, e.g., by substitutions.</p></li>
 </ul>
 </aside>
+</div><div class="ld-slide" id="entropie">
+<h2>Entropie</h2>
+<p>TODO</p>
+</div><div class="ld-slide" id="feistel-cipher-encryption-and-decryption">
+<h2>Feistel Cipher - Encryption and Decryption</h2>
+</div><div class="ld-slide" id="feistel-cipher-design-features">
+<h2>Feistel Cipher - Design Features</h2>
+<dl class="two-column small incremental field-list simple">
+<dt><strong>Round function F</strong><span class="colon">:</span></dt>
+<dd><p>Greater complexity generally means greater resistance to cryptanalysis</p>
+</dd>
+<dt><strong>Fast software encryption/decryption</strong><span class="colon">:</span></dt>
+<dd><p>In many cases, encrypting is embedded in applications or utility functions in such a way as to preclude a hardware implementation; accordingly, the speed of execution of the algorithm becomes a concern</p>
+</dd>
+<dt><strong>Ease of analysis</strong><span class="colon">:</span></dt>
+<dd><p>If the algorithm can be concisely and clearly explained, it is easier to analyze that algorithm for cryptanalytic vulnerabilities and therefore develop a higher level of assurance as to its strength</p>
+</dd>
+<dt><strong>Block size</strong><span class="colon">:</span></dt>
+<dd><p>Larger block sizes mean greater security but reduced encryption/decryption speed for a given algorithm</p>
+</dd>
+<dt><strong>Key size</strong><span class="colon">:</span></dt>
+<dd><p>Larger key size means greater security but may decrease encryption/decryption speeds</p>
+</dd>
+<dt><strong>Number of rounds</strong><span class="colon">:</span></dt>
+<dd><p>The essence of the Feistel cipher is that a single round offers inadequate security but that multiple rounds offer increasing security</p>
+</dd>
+<dt><strong>Subkey generation algorithm</strong><span class="colon">:</span></dt>
+<dd><p>Greater complexity in this algorithm should lead to greater difficulty of cryptanalysis</p>
+</dd>
+</dl>
 </div>
 </body>
 </html>

@@ -206,3 +206,52 @@ Diffusion and **Confusion**
     - Seeks to make the relationship between the statistics of the ciphertext and the value of the encryption key as complex as possible
     - Even if the attacker can get some handle on the statistics of the ciphertext, the way in which the key was used to produce that ciphertext is so complex as to make it difficult to deduce the key
     - Confusion can be realized, e.g., by substitutions.
+
+
+
+Entropie
+--------
+
+TODO
+
+
+Feistel Cipher - Encryption and Decryption
+------------------------------------------
+
+TODO
+
+
+Feistel Cipher - Example
+------------------------
+
+TODO
+
+
+Feistel Cipher - Design Features 
+--------------------------------
+
+.. class:: two-column small incremental
+
+    :**Round function F**:
+        Greater complexity generally means greater resistance to cryptanalysis
+    
+    :**Fast software encryption/decryption**: 
+        In many cases, encrypting is embedded in applications or utility functions in such a way as to preclude a hardware implementation; accordingly, the speed of execution of the algorithm becomes a concern
+
+    :**Ease of analysis**: 
+        If the algorithm can be concisely and clearly explained, it is easier to analyze that algorithm for cryptanalytic vulnerabilities and therefore develop a higher level of assurance as to its strength
+
+    :**Block size**:
+        Larger block sizes mean greater security but reduced encryption/decryption speed for a given algorithm
+
+    :**Key size**:
+        Larger key size means greater security but may decrease encryption/decryption speeds
+
+    :**Number of rounds**: 
+        The essence of the Feistel cipher is that a single round offers inadequate security but that multiple rounds offer increasing security
+
+    :**Subkey generation algorithm**: 
+        Greater complexity in this algorithm should lead to greater difficulty of cryptanalysis
+
+
+
