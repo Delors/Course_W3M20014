@@ -255,3 +255,13 @@ Feistel Cipher - Design Features
 
 
 
+Data Encryption Standard (DES)
+-------------------------------
+
+- Issued in 1977 by the National Bureau of Standards (now NIST) as Federal Information Processing Standard 46
+- Was the most widely used encryption scheme until the introduction of the Advanced Encryption Standard (AES) in 2001
+- Algorithm itself is referred to as the Data Encryption Algorithm (DEA):
+
+   - Data is encrypted in 64-bit blocks using a 56-bit key
+   - The algorithm transforms 64-bit input in a series of steps into a 64-bit output
+   - The same steps, with the same key, are used to reverse the encryption
