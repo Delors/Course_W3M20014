@@ -177,7 +177,7 @@ window.addEventListener("load", (event) => {
             console.error(error)
         }
     }
-    console.info("the first slide is: " + currentSlideNo);
+    console.info("the presentation starts with slide: " + currentSlideNo);
     showSlide(currentSlideNo);
 
     /*  Initialize the span element which shows the  
