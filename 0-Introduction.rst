@@ -29,7 +29,7 @@ This lecture is based on the book:
 1. `Introduction to Number Theory <1-introduction_to_number_theory.rst.html>`__
 2. `Classical Encryption Techniques <2-classical_encryption_techniques.rst.html>`__
 3. `Block Ciphers and the Data Encryption Standard <3-block_ciphers.rst.html>`__
-4. Finite Fields
+4. `Finite Fields <4-finite_fields.rst.html>`__
 5. Advanced Encryption Standard (AES)
 6. Block Cipher Operation
 7. Random Bit Generation and Stream Ciphers

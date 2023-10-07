@@ -16,6 +16,8 @@ Block Ciphers and the Data Encryption Standard
 
 :Lecturer: **Prof. Dr. Michael Eichberg**
 :Version: |date|
+:Based on: *Cryptography and Network Security - Principles and Practice, 8th Edition, William Stallings*
+
 
 .. image:: logo.svg
     :alt: DHBW CAS Logo
