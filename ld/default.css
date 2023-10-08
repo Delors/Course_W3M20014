@@ -70,8 +70,11 @@ pre.code {
     font-size: 30px;
 }
 
+.tiny {
+    font-size: 24px;
+}
+
 .hexdump {
-    font-size: 30px;
     font-family: monospace;
 }
 
@@ -127,4 +130,9 @@ span.ger::after {
     column-gap: 96px;
     column-rule: 2px solid gray;
     width: 100%;
+}
+
+td:has(p>span.red) {
+    background-color: rgb(255, 162, 162);
+    font-weight: bold;
 }
