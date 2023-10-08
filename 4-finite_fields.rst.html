@@ -5,12 +5,13 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta name="version" content="LD2 0.1" />
 <meta content="Michael Eichberg" name="author" />
-<meta content="Block Ciphers" name="keywords" />
-<meta content="Block Ciphers" lang="en" name="description" xml:lang="en" />
-<meta content="Blockverschlüsselung" lang="de" name="description" xml:lang="de" />
-<meta content="2023_10-W3M20014-block_ciphers" name="id" />
+<meta content="Groups, Rings, Fields" name="keywords" />
+<meta content="(Finite) Fields" lang="en" name="description" xml:lang="en" />
+<meta content="(Endliche) Körper" lang="de" name="description" xml:lang="de" />
+<meta content="2023_10-W3M20014-finite_fields" name="id" />
 <meta content="last-viewed" name="first-slide" />
 <title>Finite Fields</title>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@3.0.1/es5/tex-mml-chtml.js?config=TeX-AMS_CHTML"></script>
 <link rel="stylesheet" href="ld/normalize.css" type="text/css" />
 <style type="text/css">
 
@@ -622,12 +623,1237 @@ a { text-decoration: none; }
 <dd class="lecturer"><p><strong>Prof. Dr. Michael Eichberg</strong></p>
 </dd>
 <dt class="version">Version<span class="colon">:</span></dt>
-<dd class="version">2023-10-07</dd>
+<dd class="version">2023-10-08</dd>
 <dt class="based-on">Based on<span class="colon">:</span></dt>
 <dd class="based-on"><p><em>Cryptography and Network Security - Principles and Practice, 8th Edition, William Stallings</em></p>
 </dd>
 </dl>
 <img alt="DHBW CAS Logo" class="logo" src="logo.svg" />
+</div>
+<div class="ld-slide" id="groups-rings-and-fields">
+<h2>Groups, Rings and Fields</h2>
+<pre class="literal-block">((((((
+    (Finite Fields)
+        in Fields)
+            in Integral Domains)
+                in Commutative Rings)
+                    in Rings)
+                        in Abelian Groups)
+                            in Groups)</pre>
+</div><div class="ld-slide" id="groups">
+<h2>Groups</h2>
+<p>A set of elements with a binary operation denoted by ● that associates to each ordered pair <span class="math">\((a,b)\)</span> of elements in <span class="math">\(G\)</span> an element <span class="math">\((a ● b ) \in G\)</span> , such that the following axioms are obeyed:</p>
+<dl class="incremental field-list simple">
+<dt>(A1) Closure<span class="colon">:</span></dt>
+<dd><p>If <span class="math">\(a\)</span> and <span class="math">\(b\)</span> belong to <span class="math">\(G\)</span>, then <span class="math">\(a ● b\)</span> is also in <span class="math">\(G\)</span></p>
+</dd>
+<dt>(A2) Associative<span class="colon">:</span></dt>
+<dd><p><span class="math">\(a ● ( b ● c ) = ( a ● b ) ● c\)</span> for all <span class="math">\(a, b, c \in G\)</span></p>
+</dd>
+<dt>(A3) Identity element<span class="colon">:</span></dt>
+<dd><p>There is an element <span class="math">\(e \in G\)</span> such that <span class="math">\(a ● e = e ● a = a\)</span> for all <span class="math">\(a \in G\)</span></p>
+</dd>
+<dt>(A4) Inverse element<span class="colon">:</span></dt>
+<dd><p>For each <span class="math">\(a \in G\)</span>, there is an element <span class="math">\(a^1 \in G\)</span> such that <span class="math">\(a ● a^1 = a^1 ● a = e\)</span></p>
+</dd>
+<dt>(A5) Commutative<span class="colon">:</span></dt>
+<dd><p><span class="math">\(a ● b = b ● a\)</span> for all <span class="math">\(a, b \in G\)</span></p>
+</dd>
+</dl>
+</div><div class="ld-slide" id="cyclic-group">
+<h2>Cyclic Group</h2>
+<ul class="simple">
+<li><p>Exponentiation is defined within a group as a repeated application of the group operator, so that <span class="math">\(a^3 = a ● a ● a\)</span>.</p></li>
+<li><p>We define <span class="math">\(a^0 = e\)</span> as the identity element, and <span class="math">\(a^{-n} = (a’)^n\)</span> , where <span class="math">\(a’\)</span> is the inverse element of <span class="math">\(a\)</span> within the group.</p></li>
+<li><p>A group <span class="math">\(G\)</span> is cyclic if every element of <span class="math">\(G\)</span> is a power <span class="math">\(a^k\)</span> (<span class="math">\(k\)</span> is an integer) of a fixed element <span class="math">\(a \in G\)</span>.</p></li>
+<li><p>The element <span class="math">\(a\)</span> is said to generate the group <span class="math">\(G\)</span> or to be a generator of <span class="math">\(G\)</span>.</p></li>
+<li><p>A cyclic group is always abelian and may be finite or infinite.</p></li>
+</ul>
+<!-- A cyclic group is, e.g., {1,2,4,8,16,...} with a = 2; e = 1 (k does not have to part of the cyclic group.) -->
+</div><div class="ld-slide" id="rings">
+<h2>Rings</h2>
+<ul class="simple">
+<li><p>A ring <span class="math">\(R\)</span> , sometimes denoted by <span class="math">\(\lbrace R , + , * \rbrace\)</span>, is a set of elements with two binary operations, called addition and multiplication, such that for all <span class="math">\(a , b , c \in R\)</span> the axioms (A1-A5) are obeyed.</p></li>
+<li><p><span class="math">\(R\)</span> is an abelian group with respect to addition; that is, <span class="math">\(R\)</span> satisfies axioms A1 through A5. For the case of an additive group, we denote the identity element as <span class="math">\(0\)</span> and the inverse of <span class="math">\(a\)</span> as <span class="math">\(–a\)</span>.</p></li>
+</ul>
+</div><div class="ld-slide" id="rings-1">
+<h2>Rings</h2>
+<dl class="field-list">
+<dt>(M1) Closure under multiplication<span class="colon">:</span></dt>
+<dd><p>If <span class="math">\(a\)</span> and <span class="math">\(b\)</span> belong to <span class="math">\(R\)</span>, then <span class="math">\(ab\)</span> is also in <span class="math">\(R\)</span></p>
+</dd>
+<dt>(M2) Associativity of multiplication<span class="colon">:</span></dt>
+<dd><p><span class="math">\(a(bc) = (ab)c\)</span> for all <span class="math">\(a,b,c \in R\)</span></p>
+</dd>
+<dt>(M3) Distributive laws<span class="colon">:</span></dt>
+<dd><p><span class="math">\(a(b+c) = ab+ac\)</span> for all <span class="math">\(a,b,c \in R\)</span></p>
+<p><span class="math">\((a+b)c = ac+bc\)</span> for all <span class="math">\(a,b,c \in R\)</span></p>
+</dd>
+</dl>
+<p>In essence, a ring is a set in which we can do addition, subtraction [a - b = a + (-b )], and multiplication without leaving the set.</p>
+</div><div class="ld-slide" id="rings-2">
+<h2>Rings</h2>
+<ul class="incremental simple">
+<li><p>A ring is said to be commutative if it satisfies the following additional condition:</p>
+<dl class="field-list simple">
+<dt>(M4) Commutativity of multiplication<span class="colon">:</span></dt>
+<dd><p><span class="math">\(ab = ba\)</span> for all <span class="math">\(a, b \in R\)</span></p>
+</dd>
+</dl>
+</li>
+<li><p>An integral domain is a commutative ring that obeys the following axioms.</p>
+<dl class="field-list simple">
+<dt>(M5) Multiplicative identity<span class="colon">:</span></dt>
+<dd><p>There is an element 1 in R such that <span class="math">\(a1 = 1a = a\)</span> for all <span class="math">\(a \in R\)</span></p>
+</dd>
+<dt>(M6) No zero divisors<span class="colon">:</span></dt>
+<dd><p>If <span class="math">\(a,b \in R\)</span> and <span class="math">\(ab = 0\)</span>, then either <span class="math">\(a = 0\)</span> or <span class="math">\(b = 0\)</span></p>
+</dd>
+</dl>
+</li>
+</ul>
+</div><div class="ld-slide" id="fields-korper">
+<h2>Fields <span class="ger">Körper</span></h2>
+<ul class="simple">
+<li><p>A field <span class="math">\(F\)</span>, sometimes denoted by <span class="math">\(\lbrace F, +, * \rbrace\)</span>, is a set of elements with two binary operations, called addition and multiplication, such that for all <span class="math">\(a, b, c \in F\)</span> the axioms (A1–M6) are obeyed. <span class="math">\(F\)</span> is an integral domain; that is, <span class="math">\(F\)</span> satisfies axioms A1 through A5 and M1 through M6</p></li>
+</ul>
+<dl class="incremental field-list simple">
+<dt>(M7) Multiplicative inverse<span class="colon">:</span></dt>
+<dd><p>For each a in F, except 0, there is an element <span class="math">\(a^{-1} \in F\)</span> such that <span class="math">\(aa^{-1} = (a^{-1})a = 1\)</span></p>
+</dd>
+</dl>
+</div><div class="ld-slide" id="fields">
+<h2>Fields</h2>
+<ul class="simple">
+<li><p>In essence, a field is a set in which we can do addition, subtraction, multiplication, and division without leaving the set. Division is defined with the following rule: <span class="math">\(a/b = a (b^{-1})\)</span></p></li>
+</ul>
+<aside class="admonition incremental">
+<p class="admonition-title">Note</p>
+<p>Familiar examples of fields are the rational numbers, the real numbers, and the complex numbers. Note that the set of all integers is not a field, because not every element of the set has a multiplicative inverse.</p>
+</aside>
+</div><div class="ld-slide" id="summary-properties-of-groups-rings-and-fields">
+<h2>Summary - Properties of Groups, Rings and Fields</h2>
+<img alt="Properties of Groups, Rings, and Fields" class="align-center" src="4-properties_of_groups_..._fields.svg" style="width: 1400px;" />
+</div><div class="ld-slide" id="types-of-fields">
+<h2>Types of Fields</h2>
+<img alt="4-fields.svg" src="4-fields.svg" style="width: 1600px;" />
+</div><div class="ld-slide" id="finite-fields-of-the-form-gf-p">
+<h2>Finite Fields of the Form <span class="math">\(GF(p)\)</span></h2>
+<ul class="simple">
+<li><p>Finite fields play a crucial role in many cryptographic algorithms</p></li>
+<li><p>It can be shown that the order of a finite field must be a power of a prime <span class="math">\(p^n\)</span>, where <span class="math">\(n\)</span> is a positive integer</p></li>
+<li><p>The finite field of order <span class="math">\(p^n\)</span> is generally written <span class="math">\(GF(p^n)\)</span></p></li>
+<li><p>GF stands for Galois field, in honor of the mathematician who first studied finite fields</p></li>
+</ul>
+</div><div class="ld-slide" id="addition-modulo-8">
+<h2>Addition Modulo 8</h2>
+<table class="align-center">
+<tbody>
+<tr><td><p><span class="math">\(+\)</span></p></td>
+<td><p><em>0</em></p></td>
+<td><p><em>1</em></p></td>
+<td><p><em>2</em></p></td>
+<td><p><em>3</em></p></td>
+<td><p><em>4</em></p></td>
+<td><p><em>5</em></p></td>
+<td><p><em>6</em></p></td>
+<td><p><em>7</em></p></td>
+</tr>
+<tr><td><p><em>0</em></p></td>
+<td><p><span class="red">0</span></p></td>
+<td><p>1</p></td>
+<td><p>2</p></td>
+<td><p>3</p></td>
+<td><p>4</p></td>
+<td><p>5</p></td>
+<td><p>6</p></td>
+<td><p>7</p></td>
+</tr>
+<tr><td><p><em>1</em></p></td>
+<td><p>1</p></td>
+<td><p>2</p></td>
+<td><p>3</p></td>
+<td><p>4</p></td>
+<td><p>5</p></td>
+<td><p>6</p></td>
+<td><p>7</p></td>
+<td><p><span class="red">0</span></p></td>
+</tr>
+<tr><td><p><em>2</em></p></td>
+<td><p>2</p></td>
+<td><p>3</p></td>
+<td><p>4</p></td>
+<td><p>5</p></td>
+<td><p>6</p></td>
+<td><p>7</p></td>
+<td><p><span class="red">0</span></p></td>
+<td><p>1</p></td>
+</tr>
+<tr><td><p><em>3</em></p></td>
+<td><p>3</p></td>
+<td><p>4</p></td>
+<td><p>5</p></td>
+<td><p>6</p></td>
+<td><p>7</p></td>
+<td><p><span class="red">0</span></p></td>
+<td><p>1</p></td>
+<td><p>2</p></td>
+</tr>
+<tr><td><p><em>4</em></p></td>
+<td><p>4</p></td>
+<td><p>5</p></td>
+<td><p>6</p></td>
+<td><p>7</p></td>
+<td><p><span class="red">0</span></p></td>
+<td><p>1</p></td>
+<td><p>2</p></td>
+<td><p>3</p></td>
+</tr>
+<tr><td><p><em>5</em></p></td>
+<td><p>5</p></td>
+<td><p>6</p></td>
+<td><p>7</p></td>
+<td><p><span class="red">0</span></p></td>
+<td><p>1</p></td>
+<td><p>2</p></td>
+<td><p>3</p></td>
+<td><p>4</p></td>
+</tr>
+<tr><td><p><em>6</em></p></td>
+<td><p>6</p></td>
+<td><p>7</p></td>
+<td><p><span class="red">0</span></p></td>
+<td><p>1</p></td>
+<td><p>2</p></td>
+<td><p>3</p></td>
+<td><p>4</p></td>
+<td><p>5</p></td>
+</tr>
+<tr><td><p><em>7</em></p></td>
+<td><p>7</p></td>
+<td><p><span class="red">0</span></p></td>
+<td><p>1</p></td>
+<td><p>2</p></td>
+<td><p>3</p></td>
+<td><p>4</p></td>
+<td><p>5</p></td>
+<td><p>6</p></td>
+</tr>
+</tbody>
+</table>
+</div><div class="ld-slide" id="multiplication-modulo-8">
+<h2>Multiplication Modulo 8</h2>
+<table class="align-center">
+<tbody>
+<tr><td><p><span class="math">\(\times\)</span></p></td>
+<td><p><em>0</em></p></td>
+<td><p><em>1</em></p></td>
+<td><p><em>2</em></p></td>
+<td><p><em>3</em></p></td>
+<td><p><em>4</em></p></td>
+<td><p><em>5</em></p></td>
+<td><p><em>6</em></p></td>
+<td><p><em>7</em></p></td>
+</tr>
+<tr><td><p><em>0</em></p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+</tr>
+<tr><td><p><em>1</em></p></td>
+<td><p>0</p></td>
+<td><p><span class="red">1</span></p></td>
+<td><p>2</p></td>
+<td><p>3</p></td>
+<td><p>4</p></td>
+<td><p>5</p></td>
+<td><p>6</p></td>
+<td><p>7</p></td>
+</tr>
+<tr><td><p><em>2</em></p></td>
+<td><p>0</p></td>
+<td><p>2</p></td>
+<td><p>4</p></td>
+<td><p>6</p></td>
+<td><p>0</p></td>
+<td><p>2</p></td>
+<td><p>4</p></td>
+<td><p>6</p></td>
+</tr>
+<tr><td><p><em>3</em></p></td>
+<td><p>0</p></td>
+<td><p>3</p></td>
+<td><p>6</p></td>
+<td><p><span class="red">1</span></p></td>
+<td><p>4</p></td>
+<td><p>7</p></td>
+<td><p>2</p></td>
+<td><p>5</p></td>
+</tr>
+<tr><td><p><em>4</em></p></td>
+<td><p>0</p></td>
+<td><p>4</p></td>
+<td><p>0</p></td>
+<td><p>4</p></td>
+<td><p>0</p></td>
+<td><p>4</p></td>
+<td><p>0</p></td>
+<td><p>4</p></td>
+</tr>
+<tr><td><p><em>5</em></p></td>
+<td><p>0</p></td>
+<td><p>5</p></td>
+<td><p>2</p></td>
+<td><p>7</p></td>
+<td><p>4</p></td>
+<td><p><span class="red">1</span></p></td>
+<td><p>6</p></td>
+<td><p>3</p></td>
+</tr>
+<tr><td><p><em>6</em></p></td>
+<td><p>0</p></td>
+<td><p>6</p></td>
+<td><p>4</p></td>
+<td><p>2</p></td>
+<td><p>0</p></td>
+<td><p>6</p></td>
+<td><p>4</p></td>
+<td><p>2</p></td>
+</tr>
+<tr><td><p><em>7</em></p></td>
+<td><p>0</p></td>
+<td><p>7</p></td>
+<td><p>6</p></td>
+<td><p>5</p></td>
+<td><p>4</p></td>
+<td><p>3</p></td>
+<td><p>2</p></td>
+<td><p><span class="red">1</span></p></td>
+</tr>
+</tbody>
+</table>
+</div><div class="ld-slide" id="additive-and-muliplicative-inverses-modulo-8">
+<h2>Additive and muliplicative inverses modulo 8</h2>
+<table class="align-center">
+<tbody>
+<tr><td><p><span class="math">\(w\)</span></p></td>
+<td><p><span class="math">\(-w\)</span></p></td>
+<td><p><span class="math">\(w^{-1}\)</span></p></td>
+</tr>
+<tr><td><p>0</p></td>
+<td><p>0</p></td>
+<td><p><span class="math">\(-\)</span></p></td>
+</tr>
+<tr><td><p>1</p></td>
+<td><p>7</p></td>
+<td><p>1</p></td>
+</tr>
+<tr><td><p>2</p></td>
+<td><p>6</p></td>
+<td><p><span class="math">\(-\)</span></p></td>
+</tr>
+<tr><td><p>3</p></td>
+<td><p>5</p></td>
+<td><p>3</p></td>
+</tr>
+<tr><td><p>4</p></td>
+<td><p>4</p></td>
+<td><p><span class="math">\(-\)</span></p></td>
+</tr>
+<tr><td><p>5</p></td>
+<td><p>3</p></td>
+<td><p>5</p></td>
+</tr>
+<tr><td><p>6</p></td>
+<td><p>2</p></td>
+<td><p><span class="math">\(-\)</span></p></td>
+</tr>
+<tr><td><p>7</p></td>
+<td><p>1</p></td>
+<td><p>7</p></td>
+</tr>
+</tbody>
+</table>
+</div><div class="ld-slide" id="addition-modulo-7">
+<h2>Addition modulo 7</h2>
+<table class="align-center">
+<tbody>
+<tr><td><p><span class="math">\(+\)</span></p></td>
+<td><p><em>0</em></p></td>
+<td><p><em>1</em></p></td>
+<td><p><em>2</em></p></td>
+<td><p><em>3</em></p></td>
+<td><p><em>4</em></p></td>
+<td><p><em>5</em></p></td>
+<td><p><em>6</em></p></td>
+</tr>
+<tr><td><p><em>0</em></p></td>
+<td><p><span class="red">0</span></p></td>
+<td><p>1</p></td>
+<td><p>2</p></td>
+<td><p>3</p></td>
+<td><p>4</p></td>
+<td><p>5</p></td>
+<td><p>6</p></td>
+</tr>
+<tr><td><p><em>1</em></p></td>
+<td><p>1</p></td>
+<td><p>2</p></td>
+<td><p>3</p></td>
+<td><p>4</p></td>
+<td><p>5</p></td>
+<td><p>6</p></td>
+<td><p><span class="red">0</span></p></td>
+</tr>
+<tr><td><p><em>2</em></p></td>
+<td><p>2</p></td>
+<td><p>3</p></td>
+<td><p>4</p></td>
+<td><p>5</p></td>
+<td><p>6</p></td>
+<td><p><span class="red">0</span></p></td>
+<td><p>1</p></td>
+</tr>
+<tr><td><p><em>3</em></p></td>
+<td><p>3</p></td>
+<td><p>4</p></td>
+<td><p>5</p></td>
+<td><p>6</p></td>
+<td><p><span class="red">0</span></p></td>
+<td><p>1</p></td>
+<td><p>2</p></td>
+</tr>
+<tr><td><p><em>4</em></p></td>
+<td><p>4</p></td>
+<td><p>5</p></td>
+<td><p>6</p></td>
+<td><p><span class="red">0</span></p></td>
+<td><p>1</p></td>
+<td><p>2</p></td>
+<td><p>3</p></td>
+</tr>
+<tr><td><p><em>5</em></p></td>
+<td><p>5</p></td>
+<td><p>6</p></td>
+<td><p><span class="red">0</span></p></td>
+<td><p>1</p></td>
+<td><p>2</p></td>
+<td><p>3</p></td>
+<td><p>4</p></td>
+</tr>
+<tr><td><p><em>6</em></p></td>
+<td><p>6</p></td>
+<td><p><span class="red">0</span></p></td>
+<td><p>1</p></td>
+<td><p>2</p></td>
+<td><p>3</p></td>
+<td><p>4</p></td>
+<td><p>5</p></td>
+</tr>
+</tbody>
+</table>
+</div><div class="ld-slide" id="multiplication-modulo-7">
+<h2>Multiplication modulo 7</h2>
+<table class="align-center">
+<tbody>
+<tr><td><p><span class="math">\(*\)</span></p></td>
+<td><p><em>0</em></p></td>
+<td><p><em>1</em></p></td>
+<td><p><em>2</em></p></td>
+<td><p><em>3</em></p></td>
+<td><p><em>4</em></p></td>
+<td><p><em>5</em></p></td>
+<td><p><em>6</em></p></td>
+</tr>
+<tr><td><p><em>0</em></p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+</tr>
+<tr><td><p><em>1</em></p></td>
+<td><p>0</p></td>
+<td><p><span class="red">1</span></p></td>
+<td><p>2</p></td>
+<td><p>3</p></td>
+<td><p>4</p></td>
+<td><p>5</p></td>
+<td><p>6</p></td>
+</tr>
+<tr><td><p><em>2</em></p></td>
+<td><p>0</p></td>
+<td><p>2</p></td>
+<td><p>4</p></td>
+<td><p>6</p></td>
+<td><p><span class="red">1</span></p></td>
+<td><p>3</p></td>
+<td><p>5</p></td>
+</tr>
+<tr><td><p><em>3</em></p></td>
+<td><p>0</p></td>
+<td><p>3</p></td>
+<td><p>6</p></td>
+<td><p>2</p></td>
+<td><p>5</p></td>
+<td><p><span class="red">1</span></p></td>
+<td><p>4</p></td>
+</tr>
+<tr><td><p><em>4</em></p></td>
+<td><p>0</p></td>
+<td><p>4</p></td>
+<td><p><span class="red">1</span></p></td>
+<td><p>5</p></td>
+<td><p>2</p></td>
+<td><p>6</p></td>
+<td><p>3</p></td>
+</tr>
+<tr><td><p><em>5</em></p></td>
+<td><p>0</p></td>
+<td><p>5</p></td>
+<td><p>3</p></td>
+<td><p><span class="red">1</span></p></td>
+<td><p>6</p></td>
+<td><p>4</p></td>
+<td><p>2</p></td>
+</tr>
+<tr><td><p><em>6</em></p></td>
+<td><p>0</p></td>
+<td><p>6</p></td>
+<td><p>5</p></td>
+<td><p>4</p></td>
+<td><p>3</p></td>
+<td><p>2</p></td>
+<td><p><span class="red">1</span></p></td>
+</tr>
+</tbody>
+</table>
+</div><div class="ld-slide" id="additive-and-muliplicative-inverses-modulo-7">
+<h2>Additive and muliplicative inverses modulo 7</h2>
+<table class="align-center">
+<tbody>
+<tr><td><p><span class="math">\(w\)</span></p></td>
+<td><p><span class="math">\(-w\)</span></p></td>
+<td><p><span class="math">\(w^{-1}\)</span></p></td>
+</tr>
+<tr><td><p>0</p></td>
+<td><p>0</p></td>
+<td><p><span class="math">\(-\)</span></p></td>
+</tr>
+<tr><td><p>1</p></td>
+<td><p>6</p></td>
+<td><p>1</p></td>
+</tr>
+<tr><td><p>2</p></td>
+<td><p>5</p></td>
+<td><p>4</p></td>
+</tr>
+<tr><td><p>3</p></td>
+<td><p>4</p></td>
+<td><p>5</p></td>
+</tr>
+<tr><td><p>4</p></td>
+<td><p>3</p></td>
+<td><p>2</p></td>
+</tr>
+<tr><td><p>5</p></td>
+<td><p>2</p></td>
+<td><p>3</p></td>
+</tr>
+<tr><td><p>6</p></td>
+<td><p>1</p></td>
+<td><p>6</p></td>
+</tr>
+</tbody>
+</table>
+</div><div class="ld-slide" id="finite-fields-1">
+<h2>Finite Fields</h2>
+<p>In this section, we have shown how to construct finite fields of order p where p is prim.</p>
+<p><span class="math">\(GF(p)\)</span> is defined with the following properties:</p>
+<ol class="arabic simple">
+<li><p><span class="math">\(GF(p)\)</span> consists of p elements</p></li>
+<li><p>The binary operations <span class="math">\(+\)</span> and <span class="math">\(*\)</span> are defined over the set. The operations of addition, subtraction, multiplication, and division can be performed without leaving the set. Each element of the set other than 0 has a multiplicative inverse.</p></li>
+</ol>
+<aside class="admonition incremental">
+<p class="admonition-title">Quintessence</p>
+<p>We have shown that the elements of <span class="math">\(GF(p)\)</span> are the integers <span class="math">\(\lbrace 0, 1, . . . , p – 1 \rbrace\)</span> and that the arithmetic operations are addition and multiplication mod p.</p>
+</aside>
+</div><div class="ld-slide" id="treatment-of-polynomials">
+<h2>Treatment of Polynomials</h2>
+<img alt="Treatment of Polynomials" class="align-center" src="4-treatment_of_polynomials.svg" style="width: 1600px;" />
+<p class="small">(indeterminate <span class="ger">unbestimmte</span>)</p>
+</div><div class="ld-slide" id="example-of-polynomial-arithmetic">
+<h2>Example of Polynomial Arithmetic</h2>
+<dl class="incremental field-list">
+<dt>Addition<span class="colon">:</span></dt>
+<dd><div class="math">
+\begin{equation*}
+(x^3 + x^2 + 2) + (x^2 - x + 1) = x^3 + 2x^2 - x + 3
+\end{equation*}
+</div>
+</dd>
+<dt>Subtraction<span class="colon">:</span></dt>
+<dd><div class="math">
+\begin{equation*}
+(x^3 + x^2 + 2) - (x^2 - x + 1) = x^3 + x + 1
+\end{equation*}
+</div>
+</dd>
+<dt>Multiplication<span class="colon">:</span></dt>
+<dd><div class="math">
+\begin{equation*}
+(x^3 + x^2 + 2) \times (x^2 - x + 1) =
+\end{equation*}
+</div>
+<div class="small math">
+\begin{equation*}
+\begin{matrix}   &amp; &amp; &amp; &amp; x^3 &amp; + &amp; x^2 &amp; &amp;  &amp; + &amp; 2 \\
+                 &amp; - &amp; x^4 &amp; - &amp; x^3 &amp; &amp; &amp; - &amp; 2x &amp; &amp; &amp; \\
+                 x^5 &amp; + &amp; x^4 &amp; &amp; &amp; + &amp; 2x^2 &amp; &amp; &amp; &amp; &amp;  =
+\end{matrix}
+\end{equation*}
+</div>
+<div class="math">
+\begin{equation*}
+x^{5} + 3x^2 - 2x + 2
+\end{equation*}
+</div>
+</dd>
+<dt>Division<span class="colon">:</span></dt>
+<dd><div class="math">
+\begin{equation*}
+(x^3 + x^2 + 2) : (x^2 - x + 1) = x + 2 + \left ( \frac{x}{x^2 - x + 1} \right )
+\end{equation*}
+</div>
+</dd>
+</dl>
+</div><div class="ld-slide" id="polynomial-arithmetic-with-coefficients-in-z-p">
+<h2>Polynomial Arithmetic with Coefficients in <span class="math">\(Z_p\)</span></h2>
+<ul class="incremental">
+<li><p>If each distinct polynomial is considered to be an element of the set, then that set is a ring.</p></li>
+<li><p>When polynomial arithmetic is performed on polynomials over a field, then division is possible.</p>
+<aside class="admonition admonition-note">
+<p class="admonition-title">Note</p>
+<p>This does not mean that exact division is possible.</p>
+</aside>
+</li>
+<li><p>If we attempt to perform polynomial division over a coefficient set that is not a field, we find that division is not always defined</p>
+<ul class="simple">
+<li><p>Even if the coefficient set is a field, polynomial division is not necessarily exact</p></li>
+<li><p>With the understanding that remainders are allowed, we can say that polynomial division is possible if the coefficient set is a field</p></li>
+</ul>
+</li>
+</ul>
+</div><div class="ld-slide" id="polynomial-division">
+<h2>Polynomial Division</h2>
+<ul class="incremental simple">
+<li><p>We can write any polynomial in the form: <span class="math">\(f(x) = q(x) g(x) + r(x)\)</span></p>
+<ul>
+<li><p><span class="math">\(r(x)\)</span> can be interpreted as being a remainder</p></li>
+<li><p>So <span class="math">\(r(x) = f(x)\; mod\; g(x)\)</span></p></li>
+</ul>
+</li>
+<li><p>If there is no remainder we can say <span class="math">\(g(x)\)</span> divides <span class="math">\(f(x)\)</span></p>
+<ul>
+<li><p>Written as <span class="math">\(g(x) | f(x)\)</span></p></li>
+<li><p>We can say that <span class="math">\(g(x)\)</span> is a factor of <span class="math">\(f(x)\)</span></p></li>
+<li><p>Or <span class="math">\(g(x)\)</span> is a divisor of <span class="math">\(f(x)\)</span></p></li>
+</ul>
+</li>
+<li><p>A polynomial <span class="math">\(f(x)\)</span> over a field <span class="math">\(F\)</span> is called irreducible if and only if <span class="math">\(f(x)\)</span> cannot be expressed as a product of two polynomials, both over <span class="math">\(F\)</span>, and both of degree lower than that of <span class="math">\(f(x)\)</span>.</p>
+<ul>
+<li><p>An irreducible polynomial is also called a prime polynomial.</p></li>
+</ul>
+</li>
+</ul>
+</div><div class="ld-slide" id="example-of-polynomial-arithmetic-over-gf-2">
+<h2>Example of Polynomial Arithmetic Over GF(2)</h2>
+<dl class="incremental field-list">
+<dt>Addition<span class="colon">:</span></dt>
+<dd><div class="math">
+\begin{equation*}
+(x^7 + x^5 + x^4 + x^3 + x + 1) + (x^3 + x + 1) = x^7 + x^5 + x^4
+\end{equation*}
+</div>
+</dd>
+<dt>Subtraction<span class="colon">:</span></dt>
+<dd><div class="math">
+\begin{equation*}
+(x^7 + x^5 + x^4 + x^3 + x + 1) - (x^3 + x + 1) = x^7 + x^5 + x^4
+\end{equation*}
+</div>
+</dd>
+<dt>Multiplication<span class="colon">:</span></dt>
+<dd><div class="math">
+\begin{equation*}
+(x^7 + x^5 + x^4 + x^3 + x + 1) \times (x^3 + x + 1) =
+\end{equation*}
+</div>
+<div class="small math">
+\begin{equation*}
+\begin{matrix} &amp; &amp; &amp; &amp; &amp; &amp; x^7 &amp; + &amp; &amp; &amp; x^5 &amp; +&amp;  x^4 &amp; + &amp; x^3 &amp; + &amp; &amp; &amp; x &amp; + &amp; 1 \\
+                &amp; &amp; &amp; &amp; x^8 &amp; + &amp; &amp; &amp; x^6 &amp; + &amp; x^5 &amp; + &amp; x^4 &amp;+ &amp; &amp; &amp; x^2 &amp; + &amp; x &amp;  &amp; &amp; \\
+                x^{10} &amp; + &amp; &amp; &amp; x^8 &amp; + &amp; x^7 &amp; + &amp; x^6 &amp; + &amp; &amp; &amp; x^4 &amp; + &amp; x^3 &amp; &amp; &amp; &amp; &amp; &amp; &amp;  =
+\end{matrix}
+\end{equation*}
+</div>
+<div class="math">
+\begin{equation*}
+x^{10} + x^4 +x^2 +1
+\end{equation*}
+</div>
+</dd>
+<dt>Division<span class="colon">:</span></dt>
+<dd><div class="math">
+\begin{equation*}
+(x^7 + x^5 + x^4 + x^3 + x + 1) : (x^3 + x + 1) = x^4 + 1
+\end{equation*}
+</div>
+</dd>
+</dl>
+</div><div class="ld-slide" id="polynomial-gcd">
+<h2>Polynomial GCD</h2>
+<ul class="incremental simple">
+<li><p>The polynomial <span class="math">\(c(x)\)</span> is said to be the greatest common divisor of <span class="math">\(a(x)\)</span> and <span class="math">\(b(x)\)</span> if the following are true:</p>
+<ul>
+<li><p><span class="math">\(c(x)\)</span> divides both <span class="math">\(a(x)\)</span> and <span class="math">\(b(x)\)</span></p></li>
+<li><p>Any divisor of <span class="math">\(a(x)\)</span> and <span class="math">\(b(x)\)</span> is a divisor of <span class="math">\(c(x)\)</span></p></li>
+</ul>
+</li>
+<li><p>An equivalent definition is:</p>
+<ul>
+<li><p><span class="math">\(gcd[a(x), b(x)]\)</span> is the polynomial of maximum degree that divides both <span class="math">\(a(x)\)</span> and <span class="math">\(b(x)\)</span></p></li>
+</ul>
+</li>
+<li><p>The Euclidean algorithm can be extended to find the greatest common divisor of two polynomials whose coefficients are elements of a field</p></li>
+</ul>
+</div><div class="ld-slide" id="arithmetic-in-gf-2-3-addition">
+<h2>Arithmetic in <span class="math">\(GF(2^3)\)</span>: Addition</h2>
+<table class="align-center">
+<tbody>
+<tr><td></td>
+<td></td>
+<td><p><em>000</em></p></td>
+<td><p><em>001</em></p></td>
+<td><p><em>010</em></p></td>
+<td><p><em>011</em></p></td>
+<td><p><em>100</em></p></td>
+<td><p><em>101</em></p></td>
+<td><p><em>110</em></p></td>
+<td><p><em>111</em></p></td>
+</tr>
+<tr><td></td>
+<td><p><span class="math">\(+\)</span></p></td>
+<td><p><em>0</em></p></td>
+<td><p><em>1</em></p></td>
+<td><p><em>2</em></p></td>
+<td><p><em>3</em></p></td>
+<td><p><em>4</em></p></td>
+<td><p><em>5</em></p></td>
+<td><p><em>6</em></p></td>
+<td><p><em>7</em></p></td>
+</tr>
+<tr><td><p><em>000</em></p></td>
+<td><p><em>0</em></p></td>
+<td><p><span class="red">0</span></p></td>
+<td><p>1</p></td>
+<td><p>2</p></td>
+<td><p>3</p></td>
+<td><p>4</p></td>
+<td><p>5</p></td>
+<td><p>6</p></td>
+<td><p>7</p></td>
+</tr>
+<tr><td><p><em>001</em></p></td>
+<td><p><em>1</em></p></td>
+<td><p>1</p></td>
+<td><p><span class="red">0</span></p></td>
+<td><p>3</p></td>
+<td><p>2</p></td>
+<td><p>5</p></td>
+<td><p>4</p></td>
+<td><p>7</p></td>
+<td><p>6</p></td>
+</tr>
+<tr><td><p><em>010</em></p></td>
+<td><p><em>2</em></p></td>
+<td><p>2</p></td>
+<td><p>3</p></td>
+<td><p><span class="red">0</span></p></td>
+<td><p>1</p></td>
+<td><p>6</p></td>
+<td><p>7</p></td>
+<td><p>4</p></td>
+<td><p>5</p></td>
+</tr>
+<tr><td><p><em>011</em></p></td>
+<td><p><em>3</em></p></td>
+<td><p>3</p></td>
+<td><p>2</p></td>
+<td><p>1</p></td>
+<td><p><span class="red">0</span></p></td>
+<td><p>7</p></td>
+<td><p>6</p></td>
+<td><p>5</p></td>
+<td><p>4</p></td>
+</tr>
+<tr><td><p><em>100</em></p></td>
+<td><p><em>4</em></p></td>
+<td><p>4</p></td>
+<td><p>5</p></td>
+<td><p>6</p></td>
+<td><p>7</p></td>
+<td><p><span class="red">0</span></p></td>
+<td><p>1</p></td>
+<td><p>2</p></td>
+<td><p>3</p></td>
+</tr>
+<tr><td><p><em>101</em></p></td>
+<td><p><em>5</em></p></td>
+<td><p>5</p></td>
+<td><p>4</p></td>
+<td><p>7</p></td>
+<td><p>6</p></td>
+<td><p>1</p></td>
+<td><p><span class="red">0</span></p></td>
+<td><p>3</p></td>
+<td><p>2</p></td>
+</tr>
+<tr><td><p><em>110</em></p></td>
+<td><p><em>6</em></p></td>
+<td><p>6</p></td>
+<td><p>7</p></td>
+<td><p>4</p></td>
+<td><p>5</p></td>
+<td><p>2</p></td>
+<td><p>3</p></td>
+<td><p><span class="red">0</span></p></td>
+<td><p>1</p></td>
+</tr>
+<tr><td><p><em>111</em></p></td>
+<td><p><em>7</em></p></td>
+<td><p>7</p></td>
+<td><p>6</p></td>
+<td><p>5</p></td>
+<td><p>4</p></td>
+<td><p>3</p></td>
+<td><p>2</p></td>
+<td><p>1</p></td>
+<td><p><span class="red">0</span></p></td>
+</tr>
+</tbody>
+</table>
+</div><div class="ld-slide" id="arithmetic-in-gf-2-3-multiplication">
+<h2>Arithmetic in <span class="math">\(GF(2^3)\)</span>: Multiplication</h2>
+<table class="align-center">
+<tbody>
+<tr><td></td>
+<td></td>
+<td><p><em>000</em></p></td>
+<td><p><em>001</em></p></td>
+<td><p><em>010</em></p></td>
+<td><p><em>011</em></p></td>
+<td><p><em>100</em></p></td>
+<td><p><em>101</em></p></td>
+<td><p><em>110</em></p></td>
+<td><p><em>111</em></p></td>
+</tr>
+<tr><td></td>
+<td><p><span class="math">\(\times\)</span></p></td>
+<td><p><em>0</em></p></td>
+<td><p><em>1</em></p></td>
+<td><p><em>2</em></p></td>
+<td><p><em>3</em></p></td>
+<td><p><em>4</em></p></td>
+<td><p><em>5</em></p></td>
+<td><p><em>6</em></p></td>
+<td><p><em>7</em></p></td>
+</tr>
+<tr><td><p><em>000</em></p></td>
+<td><p><em>0</em></p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+</tr>
+<tr><td><p><em>001</em></p></td>
+<td><p><em>1</em></p></td>
+<td><p>0</p></td>
+<td><p><span class="red">1</span></p></td>
+<td><p>2</p></td>
+<td><p>3</p></td>
+<td><p>4</p></td>
+<td><p>5</p></td>
+<td><p>6</p></td>
+<td><p>7</p></td>
+</tr>
+<tr><td><p><em>010</em></p></td>
+<td><p><em>2</em></p></td>
+<td><p>0</p></td>
+<td><p>2</p></td>
+<td><p>4</p></td>
+<td><p>6</p></td>
+<td><p>3</p></td>
+<td><p><span class="red">1</span></p></td>
+<td><p>7</p></td>
+<td><p>5</p></td>
+</tr>
+<tr><td><p><em>011</em></p></td>
+<td><p><em>3</em></p></td>
+<td><p>0</p></td>
+<td><p>3</p></td>
+<td><p>6</p></td>
+<td><p>5</p></td>
+<td><p>7</p></td>
+<td><p>4</p></td>
+<td><p><span class="red">1</span></p></td>
+<td><p>2</p></td>
+</tr>
+<tr><td><p><em>100</em></p></td>
+<td><p><em>4</em></p></td>
+<td><p>0</p></td>
+<td><p>4</p></td>
+<td><p>3</p></td>
+<td><p>7</p></td>
+<td><p>6</p></td>
+<td><p>2</p></td>
+<td><p>5</p></td>
+<td><p><span class="red">1</span></p></td>
+</tr>
+<tr><td><p><em>101</em></p></td>
+<td><p><em>5</em></p></td>
+<td><p>0</p></td>
+<td><p>5</p></td>
+<td><p><span class="red">1</span></p></td>
+<td><p>4</p></td>
+<td><p>2</p></td>
+<td><p>7</p></td>
+<td><p>3</p></td>
+<td><p>6</p></td>
+</tr>
+<tr><td><p><em>110</em></p></td>
+<td><p><em>6</em></p></td>
+<td><p>0</p></td>
+<td><p>6</p></td>
+<td><p>7</p></td>
+<td><p><span class="red">1</span></p></td>
+<td><p>5</p></td>
+<td><p>3</p></td>
+<td><p>2</p></td>
+<td><p>4</p></td>
+</tr>
+<tr><td><p><em>111</em></p></td>
+<td><p><em>7</em></p></td>
+<td><p>0</p></td>
+<td><p>7</p></td>
+<td><p>5</p></td>
+<td><p>2</p></td>
+<td><p><span class="red">1</span></p></td>
+<td><p>6</p></td>
+<td><p>4</p></td>
+<td><p>3</p></td>
+</tr>
+</tbody>
+</table>
+</div><div class="ld-slide" id="arithmetic-in-gf-2-3-additive-and-multiplicative-inverses">
+<h2>Arithmetic in <span class="math">\(GF(2^3)\)</span>: Additive and Multiplicative Inverses</h2>
+<table class="align-center">
+<tbody>
+<tr><td><p><span class="math">\(w\)</span></p></td>
+<td><p><span class="math">\(-w\)</span></p></td>
+<td><p><span class="math">\(w^{-1}\)</span></p></td>
+</tr>
+<tr><td><p>0</p></td>
+<td><p>0</p></td>
+<td><p><span class="math">\(-\)</span></p></td>
+</tr>
+<tr><td><p>1</p></td>
+<td><p>1</p></td>
+<td><p>1</p></td>
+</tr>
+<tr><td><p>2</p></td>
+<td><p>2</p></td>
+<td><p>5</p></td>
+</tr>
+<tr><td><p>3</p></td>
+<td><p>3</p></td>
+<td><p>6</p></td>
+</tr>
+<tr><td><p>4</p></td>
+<td><p>4</p></td>
+<td><p>7</p></td>
+</tr>
+<tr><td><p>5</p></td>
+<td><p>5</p></td>
+<td><p>2</p></td>
+</tr>
+<tr><td><p>6</p></td>
+<td><p>6</p></td>
+<td><p>3</p></td>
+</tr>
+<tr><td><p>7</p></td>
+<td><p>7</p></td>
+<td><p>4</p></td>
+</tr>
+</tbody>
+</table>
+</div><div class="ld-slide" id="polynomial-arithmetic-modulo-x-3-x-1-addition">
+<h2>Polynomial Arithmetic Modulo <span class="math">\((x^3 + x + 1)\)</span> - Addition</h2>
+<table class="align-center small">
+<tbody>
+<tr><td></td>
+<td></td>
+<td><p><em>000</em></p></td>
+<td><p><em>001</em></p></td>
+<td><p><em>010</em></p></td>
+<td><p><em>011</em></p></td>
+<td><p><em>100</em></p></td>
+<td><p><em>101</em></p></td>
+<td><p><em>110</em></p></td>
+<td><p><em>111</em></p></td>
+</tr>
+<tr><td></td>
+<td><p><span class="math">\(+\)</span></p></td>
+<td><p><em>0</em></p></td>
+<td><p><em>1</em></p></td>
+<td><p><span class="math">\(x\)</span></p></td>
+<td><p><span class="math">\(x+1\)</span></p></td>
+<td><p><span class="math">\(x^2\)</span></p></td>
+<td><p><span class="math">\(x^2+1\)</span></p></td>
+<td><p><span class="math">\(x^2+x\)</span></p></td>
+<td><p><span class="math">\(x^2+x+1\)</span></p></td>
+</tr>
+<tr><td><p><em>000</em></p></td>
+<td><p><em>0</em></p></td>
+<td><p><span class="red">0</span></p></td>
+<td><p>1</p></td>
+<td><p>x</p></td>
+<td><p><span class="math">\(x+1\)</span></p></td>
+<td><p><span class="math">\(x^2\)</span></p></td>
+<td><p><span class="math">\(x^2 + 1\)</span></p></td>
+<td><p><span class="math">\(x^2 + x\)</span></p></td>
+<td><p><span class="math">\(x^2 + x + 1\)</span></p></td>
+</tr>
+<tr><td><p><em>001</em></p></td>
+<td><p><em>1</em></p></td>
+<td><p>1</p></td>
+<td><p><span class="red">0</span></p></td>
+<td><p><span class="math">\(x+1\)</span></p></td>
+<td><p>x</p></td>
+<td><p><span class="math">\(x^2 + 1\)</span></p></td>
+<td><p><span class="math">\(x^2\)</span></p></td>
+<td><p><span class="math">\(x^2 + x + 1\)</span></p></td>
+<td><p><span class="math">\(x^2 + x\)</span></p></td>
+</tr>
+<tr><td><p><em>010</em></p></td>
+<td><p><span class="math">\(x\)</span></p></td>
+<td><p>x</p></td>
+<td><p><span class="math">\(x+1\)</span></p></td>
+<td><p><span class="red">0</span></p></td>
+<td><p>1</p></td>
+<td><p><span class="math">\(x^2 + x\)</span></p></td>
+<td><p><span class="math">\(x^2 + x + 1\)</span></p></td>
+<td><p><span class="math">\(x^2\)</span></p></td>
+<td><p><span class="math">\(x^2 + 1\)</span></p></td>
+</tr>
+<tr><td><p><em>011</em></p></td>
+<td><p><span class="math">\(x+1\)</span></p></td>
+<td><p><span class="math">\(x+1\)</span></p></td>
+<td><p>x</p></td>
+<td><p>1</p></td>
+<td><p><span class="red">0</span></p></td>
+<td><p><span class="math">\(x^2 + x + 1\)</span></p></td>
+<td><p><span class="math">\(x^2 + x\)</span></p></td>
+<td><p><span class="math">\(x^2 + 1\)</span></p></td>
+<td><p><span class="math">\(x^2\)</span></p></td>
+</tr>
+<tr><td><p><em>100</em></p></td>
+<td><p><span class="math">\(x^2\)</span></p></td>
+<td><p><span class="math">\(x^2\)</span></p></td>
+<td><p><span class="math">\(x^2 + 1\)</span></p></td>
+<td><p><span class="math">\(x^2 + x\)</span></p></td>
+<td><p><span class="math">\(x^2 + x + 1\)</span></p></td>
+<td><p><span class="red">0</span></p></td>
+<td><p>1</p></td>
+<td><p>x</p></td>
+<td><p><span class="math">\(x+1\)</span></p></td>
+</tr>
+<tr><td><p><em>101</em></p></td>
+<td><p><span class="math">\(x^2+1\)</span></p></td>
+<td><p><span class="math">\(x^2 + 1\)</span></p></td>
+<td><p><span class="math">\(x^2\)</span></p></td>
+<td><p><span class="math">\(x^2 + x + 1\)</span></p></td>
+<td><p><span class="math">\(x^2 + x\)</span></p></td>
+<td><p>1</p></td>
+<td><p><span class="red">0</span></p></td>
+<td><p><span class="math">\(x+1\)</span></p></td>
+<td><p>x</p></td>
+</tr>
+<tr><td><p><em>110</em></p></td>
+<td><p><span class="math">\(x^2+x\)</span></p></td>
+<td><p><span class="math">\(x^2 + x\)</span></p></td>
+<td><p><span class="math">\(x^2 + x + 1\)</span></p></td>
+<td><p><span class="math">\(x^2\)</span></p></td>
+<td><p><span class="math">\(x^2 + 1\)</span></p></td>
+<td><p>x</p></td>
+<td><p><span class="math">\(x+1\)</span></p></td>
+<td><p><span class="red">0</span></p></td>
+<td><p>1</p></td>
+</tr>
+<tr><td><p><em>111</em></p></td>
+<td><p><span class="math">\(x^2+x+1\)</span></p></td>
+<td><p><span class="math">\(x^2 + x + 1\)</span></p></td>
+<td><p><span class="math">\(x^2 + x\)</span></p></td>
+<td><p><span class="math">\(x^2 + 1\)</span></p></td>
+<td><p><span class="math">\(x^2\)</span></p></td>
+<td><p><span class="math">\(x+1\)</span></p></td>
+<td><p>x</p></td>
+<td><p>1</p></td>
+<td><p><span class="red">0</span></p></td>
+</tr>
+</tbody>
+</table>
+</div><div class="ld-slide" id="arithmetic-in-gf-2-3-multiplication-multipication">
+<h2>Arithmetic in <span class="math">\(GF(2^3)\)</span>: Multiplication - Multipication</h2>
+<table class="align-center small">
+<tbody>
+<tr><td></td>
+<td></td>
+<td><p><em>000</em></p></td>
+<td><p><em>001</em></p></td>
+<td><p><em>010</em></p></td>
+<td><p><em>011</em></p></td>
+<td><p><em>100</em></p></td>
+<td><p><em>101</em></p></td>
+<td><p><em>110</em></p></td>
+<td><p><em>111</em></p></td>
+</tr>
+<tr><td></td>
+<td><p><span class="math">\(\times\)</span></p></td>
+<td><p><em>0</em></p></td>
+<td><p><em>1</em></p></td>
+<td><p><span class="math">\(x\)</span></p></td>
+<td><p><span class="math">\(x+1\)</span></p></td>
+<td><p><span class="math">\(x^2\)</span></p></td>
+<td><p><span class="math">\(x^2+1\)</span></p></td>
+<td><p><span class="math">\(x^2+x\)</span></p></td>
+<td><p><span class="math">\(x^2+x+1\)</span></p></td>
+</tr>
+<tr><td><p><em>000</em></p></td>
+<td><p><em>0</em></p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+</tr>
+<tr><td><p><em>001</em></p></td>
+<td><p><em>1</em></p></td>
+<td><p>0</p></td>
+<td><p><span class="red">1</span></p></td>
+<td><p><span class="math">\(x\)</span></p></td>
+<td><p><span class="math">\(x+1\)</span></p></td>
+<td><p><span class="math">\(x^2\)</span></p></td>
+<td><p><span class="math">\(x^2 + 1\)</span></p></td>
+<td><p><span class="math">\(x^2 + x\)</span></p></td>
+<td><p><span class="math">\(x^2 + x + 1\)</span></p></td>
+</tr>
+<tr><td><p><em>010</em></p></td>
+<td><p><span class="math">\(x\)</span></p></td>
+<td><p>0</p></td>
+<td><p><span class="math">\(x\)</span></p></td>
+<td><p><span class="math">\(x^2\)</span></p></td>
+<td><p><span class="math">\(x^2 + x\)</span></p></td>
+<td><p><span class="math">\(x+1\)</span></p></td>
+<td><p><span class="red">1</span></p></td>
+<td><p><span class="math">\(x^2 + x + 1\)</span></p></td>
+<td><p><span class="math">\(x^2 + 1\)</span></p></td>
+</tr>
+<tr><td><p><em>011</em></p></td>
+<td><p><span class="math">\(x+1\)</span></p></td>
+<td><p>0</p></td>
+<td><p><span class="math">\(x+1\)</span></p></td>
+<td><p><span class="math">\(x^2 + x\)</span></p></td>
+<td><p><span class="math">\(x^2 + 1\)</span></p></td>
+<td><p><span class="math">\(x^2 + x + 1\)</span></p></td>
+<td><p><span class="math">\(x^2\)</span></p></td>
+<td><p><span class="red">1</span></p></td>
+<td><p>2</p></td>
+</tr>
+<tr><td><p><em>100</em></p></td>
+<td><p><span class="math">\(x^2\)</span></p></td>
+<td><p>0</p></td>
+<td><p><span class="math">\(x^2\)</span></p></td>
+<td><p><span class="math">\(x+1\)</span></p></td>
+<td><p><span class="math">\(x^2 + x + 1\)</span></p></td>
+<td><p><span class="math">\(x^2 + x\)</span></p></td>
+<td><p><span class="math">\(x\)</span></p></td>
+<td><p><span class="math">\(x^2 + 1\)</span></p></td>
+<td><p><span class="red">1</span></p></td>
+</tr>
+<tr><td><p><em>101</em></p></td>
+<td><p><span class="math">\(x^2+1\)</span></p></td>
+<td><p>0</p></td>
+<td><p><span class="math">\(x^2 + 1\)</span></p></td>
+<td><p><span class="red">1</span></p></td>
+<td><p><span class="math">\(x^2\)</span></p></td>
+<td><p><span class="math">\(x\)</span></p></td>
+<td><p><span class="math">\(x^2 + x + 1\)</span></p></td>
+<td><p><span class="math">\(x+1\)</span></p></td>
+<td><p><span class="math">\(x^2 + x\)</span></p></td>
+</tr>
+<tr><td><p><em>110</em></p></td>
+<td><p><span class="math">\(x^2+x\)</span></p></td>
+<td><p>0</p></td>
+<td><p><span class="math">\(x^2 + x\)</span></p></td>
+<td><p><span class="math">\(x^2 + x + 1\)</span></p></td>
+<td><p><span class="red">1</span></p></td>
+<td><p><span class="math">\(x^2 + 1\)</span></p></td>
+<td><p><span class="math">\(x+1\)</span></p></td>
+<td><p><span class="math">\(x\)</span></p></td>
+<td><p><span class="math">\(x^2\)</span></p></td>
+</tr>
+<tr><td><p><em>111</em></p></td>
+<td><p><span class="math">\(x^2+x+1\)</span></p></td>
+<td><p>0</p></td>
+<td><p><span class="math">\(x^2 + x + 1\)</span></p></td>
+<td><p><span class="math">\(x^2 + 1\)</span></p></td>
+<td><p><span class="math">\(x\)</span></p></td>
+<td><p><span class="red">1</span></p></td>
+<td><p><span class="math">\(x^2 + x\)</span></p></td>
+<td><p><span class="math">\(x^2\)</span></p></td>
+<td><p><span class="math">\(x+1\)</span></p></td>
+</tr>
+</tbody>
+</table>
+<!-- replacements, e.g., 5 == x^2+1 -->
+</div><div class="ld-slide" id="computational-considerations">
+<h2>Computational Considerations</h2>
+<ul>
+<li><p>Since coefficients are 0 or 1, they can represent any such polynomial as a bit string</p>
+<ul>
+<li><p>Addition becomes XOR of these bit strings</p></li>
+<li><p>Multiplication is shift and XOR</p>
+<p>(cf long-hand multiplication)</p>
+</li>
+</ul>
+</li>
+<li><p>Modulo reduction is done by repeatedly substituting highest power with remainder of irreducible polynomial (also shift and XOR)</p></li>
+</ul>
 </div>
 </body>
 </html>
