@@ -305,7 +305,7 @@ Decryption is more complicated when the plaintext is already garble. E.g., as in
 
 .. csv-table:: 
     :delim: space
-    :class: hexdump
+    :class: small hexdump
 
     00000000: 504b 0304 1400 0800 0800 afb1 4257 0000 PK..........BW..
     00000010: 0000 0000 0000 4f04 0000 0a00 2000 322d ......O....._.2-
