@@ -30,7 +30,7 @@ This lecture is based on the book:
 2. `Classical Encryption Techniques <2-classical_encryption_techniques.rst.html>`__
 3. `Block Ciphers and the Data Encryption Standard <3-block_ciphers.rst.html>`__
 4. `Finite Fields <4-finite_fields.rst.html>`__
-5. Advanced Encryption Standard (AES)
+5. `Advanced Encryption Standard (AES) <5-aes.rst.html>`__
 6. Block Cipher Operation
 7. Random Bit Generation and Stream Ciphers
 8. Public-Key Cryptography and RSA
