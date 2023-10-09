@@ -335,7 +335,6 @@ Polynomial Arithmetic with Coefficients in :math:`Z_p`
 
 .. class:: incremental 
     
-    
 
     • If each distinct polynomial is considered to be an element of the set, then that set is a ring.
     • When polynomial arithmetic is performed on polynomials over a field, then division is possible.
@@ -372,6 +371,10 @@ Polynomial Division
     • A polynomial :math:`f(x)` over a field :math:`F` is called irreducible if and only if :math:`f(x)` cannot be expressed as a product of two polynomials, both over :math:`F`, and both of degree lower than that of :math:`f(x)`.
 
       • An irreducible polynomial is also called a prime polynomial.
+    
+    • Polynomial divsion can be defined in terms of multiplication if :math:`a,b \in F` then :math:`a/b = a \times b^{-1}` where :math:`b^{-1}` is the unique field element such that :math:`bb^{-1} = 1`. 
+    
+      .. TODO: check if the above statement is only true if the field is defined over a prime!
 
 
 
@@ -448,6 +451,11 @@ Arithmetic in :math:`GF(2^3)`: Addition
     *110*,  *6*, 6, 7, 4, 5, 2, 3, :red:`0`, 1
     *111*,  *7*, 7, 6, 5, 4, 3, 2, 1, :red:`0`
 
+.. admonition:: Recall
+    :class: small 
+        
+
+    Subtraction of two field elements can be defined in terms of addition, if :math:`a, b \in F` then :math:`a − b = a + (-b)` , where :math:`−b` is the unique field element in :math:`F` such that :math:`b + (−b) = 0` (:math:`−b` is called the negative of :math:`b`).
 
 Arithmetic in :math:`GF(2^3)`: Multiplication
 ---------------------------------------------
@@ -503,8 +511,8 @@ Polynomial Arithmetic Modulo :math:`(x^3 + x + 1)` - Addition
     *111*,  :math:`x^2+x+1`, :math:`x^2 + x + 1`, :math:`x^2 + x`, :math:`x^2 + 1`, :math:`x^2`, :math:`x+1`, x, 1, :red:`0` 
 
 
-Arithmetic in :math:`GF(2^3)`: Multiplication - Multipication
---------------------------------------------------------------
+Arithmetic in :math:`GF(2^3)`: Multiplication - Modulo :math:`(x^3 + x + 1)`
+-----------------------------------------------------------------------------
 
 .. csv-table:: 
     :class: small

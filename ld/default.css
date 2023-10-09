@@ -51,6 +51,9 @@ blockquote {
 .admonition.note {
     float: right;
     background-color: rgb(255, 255, 203);
+    margin-top: 0;
+    margin-bottom: 0;
+    margin-left: 24px;
     max-width: 40%;
 }
 
@@ -122,6 +125,16 @@ span.ger::before {
 }
 span.ger::after { 
     content: ")";
+}
+
+span.red {
+    color: rgb(131, 0, 0);
+}
+span.blue {
+    color: rgb(0, 0, 155);
+}
+span.green {
+    color: rgb(0, 88, 0);
 }
 
 
