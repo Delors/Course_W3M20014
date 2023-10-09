@@ -26,12 +26,12 @@ Feistel Cipher
    
    - encrypt and decrypt messages
    - encrypt blocks of 128 bits
-   - easily exchange the function `f` to test the effect of `f`` (depending on the language of your choice you can, e.g, use native higher order functions or a function pointer)
-   - you can use one function that produces the round keys by simply shifting the key
+   - easily exchange the function :math:`f` to test the effect of :math:`f` (depending on the language of your choice you can, e.g, use native higher order functions or a function pointer)
+   - you can use a function that produces the round keys by simply shifting the key
   
     .. note::
 
-        Don't worry about messages that are larger or smaller than the block size. This is not necessary to understand the impact of f or using a round key. Don't worry about a key that does not have the appropriate size.
+        Don't worry about messages that are larger or smaller than the block size. This is not necessary to understand the impact of :math:`f` or using a round key. Don't worry about a key that does not have the appropriate size.
 
     .. note::
 
