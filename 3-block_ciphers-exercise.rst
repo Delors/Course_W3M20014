@@ -31,7 +31,7 @@ Feistel Cipher
   
     .. note::
 
-        Don't worry about messages that are larger or smaller than the block size. This is not necessary to understand the impact of :math:`f` or using a round key. Don't worry about a key that does not have the appropriate size.
+        Don't worry about messages that are larger or smaller than the block size. This is not necessary to understand the impact of :math:`f` or using a round key. Don't worry about a key that does not have the appropriate size. I.e., use a message and a key with the appropriate size.
 
     .. note::
 

@@ -1,19 +1,15 @@
 .. meta:: 
     :author: Michael Eichberg
-    :keywords: Block Ciphers
-    :description lang=en: Block Ciphers
-    :description lang=de: Blockverschlüsselung
-    :id: 2023_10-W3M20014-block_ciphers-exercise
+    :keywords: number theory, exercise
+    :id: 2023_10-W3M20014-introduction_to_number_theory
 
 .. |date| date::
 
 IT-Security Cryptography and Secure Communications
 ==================================================
 
-**Exercise: Introduction to Number Theory**
-
-
-:Lecturer: **Prof. Dr. Michael Eichberg**
+:Exercise: **Introduction to Number Theory**
+:Lecturer: *Prof. Dr. Michael Eichberg*
 :Version: |date|
 
 
@@ -49,7 +45,7 @@ IT-Security Cryptography and Secure Communications
 
     .. 
         Solution
-        
+
         .. csv-table::
             :header: step, a,b,q,r
 
@@ -71,7 +67,6 @@ IT-Security Cryptography and Secure Communications
 
 5. Convince yourself that Fermat's (little) theorem holds. E.g., for the numbers: :math:`a = 9, p = 7`.
 
-    
     ..  
         Solution: :math:`9^6\, mod\, 7 = 531441\, mod\, 7 = 1` 
 

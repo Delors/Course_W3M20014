@@ -99,8 +99,8 @@ Cryptographic Systems can be Characterized along three independent dimensions.
 
    2. The number of keys used.
     
-      - Symmetric, single-key, secret-key, conventional encryption
-      - Asymmetric, two-key or public-key encryption
+      :Symmetric: single-key, secret-key, conventional encryption
+      :Asymmetric: two-key or public-key encryption
   
    3. The way in which the plaintext is processed.
    
@@ -132,16 +132,22 @@ Classification of Attacks
 
 :*Type of Attack*:  *<Known to Cryptanalyst>*
 
-:Ciphertext Only:
-    - encryption algorithm
-    - ciphertext
+.. container:: incremental
 
-:Known Plaintext:
-    - encryption algorithm
-    - ciphertext
-    - one or more plaintext-ciphertext pairs formed with the secret key
+    :Ciphertext Only:
+        - encryption algorithm
+        - ciphertext
 
-:Chosen Plaintext:
+.. container:: incremental
+
+    :Known Plaintext:
+      - encryption algorithm
+      - ciphertext
+      - one or more plaintext-ciphertext pairs formed with the secret key
+
+.. container:: incremental
+
+  :Chosen Plaintext:
     - encryption algorithm
     - ciphertext
     - plaintext message chosen by cryptanalyst, together with its ciphertext generated with the secret key
@@ -151,16 +157,17 @@ Classification of Attacks
 Classification of Attacks
 --------------------------
 
-:*Type of Attack*:  *<Known to Cryptanalyst>*
+.. container:: incremental
 
-
-:Chosen Chiphertext:
+  :Chosen Chiphertext:
 
     - encryption algorithm
     - ciphertext
     - ciphertext chosen by cryptanalyst, together with its corresponding decrypted plaintext generated with the secret key
 
-:Chosen Text:
+.. container:: incremental
+
+  :Chosen Text:
     - encryption algorithm
     - ciphertext
     - plaintext message chosen by cryptanalyst, together with its corresponding ciphertext generated with the secret key
@@ -298,8 +305,8 @@ Brute-Force Cryptanalysis of Caesar Cipher
     25 QIIX QI EJXIV XLI XSKE TEVXC
 
 
-Caesar Cipher Algorithm
------------------------
+Brute-Force Cryptanalysis (of Caesar Cipher)
+---------------------------------------------
 
 Decryption is more complicated when the plaintext is already garble. E.g., as in case of a compressed file as seen below.
 
@@ -334,10 +341,10 @@ Monoalphabetic Cipher
 
 .. class:: incremental
 
-  - If the “cipher” line can be any permutation of the 26 alphabetic characters, then there are 26! or greater than 4 x 1026 possible keys
+  - If the “cipher” line can be any permutation of the 26 alphabetic characters, then there are 26! or greater than :math:`4 \times 10^{26}` possible keys.
 
     - This is 10 orders of magnitude greater than the key space for DES
-    - Approach is referred to as a monoalphabetic substitution cipher because a single cipher alphabet is used per message
+    - Approach is referred to as a monoalphabetic substitution cipher because a single cipher alphabet is used per message.
 
 
 English Letter Frequency
@@ -345,6 +352,7 @@ English Letter Frequency
 
 .. image:: 2-english_letter_frequency.svg
     :width: 1200px
+    :align: center
     :alt: English letter frequency (alphabetic)
 
 
@@ -555,6 +563,7 @@ One-Time Pad
   - Key is used to encrypt and decrypt a single message and then is discarded
   - Each new message requires a new key of the same length as the new message
   - Scheme is unbreakable
+  
     - Produces random output that bears no statistical relationship to the plaintext
     - Because the ciphertext contains no information whatsoever about the plaintext, there is simply no way to break the code
 
