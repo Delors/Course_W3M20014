@@ -31,9 +31,8 @@ This lecture is based on the book:
 3. `Block Ciphers and the Data Encryption Standard <3-block_ciphers.rst.html>`__
 4. `Finite Fields <4-finite_fields.rst.html>`__
 5. `Advanced Encryption Standard (AES) <5-aes.rst.html>`__
-6. Block Cipher Operation
-7. Random Bit Generation and Stream Ciphers
-8. Public-Key Cryptography and RSA
-9. Other Public-Key Cryptosystems
-10. Cryptographic Hash Functions
+6. `Block Cipher Operations <6-block_cipher_operations.rst.html>`__
+7. `Random Bit Generation and Stream Ciphers <7-stream_ciphers.rst.html>`__
+8. `Public-Key Cryptography and RSA <8-public_key_cryptography.rst.html>`__
+9. `Cryptographic Hash Functions <9-hash_functions.rst.html>`__
 

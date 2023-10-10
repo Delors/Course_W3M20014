@@ -5,9 +5,13 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta name="version" content="LD2 0.1" />
 <meta content="Michael Eichberg" name="author" />
-<meta content="Cryptography" name="keywords" />
-<meta content="IT-Security Cryptography and Secure Communications" lang="en" name="description" xml:lang="en" />
-<title>IT-Security Cryptography and Secure Communications</title>
+<meta content="Block Cipher Operation" name="keywords" />
+<meta content="Block Cipher Operations" lang="en" name="description" xml:lang="en" />
+<meta content="Betriebsmodi bei Blockchiffren" lang="de" name="description" xml:lang="de" />
+<meta content="2023_10-W3M20014-block_cipher_operations" name="id" />
+<meta content="last-viewed" name="first-slide" />
+<title>Block Cipher Operations</title>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@3.0.1/es5/tex-mml-chtml.js?config=TeX-AMS_CHTML"></script>
 <link rel="stylesheet" href="ld/normalize.css" type="text/css" />
 <style type="text/css">
 
@@ -613,40 +617,41 @@ a { text-decoration: none; }
 </head>
 <body>
 <div class="ld-slide" id="slide0">
-<h1 class="title">IT-Security Cryptography and Secure Communications</h1>
-
-<p><strong>Prof. Dr. Michael Eichberg</strong></p>
-<dl class="field-list simple">
-<dt>since Oct. 2023<span class="colon">:</span></dt>
-<dd><p>Professor at DHBW Mannheim</p>
+<h1 class="title">Block Cipher Operations</h1>
+<dl class="docinfo simple">
+<dt class="lecturer">Lecturer<span class="colon">:</span></dt>
+<dd class="lecturer"><p><strong>Prof. Dr. Michael Eichberg</strong></p>
 </dd>
-<dt>4 years<span class="colon">:</span></dt>
-<dd><p>Federal Criminal Police Office</p>
-</dd>
-<dt>12 years<span class="colon">:</span></dt>
-<dd><p>Postdoc at Software Technology Group - TU Darmstadt</p>
-</dd>
-<dt>2007<span class="colon">:</span></dt>
-<dd><p>PhD (Dr. Ing.) at Software Technology Group - TU Darmstadt</p>
+<dt class="version">Version<span class="colon">:</span></dt>
+<dd class="version">2023-10-10</dd>
+<dt class="based-on">Based on<span class="colon">:</span></dt>
+<dd class="based-on"><p><em>Cryptography and Network Security - Principles and Practice, 8th Edition, William Stallings</em></p>
 </dd>
 </dl>
 <img alt="DHBW CAS Logo" class="logo" src="logo.svg" />
 </div>
-<div class="ld-slide" id="overview">
-<h2>Overview</h2>
-<p>This lecture is based on the book:</p>
-<p><em>Cryptography and Network Security - Principles and Practice, 8th Edition, William Stallings</em></p>
-<ol class="arabic simple">
-<li><p><a class="reference external" href="1-introduction_to_number_theory.rst.html">Introduction to Number Theory</a></p></li>
-<li><p><a class="reference external" href="2-classical_encryption_techniques.rst.html">Classical Encryption Techniques</a></p></li>
-<li><p><a class="reference external" href="3-block_ciphers.rst.html">Block Ciphers and the Data Encryption Standard</a></p></li>
-<li><p><a class="reference external" href="4-finite_fields.rst.html">Finite Fields</a></p></li>
-<li><p><a class="reference external" href="5-aes.rst.html">Advanced Encryption Standard (AES)</a></p></li>
-<li><p><a class="reference external" href="6-block_cipher_operations.rst.html">Block Cipher Operations</a></p></li>
-<li><p><a class="reference external" href="7-stream_ciphers.rst.html">Random Bit Generation and Stream Ciphers</a></p></li>
-<li><p><a class="reference external" href="8-public_key_cryptography.rst.html">Public-Key Cryptography and RSA</a></p></li>
-<li><p><a class="reference external" href="9-hash_functions.rst.html">Cryptographic Hash Functions</a></p></li>
-</ol>
+<div class="ld-slide" id="multiple-encryption">
+<h2>Multiple Encryption</h2>
+<p>TODO</p>
+</div><div class="ld-slide" id="meet-in-the-middle-attack">
+<h2>Meet-in-the-Middle Attack</h2>
+</div><div class="ld-slide" id="triple-des-with-two-keys">
+<h2>Triple-DES with Two-Keys</h2>
+<p>Obvious counter to the meet-in-the-middle attack is to use three stages of encryption with three different keys
+• This raises the cost of the meet-in-the-middle attack to <span class="math">\(2^{112}\)</span>, which is beyond what is practical
+• Has the drawback of requiring a key length of <span class="math">\(56 x 3 = 168\,bits\)</span>, which may be somewhat unwieldy
+• As an alternative Tuchman proposed a triple encryption method that uses only two keys
+3DES with two keys is a relatively popular alternative to DES and has been adopted for use in the key management standards ANSI X9.17 and ISO 8732</p>
+</div><div class="ld-slide" id="triple-des-with-three-keys">
+<h2>Triple-DES with Three-Keys</h2>
+</div><div class="ld-slide" id="modes-of-operation">
+<h2>Modes of Operation</h2>
+<ul class="simple">
+<li><p>A technique for enhancing the effect of a cryptographic algorithm or adapting the algorithm for an application</p></li>
+<li><p>To apply a block cipher in a variety of applications, five modes of operation have been defined by NIST</p></li>
+<li><p>The five modes are intended to cover a wide variety of applications of encryption for which a block cipher could be used</p></li>
+<li><p>These modes are intended for use with any symmetric block cipher, including triple DES and AES</p></li>
+</ul>
 </div>
 </body>
 </html>

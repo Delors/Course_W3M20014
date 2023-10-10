@@ -236,7 +236,7 @@ Feistel Cipher - Example
 Feistel Cipher - Design Features 
 --------------------------------
 
-.. class:: two-column small incremental
+.. class:: two-columns small incremental
 
     :**Round function F**:
         Greater complexity generally means greater resistance to cryptanalysis

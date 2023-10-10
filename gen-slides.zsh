@@ -25,4 +25,8 @@ update_all_html_if_necessary \
     "2-classical_encryption_techniques.rst" \
     "3-block_ciphers.rst" \
     "4-finite_fields.rst" \
-    "5-aes.rst"
+    "5-aes.rst" \
+    "6-block_cipher_operations.rst" \
+    "7-stream_ciphers.rst" \
+    "8-public_key_cryptography.rst" \
+    "9-hash_functions.rst"

@@ -92,6 +92,10 @@ table.compact td {
     padding: 0;
 }
 
+table.no-borders :is(td,th)  {
+    border: 0;
+}
+
 /* fix for an rst2ld issue related to the csv tables */
 table.align-center tr{
     text-align: center;
@@ -137,8 +141,12 @@ span.green {
     color: rgb(0, 88, 0);
 }
 
+.not-important {
+    color: rgb(175, 175, 175)
+}
 
-.two-column {
+
+.two-columns {
     column-count: 2;
     column-gap: 96px;
     column-rule: 2px solid gray;
