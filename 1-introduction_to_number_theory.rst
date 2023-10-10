@@ -44,7 +44,9 @@ Divisibility
 
     The positive divisors of: :math:`24` 
     
-    are: :math:`1`, :math:`2`, :math:`3`, :math:`4`, :math:`6`, :math:`8`, :math:`12` and :math:`24`; :math:`13 | 182`; :math:`-5 | 30`; :math:`17 | 289`; :math:`-3 | 33`; :math:`17 | 0`.
+    are: :math:`1`, :math:`2`, :math:`3`, :math:`4`, :math:`6`, :math:`8`, :math:`12` and :math:`24`
+    
+    :math:`13 | 182`; :math:`-5 | 30`; :math:`17 | 289`; :math:`-3 | 33`; :math:`17 | 0`.
 
 
 Properties of Divisibility
@@ -152,7 +154,7 @@ Alternative definition:
 
 .. math:: 
 
-    gcd(a,b) = max[k, such\,that\, k|a \, and \, k|b]
+    gcd(a,b) = max[k, such\;that\; k|a \; and \; k|b]
 
 .. admonition:: Example
 
@@ -373,7 +375,7 @@ Modular Arithmetic Modulo 8
 Addition
 
 .. csv-table:: 
-    :header: ":math:`+`","0","1","2","3","4","5","6","7"
+    :header: `+`,"0","1","2","3","4","5","6","7"
 
     0,*0*,1,2,3,4,5,6,7
     1,1,2,3,4,5,6,7,*0*
@@ -390,7 +392,7 @@ Modular Arithmetic Modulo 8
 Multiplication
 
 .. csv-table:: 
-    :header: ×,"0","1","2","3","4","5","6","7"
+    :header: `×`,"0","1","2","3","4","5","6","7"
 
     0, 0,0,0,0,0,0,0,0
     1, 0,*1*,2,3,4,5,6,7
@@ -475,6 +477,139 @@ Properties of Modular Arithmetic for Integers in :math:`Z_n`
     :Additive Inverse (-w):
         For each :math:`w \in Z_n` there exists a zu such that :math:`w + z \equiv 0\; mod\; n`
 
+
+Euclidean Algorithm Revisited
+--------------------------------
+
+.. admonition:: Theorem
+
+    For any integers :math:`a, b` with :math:`a \geq b \geq 0`,
+
+    .. math::
+        gcd(a,b) = gcd(b, a\; mod\; b)
+
+.. code:: pseudocode
+    :class: incremental
+
+    Euclid(a,b):
+        if (b = 0) then return a;
+        else return Euclid(b, a mod b);
+
+.. class:: incremental small
+
+  **Example**
+
+  .. code:: pseudocode
+    
+    gcd(10,6)
+        ↳ gcd(6,4)
+            ↳ gcd(4,2)
+                ↳ gcd(2,0)
+    2              ↩︎
+
+Extended Euclidean Algorithm 
+--------------------------------------
+
+- Necessary for computations in the area of finite fields and encryption algoritms such as RSA.
+- For two integers :math:`a` and :math:`b`, the extended Euclidean Algorithm computes the gcd :math:`d`, but also two additional integers :math:`x` and :math:`y` that satisfy the following equation:
+  
+  .. note::
+    :class: incremental smaller
+
+    :math:`x` and :math:`y` will have oposite signs. 
+
+  .. math::
+    ax + by = d = gcd(a,b)
+
+Extended Euclidean Algorithm - :math:`gcd(a=42,b=30)`
+------------------------------------------------------------------------------
+
+Let's take a look at :math:`ax+by` for some :math:`x` and :math:`y`:
+
+.. csv-table::
+    :width: 1500px
+    :class: hexdump
+    :align: center
+
+    :math:`_у \\ ^x`, -3, -2, -1, 0, 1, 2, 3
+    -3, -216, -174, -132, -90, -48, -6, 36
+    -2, -186, -144, -102, -60, -18, 24, 66
+    -1, -156, -114, -72, -30, 12, 54, 96
+    0, -126, -84, -42, 0, 42, 84, 126
+    1, -96, -54, -12, 30, 72, 114, 156
+    2, -66, -24, 18, 60, 102, 144, 186
+    3, -36, 6, 48, 90, 132, 174, 216
+
+.. admonition:: Note
+    :class: incremental small
+
+    The :math:`gcd` :math:`6` appears in the table.
+    
+
+Extended Euclidean Algorithm 
+-----------------------------
+
+We assume that at each step :math:`i` we can find integers :math:`x_i` and :math:`y_i` that satisfy: :math:`r_i = ax_i + by_i`.
+
+.. math::
+
+    \begin{matrix}
+    original & extension \\
+    a = q_1b + r_1 & r_1 = ax_1 + by_1 \\
+    b = q_2r_1 + r_2 & r_2 = ax_2 + by_2 \\
+    r_1 = q_3r_2 + r_3 & r_3 = ax_3 + by_3 \\
+    \vdots & \vdots \\
+    r_{n-2} = q_nr_{n-1}+r_n & r_n=ax_n + by_n \\
+    r_{n-1} = q_{n+1}r_n +0 & \\
+    d = gcd(a,b) = r_n &
+    \end{matrix}
+
+Extended Euclidean Algorithm 
+-----------------------------
+
+.. csv-table::
+    :align: left
+    :width: 1800px
+    :class: small
+    :header: Calculate, Which satisfies, Calculate, Which satisfies
+
+    :math:`r_{-1} = a`, , :math:`x_{-1}=1; y_{-1}=0`, :math:`a = ax_{-1} + by_{-1}`
+    :math:`r_{0} = b`, , :math:`x_0=0;y_{0}=0`, :math:`b = ax_{0} + by_{0}`
+    :math:`r_{1} = a\;mod\;b; q_1= \lfloor a/b \rfloor`, :math:`a=q_1b+r_1` , :math:`x_1=x_{-1} -q_1x_0 = 1; y_1=y_{-1} -q_1y_0 = -q_1`, :math:`r_1 = ax_{1} + by_{1}` 
+    :math:`r_{2} = b\;mod\;r_1; q_2= \lfloor b/r_1 \rfloor`, :math:`b=q_2r_1+r_2` , :math:`x_2=x_{0} -q_2x_1; y_2=y_{0} -q_2y_1`, :math:`r_2 = ax_{2} + by_{2}`
+    :math:`r_{3} = r_1\;mod\;r_2; q_3= \lfloor r_1/r_2 \rfloor`, :math:`r_1=q_3r_2+r_3` , :math:`x_3=x_{1} -q_3x_2; y_3=y_{1} -q_3y_2`, :math:`r_3 = ax_{3} + by_{3}`
+    :math:`\vdots`, :math:`\vdots`, :math:`\vdots`, :math:`\vdots`
+    :math:`r_{n} = r_{n-2}\;mod\;r_{n-1}; q_n= \lfloor r_{n-2}/r_{n-1} \rfloor`, :math:`r_{n-2}=q_nr_{n-1}+r_n` , :math:`x_n=x_{n-2} -q_nx_{n-1}; y_n=y_{n-2} -q_ny_{n-1}`, :math:`r_n = ax_{n} + by_{n}`
+    :math:`r_{n+1} = r_{n-1}\;mod\;r_{n} = 0; q_{n+1}= \lfloor r_{n-1}/r_{n} \rfloor`, :math:`r_{n-1}=q_{n+1}r_{n}+0` , ,  
+
+.. class:: incremental 
+
+    .. container:: small
+
+        **Solution**
+
+        :math:`d = gcd(a,b) = r_n; x = x_n; y = y_n` 
+
+
+
+Extended Euclidean Algorithm - Example :math:`gcd(1759,550)`
+-------------------------------------------------------------
+
+.. csv-table::
+    :header: :math:`i`, :math:`r_i`, :math:`q_i`, :math:`x_i`, :math:`y_i`
+    :width: 1200px
+    :class: hexdump
+    :align: center
+
+    -1, 1759, , 1, 0
+    0, 550, , 0, 1
+    1, 109, 3, 1, -3
+    2, 5, 5, -5, 16
+    3, 4, 21, 106, -339
+    4, 1, 1, -111, 355
+    5, 0, 4, , 
+
+Result: :math:`d=1; x= -111; y = 355` 
 
 Prime Numbers
 -------------
@@ -599,13 +734,41 @@ Chinese Remainder Theorem (CRT)
 
 .. note:: 
      
-    Provides a way to manipulate (potentially very large) numbers mod M in terms of tuples of smaller numbers
-      
-      - This can be useful when M is 150 digits or more
-      - However, it is necessary to know beforehand the factorization of M
+  Provides a way to manipulate (potentially very large) numbers mod M in terms of tuples of smaller numbers.
+   
+  - This can be useful when M is 150 digits or more.
+  - However, it is necessary to know beforehand the factorization of M.
 
 - Believed to have been discovered by the Chinese mathematician Sun-Tsu in around 100 A.D.
-- One of the most useful results of number theory
-- Says it is possible to reconstruct integers in a certain range from their residues modulo a set of pairwise relatively prime moduli
+- One of the most useful results of number theory.
+- Says it is possible to reconstruct integers in a certain range from their residues modulo a set of pairwise relatively prime moduli.
 - Can be stated in several ways.
-  
+
+
+Chinese Remainder Theorem (CRT) - Example in :math:`Z_{10}` 
+-------------------------------------------------------------
+
+
+Let's assume that the (relatively prime/coprime) factors of a number :math:`x` are :math:`2` and :math:`5` and 
+
+.. class:: incremental
+
+that the known residues of the decimal digit :math:`x` are :math:`r_2 = 0` and :math:`r_5 = 3`. 
+
+.. class:: incremental
+
+Hence, :math:`x\; mod \;2 = 0`; i.e., :math:`x` has to be an even number; furthermore, :math:`x\; mod\; 5 = 3`.
+
+.. class:: incremental
+
+The unique solution is: :math:`8` (:math:`3` is not a solution, because it is odd!)
+
+.. admonition:: High-level Summary
+    :class: incremental
+
+    The Chinese remainder theorem is widely used for computing with large integers, as it allows replacing a computation for which one knows a bound on the size of the result by several similar computations on small integers.
+
+    It is applied in public-key cryptography.
+
+
+

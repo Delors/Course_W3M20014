@@ -2,8 +2,11 @@
     Computes the GCD of two numbers a and b.
 """
 
-initial_a = a = 1160718174
-initial_b = b = 316258250
+# initial_a = a = 1160718174
+# initial_b = b = 316258250
+initial_a = a = 1037
+initial_b = b = 768
+
 
 if a < b: # initial swap of and b necessary?
     c = a 
