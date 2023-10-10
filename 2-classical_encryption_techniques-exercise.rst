@@ -5,14 +5,15 @@
 
 .. |date| date::
 
+.. image:: logo.png
+    :align: right
+
+
 IT-Security Cryptography and Secure Communications
 ==================================================
-
-Classical Encryption Techniques
-----------------------------------
-
-
-:Lecturer: **Prof. Dr. Michael Eichberg**
+    
+:Excercise: **Classical Encryption Techniques**
+:Lecturer: *Prof. Dr. Michael Eichberg*
 :Version: |date|
 
 
@@ -22,7 +23,7 @@ _______________
 
 Decrypt the ciphertext: ``XGAWMGAZ``. The password is ``MONARCHY`` (as used in the slides.)
 
-  .. 
+.. 
     Solution:
         w(i/j)nXnerX => Winner
 
@@ -37,13 +38,13 @@ Let's assume that you got one plaintext / ciphertext pair.
 
 1. Can you recover the key?
    
-  ..
+..
         Solution: 
         the key is: PWDPWD
 
 2. What type of attack were you able to perform?
 
-  ..
+..
         Solution:
         a simple plaintext attack
 
@@ -100,13 +101,13 @@ Additionally, you were able to extract the key except of one value: 4153.
 
 3. What is the key?
 
-    .. 
+.. 
         Solution:   
             42153    
             crypto is just fun
 
 Steganography
--------------
+______________
 
 Uncover the text hiden in the spam message. 
 

@@ -1,21 +1,19 @@
 .. meta:: 
     :author: Michael Eichberg
-    :keywords: Block Ciphers
-    :description lang=en: Block Ciphers
-    :description lang=de: Blockverschlüsselung
+    :keywords: block ciphers, exercise
     :id: 2023_10-W3M20014-block_ciphers-exercise
 
 .. |date| date::
 
+.. image:: logo.png
+    :align: right
+
 IT-Security Cryptography and Secure Communications
 ==================================================
-
-**Exercise: Block Ciphers**
-
-
-:Lecturer: **Prof. Dr. Michael Eichberg**
+    
+:Excercise: **Block Ciphers**
+:Lecturer: *Prof. Dr. Michael Eichberg*
 :Version: |date|
-
 
 
 Feistel Cipher
@@ -33,13 +31,8 @@ Feistel Cipher
 
         Don't worry about messages that are larger or smaller than the block size. This is not necessary to understand the impact of :math:`f` or using a round key. Don't worry about a key that does not have the appropriate size. I.e., use a message and a key with the appropriate size.
 
-    .. note::
-
-        Don't optimize; don't waste time on ... This is not the time to learn a new programming language or a tool.    
-
 2. What happens if `f` just returns `0x00` values (independent of the round key)?
 3. What happens if `f` just returns `0x01` values (independent of the round key)?
 4. What happens if `f` simply xors the respective half with the result of the shift of the key?
 5. Test what happens when you change your message. In particular test what happens when the message just consists of `0x00` (and you use a "more reasonable" `f` function.)
 6. Test what happens when you change your key. What happens in extrem cases (e.g., the password just consists of "0"s?
-7. Do you see any issues when the message is very regular, i.e.,

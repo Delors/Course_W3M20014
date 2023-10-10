@@ -5,6 +5,9 @@
 
 .. |date| date::
 
+.. image:: logo.png
+    :align: right
+
 IT-Security Cryptography and Secure Communications
 ==================================================
 

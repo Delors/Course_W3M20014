@@ -623,7 +623,7 @@ a { text-decoration: none; }
 <dd class="lecturer"><p><strong>Prof. Dr. Michael Eichberg</strong></p>
 </dd>
 <dt class="version">Version<span class="colon">:</span></dt>
-<dd class="version">2023-10-09</dd>
+<dd class="version">2023-10-10</dd>
 <dt class="based-on">Based on<span class="colon">:</span></dt>
 <dd class="based-on"><p><em>Cryptography and Network Security - Principles and Practice, 8th Edition, William Stallings</em></p>
 </dd>
@@ -632,37 +632,51 @@ a { text-decoration: none; }
 </div>
 <div class="ld-slide" id="finite-field-arithmetic-recap">
 <h2>Finite Field Arithmetic (Recap)</h2>
-<ul>
-<li><p>In the Advanced Encryption Standard (AES) all operations are performed on 8-bit bytes</p>
-<p>AES uses the irreducible polynomial <span class="math">\(x^8 + x^4 + x^3 +x +1\)</span></p>
-</li>
-<li><p>The arithmetic operations of addition, multiplication, and division are performed over the finite field <span class="math">\(GF(2^8)\)</span></p></li>
-<li><p>A field is a set in which we can do addition, subtraction, multiplication, and division without leaving the set</p></li>
-<li><p>Division is defined with the following rule:  <span class="math">\(a/b = a(b^{-1})\)</span></p></li>
-<li><p>An example of a finite field (one with a finite number of elements) is the set <span class="math">\(Z_p\)</span> consisting of all the integers <span class="math">\(\lbrace 0,1,....,p-1 \rbrace\)</span>, where p is a prime number and in which arithmetic is carried out modulo <span class="math">\(p\)</span></p></li>
+<ul class="incremental simple">
+<li><p>A field is a set in which we can do addition, subtraction, multiplication, and division without leaving the set.</p></li>
+<li><p>Division is defined with the following rule:  <span class="math">\(a/b = a(b^{-1})\)</span>.</p></li>
+<li><p>An example of a finite field (one with a finite number of elements) is the set <span class="math">\(Z_p\)</span> consisting of all the integers <span class="math">\(\lbrace 0,1,....,p-1 \rbrace\)</span>, where p is a prime number and in which arithmetic is carried out modulo <span class="math">\(p\)</span>.</p></li>
 </ul>
 </div><div class="ld-slide" id="finite-field-arithmetic-recap-1">
 <h2>Finite Field Arithmetic (Recap)</h2>
-<!-- class::incremental -->
+<ul class="incremental simple">
+<li><p>For convenience and for implementation efficiency, we would like to work with integers that fit exactly into a given number of bits with no wasted bit patterns.</p>
 <ul>
-<li><p>For convenience and for implementation efficiency, we would like to work with integers that fit exactly into a given number of bits with no wasted bit patterns</p>
-<ul class="simple">
 <li><p>Integers in the range 0 through <span class="math">\(2^n – 1\)</span>, which fit into an n-bit word.</p></li>
 </ul>
 </li>
 <li><p>If one of the operations used in the algorithm is division, then we need to work in arithmetic defined over a field.</p>
-<ul class="simple">
-<li><p>Division requires that each nonzero element has a multiplicative inverse</p></li>
+<ul>
+<li><p>Division requires that each nonzero element has a multiplicative inverse.</p></li>
 </ul>
 </li>
-<li><p>The set of such integers, <span class="math">\(Z_{2^n}\)</span>, using modular arithmetic, is not a field</p>
-<ul class="simple">
+<li><p>The set of such integers, <span class="math">\(Z_{2^n}\)</span>, using modular arithmetic, is not a field!</p>
+<ul>
 <li><p>For example, the integer 2 has no multiplicative inverse in <span class="math">\(Z_{2^n}\)</span>, that is, there is no integer b, such that <span class="math">\(2b\; mod\; 2^n = 1\)</span></p></li>
 </ul>
 </li>
-<li><p>A finite field containing <span class="math">\(2^n\)</span> elements is referred to as <span class="math">\(GF(2^n)\)</span>.</p>
-<div class="hint docutils container">
+<li><p>A finite field containing <span class="math">\(2^n\)</span> elements is referred to as <span class="math">\(GF(2^n)\)</span>.</p></li>
+</ul>
+<div class="hint incremental docutils container">
 <p>Every polynomial in <span class="math">\(GF(2^n)\)</span> can be represented by an n-bit number.</p>
+</div>
+</div><div class="ld-slide" id="finite-field-arithmetic-for-aes">
+<h2>Finite Field Arithmetic for AES</h2>
+<ul>
+<li><p>In the Advanced Encryption Standard (AES) all operations are performed on 8-bit bytes</p></li>
+<li><p>The arithmetic operations of addition, multiplication, and division are performed over the finite field <span class="math">\(GF(2^8)\)</span></p>
+<p>AES uses the irreducible polynomial <span class="math">\(m(x) = x^8 + x^4 + x^3 +x +1\)</span></p>
+</li>
+</ul>
+</div><div class="ld-slide" id="aes-key-elements">
+<h2>AES Key Elements</h2>
+<ul>
+<li><p>AES uses a fixed block size of 128 bits.</p></li>
+<li><p>AES operates on a 4x4 column-major order array of 16 bytes/128 bits: <span class="math">\(b_0,b_1,\dots,b_15\)</span> termed the state:</p>
+<div class="math">
+\begin{equation*}
+\begin{bmatrix}b_{0}&amp;b_{4}&amp;b_{8}&amp;b_{12}\\b_{1}&amp;b_{5}&amp;b_{9}&amp;b_{13}\\b_{2}&amp;b_{6}&amp;b_{10}&amp;b_{14}\\b_{3}&amp;b_{7}&amp;b_{11}&amp;b_{15}\end{bmatrix}
+\end{equation*}
 </div>
 </li>
 </ul>
@@ -700,8 +714,8 @@ a { text-decoration: none; }
 </tr>
 </tbody>
 </table>
-</div><div class="ld-slide" id="aes-encryption-and-decryption-process">
-<h2>AES Encryption and Decryption Process</h2>
+</div><div class="ld-slide" id="aes-encryption-and-decryption-process-key-size-128bits">
+<h2>AES Encryption and Decryption Process (Key Size 128bits)</h2>
 <img alt="AES Encryption and Decryption Process" class="align-center" src="5-aes_encryption_and_decryption.svg" style="width: 1325px;" />
 </div><div class="ld-slide" id="aes-detailed-structure">
 <h2>AES Detailed Structure</h2>
@@ -709,7 +723,7 @@ a { text-decoration: none; }
 <li><p>Processes the entire data block as a single matrix during each round using substitutions and permutation.</p></li>
 </ul>
 <ul class="incremental simple">
-<li><p>The key that is provided as input is expanded into an array of forty-four 32-bit words, w[i].</p></li>
+<li><p>The key that is provided as input is expanded into an array of forty-four 32-bit words, <span class="math">\(w[i]\)</span> if 128 bits are used for the keysize.</p></li>
 <li><p>The cipher begins and ends with an AddRoundKey stage.</p></li>
 <li><p>Can view the cipher as alternating operations of XOR encryption (AddRoundKey) of a block, followed by scrambling of the block (the other three stages), followed by XOR encryption, and so on.</p></li>
 <li><p>Each stage is easily reversible.</p></li>
@@ -724,13 +738,13 @@ a { text-decoration: none; }
 <dd><p>uses an S-box to perform a byte-by-byte substitution of the block</p>
 </dd>
 <dt>ShiftRows<span class="colon">:</span></dt>
-<dd><p>a simple permutation</p>
+<dd><p>is a simple permutation.</p>
 </dd>
 <dt>MixColumns<span class="colon">:</span></dt>
-<dd><p>a substitution that makes use of arithmetic over GF(28)</p>
+<dd><p>is a substitution that makes use of arithmetic over <span class="math">\(GF(2^8)\)</span>.</p>
 </dd>
 <dt>AddRoundKey<span class="colon">:</span></dt>
-<dd><p>a simple bitwise XOR of the current block with a portion of the expanded key</p>
+<dd><p>is a simple bitwise XOR of the current block with a portion of the expanded key.</p>
 </dd>
 </dl>
 </div><div class="ld-slide" id="aes-substitute-byte-transformation">
@@ -1365,9 +1379,9 @@ a { text-decoration: none; }
 </div><div class="ld-slide" id="s-box-rationale">
 <h2>S-Box Rationale</h2>
 <ul class="simple">
-<li><p>The S-box is designed to be resistant to known cryptanalytic attacks</p></li>
-<li><p>The Rijndael developers sought a design that has a low correlation between input bits and output bits and the property that the output is not a linear mathematical function of the input</p></li>
-<li><p>The nonlinearity is due to the use of the multiplicative inverse in the construction of the S-box</p></li>
+<li><p>The S-box is designed to be resistant to known cryptanalytic attacks.</p></li>
+<li><p>The Rijndael developers sought a design that has a low correlation between input bits and output bits and the property that the output is not a linear mathematical function of the input.</p></li>
+<li><p>The nonlinearity is due to the use of the multiplicative inverse in the construction of the S-box.</p></li>
 </ul>
 </div><div class="ld-slide" id="shift-row-transformation">
 <h2>Shift Row Transformation</h2>
@@ -1378,15 +1392,94 @@ a { text-decoration: none; }
 <li><p>More substantial than it may first appear!</p></li>
 </ul>
 <ul class="incremental simple">
-<li><p>The State, as well as the cipher input and output, is treated as an array of four 4-byte columns</p></li>
-<li><p>On encryption, the first 4 bytes of the plaintext are copied to the first column of State, and so on</p></li>
-<li><p>The round key is applied to State column by column</p></li>
-<li><p>Thus, a row shift moves an individual byte from one column to another, which is a linear distance of a multiple of 4 bytes</p></li>
-<li><p>Transformation ensures that the 4 bytes of one column are spread out to four different columns</p></li>
+<li><p>The State, as well as the cipher input and output, is treated as an array of four 4-byte columns.</p></li>
+<li><p>On encryption, the first 4 bytes of the plaintext are copied to the first column of State, and so on.</p></li>
+<li><p>The round key is applied to State column by column.</p></li>
+<li><p>Thus, a row shift moves an individual byte from one column to another, which is a linear distance of a multiple of 4 bytes.</p></li>
+<li><p>Transformation ensures that the 4 bytes of one column are spread out to four different columns.</p></li>
 </ul>
 </div><div class="ld-slide" id="mix-column-transformation">
 <h2>Mix Column Transformation</h2>
 <img alt="Mix column transformation" class="align-center" src="5-aes_mix_column_transformation.svg" style="width: 1500px;" />
+</div><div class="ld-slide" id="inverse-mix-column-transformation">
+<h2>Inverse Mix Column Transformation</h2>
+<img alt="Mix column transformation" class="align-center" src="5-aes_inv_mix_column_transformation.svg" style="width: 1500px;" />
+</div><div class="ld-slide" id="mix-colum-transformation-example">
+<h2>Mix Colum Transformation - Example</h2>
+<div class="two-columns smaller docutils container">
+<table class="hexdump small">
+<caption>Given</caption>
+<tbody>
+<tr><td><p>87</p></td>
+<td><p>F2</p></td>
+<td><p>4D</p></td>
+<td><p>97</p></td>
+</tr>
+<tr><td><p>6E</p></td>
+<td><p>4C</p></td>
+<td><p>90</p></td>
+<td><p>EC</p></td>
+</tr>
+<tr><td><p>46</p></td>
+<td><p>E7</p></td>
+<td><p>4A</p></td>
+<td><p>C3</p></td>
+</tr>
+<tr><td><p>A6</p></td>
+<td><p>8C</p></td>
+<td><p>D8</p></td>
+<td><p>95</p></td>
+</tr>
+</tbody>
+</table>
+<table class="hexdump small">
+<caption>Result</caption>
+<tbody>
+<tr><td><p>47</p></td>
+<td><p>40</p></td>
+<td><p>A3</p></td>
+<td><p>4C</p></td>
+</tr>
+<tr><td><p>37</p></td>
+<td><p>D4</p></td>
+<td><p>70</p></td>
+<td><p>9F</p></td>
+</tr>
+<tr><td><p>94</p></td>
+<td><p>E4</p></td>
+<td><p>3A</p></td>
+<td><p>42</p></td>
+</tr>
+<tr><td><p>ED</p></td>
+<td><p>A5</p></td>
+<td><p>A6</p></td>
+<td><p>BC</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="smaller docutils container">
+<p>Example computation of <span class="math">\(S'_{0,0}\)</span>:</p>
+<div class="math">
+\begin{equation*}
+(02 \times 87) \oplus (03 \times 6E) \oplus (46) \oplus (A6) = 47.
+\end{equation*}
+</div>
+</div>
+<aside class="admonition smaller">
+<p class="admonition-title">Hints</p>
+<div class="math">
+\begin{equation*}
+\begin{matrix}
+(02 \times 87) = (0000\,1110) \oplus (0001\,1011) = &amp; (0001\,0101) \\
+(03 \times 6E) = 6E \oplus (02 \times 6E) = (0110\,1110) \oplus (1101\, 1100)  = &amp; (1011\,0010) \\
+46 = &amp; (0100\,0110) \\
+A6 = &amp; (1010\,0110) \\
+&amp; \overline{  (0100\, 0111) }
+\end{matrix}
+\end{equation*}
+</div>
+</aside>
 </div><div class="ld-slide" id="mix-column-transformation-rationale">
 <h2>Mix Column Transformation - Rationale</h2>
 <ul class="simple">
@@ -1415,13 +1508,13 @@ a { text-decoration: none; }
 </div><div class="ld-slide" id="aes-key-expansion">
 <h2>AES Key Expansion</h2>
 <ul class="simple">
-<li><p>Takes as input a four-word (16 byte) key and produces a linear array of 44 words (176) bytes</p></li>
+<li><p>Takes as input a four-word (16 byte) key and produces a linear array of 44 words (176) bytes.</p></li>
 <li><p>This is sufficient to provide a four-word round key for the initial <cite>AddRoundKey</cite> stage and each of the 10 rounds of the cipher.</p></li>
-<li><p>Key is copied into the first four words of the expanded key</p></li>
+<li><p>Key is copied into the first four words of the expanded key.</p></li>
 <li><p>The remainder of the expanded key is filled in four words at a time.</p></li>
 <li><p>Each added word <span class="math">\(w[i]\)</span> depends on the immediately preceding word, <span class="math">\(w[i – 1]\)</span>, and the word four positions back, <span class="math">\(w[i – 4]\)</span></p></li>
-<li><p>In three out of four cases a simple XOR is used</p></li>
-<li><p>For a word whose position in the w array is a multiple of 4, a more complex function is used</p></li>
+<li><p>In three out of four cases a simple XOR is used.</p></li>
+<li><p>For a word whose position in the w array is a multiple of 4, a more complex function <span class="math">\(g\)</span> is used.</p></li>
 </ul>
 </div><div class="ld-slide" id="aes-key-expansion-visualized">
 <h2>AES Key Expansion - Visualized</h2>
@@ -1645,13 +1738,13 @@ fc8923ee501a7d207ab670686839996b</p></td>
 <h2>Equivalent Inverse Cipher</h2>
 <p>AES decryption cipher is not identical to the encryption cipher.</p>
 <ul class="simple">
-<li><p>The sequence of transformations differs although the form of the key schedules is the same</p></li>
-<li><p>Has the disadvantage that two separate software or firmware modules are needed for applications that require both encryption and decryption</p></li>
+<li><p>The sequence of transformations differs although the form of the key schedules is the same.</p></li>
+<li><p>Has the disadvantage that two separate software or firmware modules are needed for applications that require both encryption and decryption.</p></li>
 </ul>
 <p class="incremental">Two separate changes are needed to bring the decryption structure in line with the encryption structure:</p>
 <ol class="arabic simple incremental">
-<li><p>The first two stages of the decryption round need to be interchanged</p></li>
-<li><p>The second two stages of the decryption round need to be interchanged</p></li>
+<li><p>The first two stages of the decryption round need to be interchanged.</p></li>
+<li><p>The second two stages of the decryption round need to be interchanged.</p></li>
 </ol>
 </div><div class="ld-slide" id="interchanging-invshiftrows-and-invsubbytes">
 <h2>Interchanging <cite>InvShiftRows</cite> and <cite>InvSubBytes</cite></h2>
@@ -1665,10 +1758,17 @@ fc8923ee501a7d207ab670686839996b</p></td>
 </aside>
 </div><div class="ld-slide" id="interchanging-addroundkey-and-invmixcolumns">
 <h2>Interchanging <cite>AddRoundKey</cite> and <cite>InvMixColumns</cite></h2>
-<ul class="simple">
-<li><p>The transformations <cite>AddRoundKey</cite> and <cite>InvMixColumns</cite> do not alter the sequence of bytes in State</p></li>
-<li><p>If we view the key as a sequence of words, then both AddRoundKey and InvMixColumns operate on State one column at a time</p></li>
-<li><p>These two operations are linear with respect to the column input</p></li>
+<ul>
+<li><p>The transformations <cite>AddRoundKey</cite> and <cite>InvMixColumns</cite> do not alter the sequence of bytes in State.</p></li>
+<li><p>If we view the key as a sequence of words, then both AddRoundKey and InvMixColumns operate on State one column at a time.</p></li>
+<li><p>These two operations are linear with respect to the column input.</p>
+<p>That is, for a given State S_i and a given round key w_j:</p>
+<div class="math">
+\begin{equation*}
+InvMixColumns(S_i \oplus w_j) = InvMixColumns(S_i) \oplus InvMixColumns(w_j)
+\end{equation*}
+</div>
+</li>
 </ul>
 </div><div class="ld-slide" id="equivalent-inverse-cipher-1">
 <h2>Equivalent Inverse Cipher</h2>
@@ -1678,16 +1778,16 @@ fc8923ee501a7d207ab670686839996b</p></td>
 <p>AES can be implemented very efficiently on an 8-bit processor:</p>
 <dl class="field-list simple">
 <dt>AddRoundKey<span class="colon">:</span></dt>
-<dd><p>is a bytewise XOR operation</p>
+<dd><p>is a bytewise XOR operation.</p>
 </dd>
 <dt>ShiftRows<span class="colon">:</span></dt>
-<dd><p>is a simple byte-shifting operation</p>
+<dd><p>is a simple byte-shifting operation.</p>
 </dd>
 <dt>SubBytes<span class="colon">:</span></dt>
-<dd><p>operates at the byte level and only requires a table of 256 bytes</p>
+<dd><p>operates at the byte level and only requires a table of 256 bytes.</p>
 </dd>
 <dt>MixColumns<span class="colon">:</span></dt>
-<dd><p>requires matrix multiplication in the field <span class="math">\(GF(2^8)\)</span>, which means that all operations are carried out on bytes</p>
+<dd><p>requires matrix multiplication in the field <span class="math">\(GF(2^8)\)</span>, which means that all operations are carried out on bytes.</p>
 </dd>
 </dl>
 </div><div class="ld-slide" id="implementation-aspects-1">

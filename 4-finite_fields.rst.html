@@ -623,7 +623,7 @@ a { text-decoration: none; }
 <dd class="lecturer"><p><strong>Prof. Dr. Michael Eichberg</strong></p>
 </dd>
 <dt class="version">Version<span class="colon">:</span></dt>
-<dd class="version">2023-10-09</dd>
+<dd class="version">2023-10-10</dd>
 <dt class="based-on">Based on<span class="colon">:</span></dt>
 <dd class="based-on"><p><em>Cryptography and Network Security - Principles and Practice, 8th Edition, William Stallings</em></p>
 </dd>
@@ -633,38 +633,53 @@ a { text-decoration: none; }
 <div class="ld-slide" id="groups-rings-and-fields">
 <h2>Groups, Rings and Fields</h2>
 <pre class="literal-block">((((((
-    (Finite Fields)
+    Finite Fields
         in Fields)
-            in Integral Domains)
+            in Integral Domains :ger:`Integritätsring`)
                 in Commutative Rings)
                     in Rings)
                         in Abelian Groups)
                             in Groups)</pre>
+<aside class="admonition small">
+<p class="admonition-title">Note</p>
+<p>Integral Domains <span class="ger">Integritätsring</span></p>
+</aside>
 </div><div class="ld-slide" id="groups">
 <h2>Groups</h2>
-<p>A set of elements with a binary operation denoted by ● that associates to each ordered pair <span class="math">\((a,b)\)</span> of elements in <span class="math">\(G\)</span> an element <span class="math">\((a ● b ) \in G\)</span> , such that the following axioms are obeyed:</p>
+<p>A set of elements with a binary operation <span class="math">\(\cdot\)</span> that associates to each ordered pair <span class="math">\((a,b)\)</span> of elements in <span class="math">\(G\)</span> an element <span class="math">\((a \cdot b ) \in G\)</span> , such that the following axioms are obeyed:</p>
 <dl class="incremental field-list simple">
 <dt>(A1) Closure<span class="colon">:</span></dt>
-<dd><p>If <span class="math">\(a\)</span> and <span class="math">\(b\)</span> belong to <span class="math">\(G\)</span>, then <span class="math">\(a ● b\)</span> is also in <span class="math">\(G\)</span></p>
+<dd><p>If <span class="math">\(a\)</span> and <span class="math">\(b\)</span> belong to <span class="math">\(G\)</span>, then <span class="math">\(a \cdot b\)</span> is also in <span class="math">\(G\)</span></p>
 </dd>
+</dl>
+<dl class="incremental field-list simple">
 <dt>(A2) Associative<span class="colon">:</span></dt>
-<dd><p><span class="math">\(a ● ( b ● c ) = ( a ● b ) ● c\)</span> for all <span class="math">\(a, b, c \in G\)</span></p>
+<dd><p><span class="math">\(a \cdot ( b \cdot c ) = ( a \cdot b ) \cdot c\)</span> for all <span class="math">\(a, b, c \in G\)</span></p>
 </dd>
+</dl>
+<dl class="incremental field-list simple">
 <dt>(A3) Identity element<span class="colon">:</span></dt>
-<dd><p>There is an element <span class="math">\(e \in G\)</span> such that <span class="math">\(a ● e = e ● a = a\)</span> for all <span class="math">\(a \in G\)</span></p>
+<dd><p>There is an element <span class="math">\(e \in G\)</span> such that <span class="math">\(a \cdot e = e \cdot a = a\)</span> for all <span class="math">\(a \in G\)</span></p>
 </dd>
+</dl>
+<dl class="incremental field-list simple">
 <dt>(A4) Inverse element<span class="colon">:</span></dt>
-<dd><p>For each <span class="math">\(a \in G\)</span>, there is an element <span class="math">\(a^1 \in G\)</span> such that <span class="math">\(a ● a^1 = a^1 ● a = e\)</span></p>
+<dd><p>For each <span class="math">\(a \in G\)</span>, there is an element <span class="math">\(a'\)</span> in G such that <span class="math">\(a \cdot a' = a' \cdot a = e\)</span></p>
 </dd>
+</dl>
+</div><div class="ld-slide" id="abelian-group">
+<h2>Abelian Group</h2>
+<p>(A1 through A4) and:</p>
+<dl class="field-list simple">
 <dt>(A5) Commutative<span class="colon">:</span></dt>
-<dd><p><span class="math">\(a ● b = b ● a\)</span> for all <span class="math">\(a, b \in G\)</span></p>
+<dd><p><span class="math">\(a \cdot b = b \cdot a\)</span> for all <span class="math">\(a, b \in G\)</span></p>
 </dd>
 </dl>
 </div><div class="ld-slide" id="cyclic-group">
 <h2>Cyclic Group</h2>
 <ul class="simple">
-<li><p>Exponentiation is defined within a group as a repeated application of the group operator, so that <span class="math">\(a^3 = a ● a ● a\)</span>.</p></li>
-<li><p>We define <span class="math">\(a^0 = e\)</span> as the identity element, and <span class="math">\(a^{-n} = (a’)^n\)</span> , where <span class="math">\(a’\)</span> is the inverse element of <span class="math">\(a\)</span> within the group.</p></li>
+<li><p>Exponentiation is defined within a group as a repeated application of the group operator, so that <span class="math">\(a^3 = a \cdot a \cdot a\)</span>.</p></li>
+<li><p>We define <span class="math">\(a^0 = e\)</span> as the identity element, and <span class="math">\(a^{-n} = (a')^n\)</span> , where <span class="math">\(a'\)</span> is the inverse element of <span class="math">\(a\)</span> within the group.</p></li>
 <li><p>A group <span class="math">\(G\)</span> is cyclic if every element of <span class="math">\(G\)</span> is a power <span class="math">\(a^k\)</span> (<span class="math">\(k\)</span> is an integer) of a fixed element <span class="math">\(a \in G\)</span>.</p></li>
 <li><p>The element <span class="math">\(a\)</span> is said to generate the group <span class="math">\(G\)</span> or to be a generator of <span class="math">\(G\)</span>.</p></li>
 <li><p>A cyclic group is always abelian and may be finite or infinite.</p></li>
@@ -673,7 +688,7 @@ a { text-decoration: none; }
 </div><div class="ld-slide" id="rings">
 <h2>Rings</h2>
 <ul class="simple">
-<li><p>A ring <span class="math">\(R\)</span> , sometimes denoted by <span class="math">\(\lbrace R , + , * \rbrace\)</span>, is a set of elements with two binary operations, called addition and multiplication, such that for all <span class="math">\(a , b , c \in R\)</span> the axioms (A1-A5) are obeyed.</p></li>
+<li><p>A ring <span class="math">\(R\)</span>, sometimes denoted by <span class="math">\(\lbrace R , + , * \rbrace\)</span>, is a set of elements with two binary operations, called addition and multiplication, such that for all <span class="math">\(a , b , c \in R\)</span> the axioms (A1-A5) are obeyed.</p></li>
 <li><p><span class="math">\(R\)</span> is an abelian group with respect to addition; that is, <span class="math">\(R\)</span> satisfies axioms A1 through A5. For the case of an additive group, we denote the identity element as <span class="math">\(0\)</span> and the inverse of <span class="math">\(a\)</span> as <span class="math">\(–a\)</span>.</p></li>
 </ul>
 </div><div class="ld-slide" id="rings-1">
@@ -690,10 +705,10 @@ a { text-decoration: none; }
 <p><span class="math">\((a+b)c = ac+bc\)</span> for all <span class="math">\(a,b,c \in R\)</span></p>
 </dd>
 </dl>
-<p>In essence, a ring is a set in which we can do addition, subtraction [a - b = a + (-b )], and multiplication without leaving the set.</p>
+<p>In essence, a ring is a set in which we can do addition, subtraction <span class="math">\([a - b = a + (-b )]\)</span>, and multiplication without leaving the set.</p>
 </div><div class="ld-slide" id="rings-2">
 <h2>Rings</h2>
-<ul class="incremental simple">
+<ul class="simple">
 <li><p>A ring is said to be commutative if it satisfies the following additional condition:</p>
 <dl class="field-list simple">
 <dt>(M4) Commutativity of multiplication<span class="colon">:</span></dt>
@@ -701,25 +716,27 @@ a { text-decoration: none; }
 </dd>
 </dl>
 </li>
-<li><p>An integral domain is a commutative ring that obeys the following axioms.</p>
+</ul>
+</div><div class="ld-slide" id="integral-domain">
+<h2>Integral Domain</h2>
+<p>A commutative ring that obeys the following axioms.</p>
 <dl class="field-list simple">
 <dt>(M5) Multiplicative identity<span class="colon">:</span></dt>
-<dd><p>There is an element 1 in R such that <span class="math">\(a1 = 1a = a\)</span> for all <span class="math">\(a \in R\)</span></p>
+<dd><p>There is an element <span class="math">\(1\)</span> in <span class="math">\(R\)</span> such that <span class="math">\(a1 = 1a = a\)</span> for all <span class="math">\(a \in R\)</span></p>
 </dd>
 <dt>(M6) No zero divisors<span class="colon">:</span></dt>
 <dd><p>If <span class="math">\(a,b \in R\)</span> and <span class="math">\(ab = 0\)</span>, then either <span class="math">\(a = 0\)</span> or <span class="math">\(b = 0\)</span></p>
 </dd>
 </dl>
-</li>
-</ul>
 </div><div class="ld-slide" id="fields-korper">
 <h2>Fields <span class="ger">Körper</span></h2>
 <ul class="simple">
-<li><p>A field <span class="math">\(F\)</span>, sometimes denoted by <span class="math">\(\lbrace F, +, * \rbrace\)</span>, is a set of elements with two binary operations, called addition and multiplication, such that for all <span class="math">\(a, b, c \in F\)</span> the axioms (A1–M6) are obeyed. <span class="math">\(F\)</span> is an integral domain; that is, <span class="math">\(F\)</span> satisfies axioms A1 through A5 and M1 through M6</p></li>
+<li><p>A field <span class="math">\(F\)</span>, sometimes denoted by <span class="math">\(\lbrace F, +, * \rbrace\)</span>, is a set of elements with two binary operations, called addition and multiplication, such that for all <span class="math">\(a, b, c \in F\)</span> the axioms (A1–M6) are obeyed.</p></li>
+<li><p><span class="math">\(F\)</span> is an integral domain; that is, <span class="math">\(F\)</span> satisfies axioms A1 through A5 and M1 through M6</p></li>
 </ul>
 <dl class="incremental field-list simple">
 <dt>(M7) Multiplicative inverse<span class="colon">:</span></dt>
-<dd><p>For each a in F, except 0, there is an element <span class="math">\(a^{-1} \in F\)</span> such that <span class="math">\(aa^{-1} = (a^{-1})a = 1\)</span></p>
+<dd><p>For each <span class="math">\(a\)</span> in <span class="math">\(F\)</span>, except <span class="math">\(0\)</span>, there is an element <span class="math">\(a^{-1} \in F\)</span> such that <span class="math">\(aa^{-1} = (a^{-1})a = 1\)</span></p>
 </dd>
 </dl>
 </div><div class="ld-slide" id="fields">
@@ -729,22 +746,27 @@ a { text-decoration: none; }
 </ul>
 <aside class="admonition incremental">
 <p class="admonition-title">Note</p>
-<p>Familiar examples of fields are the rational numbers, the real numbers, and the complex numbers. Note that the set of all integers is not a field, because not every element of the set has a multiplicative inverse.</p>
+<p>Familiar examples of fields are the rational numbers, the real numbers, and the complex numbers.</p>
+<p>Note that the set of all integers is not a field, because not every element of the set has a multiplicative inverse.</p>
 </aside>
 </div><div class="ld-slide" id="summary-properties-of-groups-rings-and-fields">
 <h2>Summary - Properties of Groups, Rings and Fields</h2>
 <img alt="Properties of Groups, Rings, and Fields" class="align-center" src="4-properties_of_groups_..._fields.svg" style="width: 1400px;" />
 </div><div class="ld-slide" id="types-of-fields">
 <h2>Types of Fields</h2>
-<img alt="4-fields.svg" src="4-fields.svg" style="width: 1600px;" />
+<img alt="4-types_of_fields.svg" class="align-center" src="4-types_of_fields.svg" style="width: 1600px;" />
 </div><div class="ld-slide" id="finite-fields-of-the-form-gf-p">
 <h2>Finite Fields of the Form <span class="math">\(GF(p)\)</span></h2>
 <ul class="simple">
-<li><p>Finite fields play a crucial role in many cryptographic algorithms</p></li>
-<li><p>It can be shown that the order of a finite field must be a power of a prime <span class="math">\(p^n\)</span>, where <span class="math">\(n\)</span> is a positive integer</p></li>
-<li><p>The finite field of order <span class="math">\(p^n\)</span> is generally written <span class="math">\(GF(p^n)\)</span></p></li>
-<li><p>GF stands for Galois field, in honor of the mathematician who first studied finite fields</p></li>
+<li><p>Finite fields play a crucial role in many cryptographic algorithms.</p></li>
+<li><p>It can be shown that the order of a finite field must be a power of a prime <span class="math">\(p^n\)</span>, where <span class="math">\(n\)</span> is a positive integer.</p></li>
+<li><p>The finite field of order <span class="math">\(p^n\)</span> is generally written <span class="math">\(GF(p^n)\)</span>.</p></li>
+<li><p>GF stands for Galois field, in honor of the mathematician who first studied finite fields.</p></li>
 </ul>
+<aside class="admonition small">
+<p class="admonition-title">Note</p>
+<p>The order of a finite field is the number of elements in the field.</p>
+</aside>
 </div><div class="ld-slide" id="addition-modulo-8">
 <h2>Addition Modulo 8</h2>
 <table class="align-center">
@@ -1061,7 +1083,7 @@ a { text-decoration: none; }
 <h2>Multiplication modulo 7</h2>
 <table class="align-center">
 <tbody>
-<tr><td><p><span class="math">\(*\)</span></p></td>
+<tr><td><p><span class="math">\(\times\)</span></p></td>
 <td><p><em>0</em></p></td>
 <td><p><em>1</em></p></td>
 <td><p><em>2</em></p></td>
@@ -1173,24 +1195,83 @@ a { text-decoration: none; }
 </tr>
 </tbody>
 </table>
+</div><div class="ld-slide" id="the-field-gf-2">
+<h2>The Field GF(2)</h2>
+<div class="three-columns docutils container">
+<table class="monospaced">
+<caption>Addition</caption>
+<tbody>
+<tr><td><p><span class="math">\(+\)</span></p></td>
+<td><p>0</p></td>
+<td><p>1</p></td>
+</tr>
+<tr><td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>1</p></td>
+</tr>
+<tr><td><p>1</p></td>
+<td><p>1</p></td>
+<td><p>0</p></td>
+</tr>
+</tbody>
+</table>
+<table class="monospaced">
+<caption>Multiplication</caption>
+<tbody>
+<tr><td><p><span class="math">\(\times\)</span></p></td>
+<td><p>0</p></td>
+<td><p>1</p></td>
+</tr>
+<tr><td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+</tr>
+<tr><td><p>1</p></td>
+<td><p>0</p></td>
+<td><p>1</p></td>
+</tr>
+</tbody>
+</table>
+<table class="monospaced">
+<caption>Inverses</caption>
+<tbody>
+<tr><td><p><span class="math">\(w\)</span></p></td>
+<td><p><span class="math">\(-w\)</span></p></td>
+<td><p><span class="math">\(w^{-1}\)</span></p></td>
+</tr>
+<tr><td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+</tr>
+<tr><td><p>1</p></td>
+<td><p>0</p></td>
+<td><p>1</p></td>
+</tr>
+</tbody>
+</table>
+</div>
 </div><div class="ld-slide" id="finite-fields-1">
 <h2>Finite Fields</h2>
-<p>In this section, we have shown how to construct finite fields of order p where p is prim.</p>
+<p>In this section, we have shown how to construct finite fields of order <span class="math">\(p\)</span> where <span class="math">\(p\)</span> is prim.</p>
 <p><span class="math">\(GF(p)\)</span> is defined with the following properties:</p>
 <ol class="arabic simple">
-<li><p><span class="math">\(GF(p)\)</span> consists of p elements</p></li>
-<li><p>The binary operations <span class="math">\(+\)</span> and <span class="math">\(*\)</span> are defined over the set. The operations of addition, subtraction, multiplication, and division can be performed without leaving the set. Each element of the set other than 0 has a multiplicative inverse.</p></li>
+<li><p><span class="math">\(GF(p)\)</span> consists of <span class="math">\(p\)</span> elements</p></li>
+<li><p>The binary operations <span class="math">\(+\)</span> and <span class="math">\(\times\)</span> are defined over the set. The operations of addition, subtraction, multiplication, and division can be performed without leaving the set. Each element of the set other than 0 has a multiplicative inverse.</p></li>
 </ol>
 <aside class="admonition incremental">
 <p class="admonition-title">Quintessence</p>
 <p>We have shown that the elements of <span class="math">\(GF(p)\)</span> are the integers <span class="math">\(\lbrace 0, 1, . . . , p – 1 \rbrace\)</span> and that the arithmetic operations are addition and multiplication mod p.</p>
 </aside>
+<aside class="admonition small incremental">
+<p class="admonition-title">Note</p>
+<p>Modular arithmetic modulo 8 is not a field.</p>
+</aside>
 </div><div class="ld-slide" id="treatment-of-polynomials">
 <h2>Treatment of Polynomials</h2>
 <img alt="Treatment of Polynomials" class="align-center" src="4-treatment_of_polynomials.svg" style="width: 1600px;" />
 <p class="small">(indeterminate <span class="ger">unbestimmte</span>)</p>
-</div><div class="ld-slide" id="example-of-polynomial-arithmetic">
-<h2>Example of Polynomial Arithmetic</h2>
+</div><div class="ld-slide" id="example-of-ordinary-polynomial-arithmetic">
+<h2>Example of Ordinary Polynomial Arithmetic</h2>
 <dl class="incremental field-list">
 <dt>Addition<span class="colon">:</span></dt>
 <dd><div class="math">
@@ -1244,7 +1325,7 @@ x^{5} + 3x^2 - 2x + 2
 <p>This does not mean that exact division is possible.</p>
 </aside>
 </li>
-<li><p>If we attempt to perform polynomial division over a coefficient set that is not a field, we find that division is not always defined</p>
+<li><p>If we attempt to perform polynomial division over a coefficient set that is not a field, we find that division is not always defined.</p>
 <ul class="simple">
 <li><p>Even if the coefficient set is a field, polynomial division is not necessarily exact</p></li>
 <li><p>With the understanding that remainders are allowed, we can say that polynomial division is possible if the coefficient set is a field</p></li>
@@ -1278,6 +1359,18 @@ x^{5} + 3x^2 - 2x + 2
 </ul>
 </div><div class="ld-slide" id="example-of-polynomial-arithmetic-over-gf-2">
 <h2>Example of Polynomial Arithmetic Over GF(2)</h2>
+<aside class="admonition small">
+<p class="admonition-title">Recall</p>
+<div class="math">
+\begin{equation*}
+\begin{matrix}
+1 + 1 &amp; = 1 - 1 &amp; = 0 \\
+1 + 0 &amp; = 1 - 0 &amp; = 1 \\
+0 + 1 &amp; = 0 - 1 &amp; = 1
+\end{matrix}
+\end{equation*}
+</div>
+</aside>
 <dl class="incremental field-list">
 <dt>Addition<span class="colon">:</span></dt>
 <dd><div class="math">
@@ -1286,6 +1379,8 @@ x^{5} + 3x^2 - 2x + 2
 \end{equation*}
 </div>
 </dd>
+</dl>
+<dl class="incremental field-list">
 <dt>Subtraction<span class="colon">:</span></dt>
 <dd><div class="math">
 \begin{equation*}
@@ -1293,6 +1388,22 @@ x^{5} + 3x^2 - 2x + 2
 \end{equation*}
 </div>
 </dd>
+</dl>
+</div><div class="ld-slide" id="example-of-polynomial-arithmetic-over-gf-2-1">
+<h2>Example of Polynomial Arithmetic Over GF(2)</h2>
+<aside class="admonition small">
+<p class="admonition-title">Recall</p>
+<div class="math">
+\begin{equation*}
+\begin{matrix}
+1 + 1 &amp; = 1 - 1 &amp; = 0 \\
+1 + 0 &amp; = 1 - 0 &amp; = 1 \\
+0 + 1 &amp; = 0 - 1 &amp; = 1
+\end{matrix}
+\end{equation*}
+</div>
+</aside>
+<dl class="field-list">
 <dt>Multiplication<span class="colon">:</span></dt>
 <dd><div class="math">
 \begin{equation*}
@@ -1313,6 +1424,8 @@ x^{10} + x^4 +x^2 +1
 \end{equation*}
 </div>
 </dd>
+</dl>
+<dl class="incremental field-list">
 <dt>Division<span class="colon">:</span></dt>
 <dd><div class="math">
 \begin{equation*}
@@ -1335,10 +1448,10 @@ x^{10} + x^4 +x^2 +1
 <li><p><span class="math">\(gcd[a(x), b(x)]\)</span> is the polynomial of maximum degree that divides both <span class="math">\(a(x)\)</span> and <span class="math">\(b(x)\)</span></p></li>
 </ul>
 </li>
-<li><p>The Euclidean algorithm can be extended to find the greatest common divisor of two polynomials whose coefficients are elements of a field</p></li>
+<li><p>The Euclidean algorithm can be extended to find the greatest common divisor of two polynomials whose coefficients are elements of a field.</p></li>
 </ul>
-</div><div class="ld-slide" id="arithmetic-in-gf-2-3-addition">
-<h2>Arithmetic in <span class="math">\(GF(2^3)\)</span>: Addition</h2>
+</div><div class="ld-slide" id="arithmetic-in-gf-2-3-addition-by-means-of-xor">
+<h2>Arithmetic in <span class="math">\(GF(2^3)\)</span>: Addition (by means of XOR)</h2>
 <table class="align-center">
 <tbody>
 <tr><td></td>
@@ -1573,6 +1686,10 @@ x^{10} + x^4 +x^2 +1
 </tr>
 </tbody>
 </table>
+<aside class="admonition small">
+<p class="admonition-title">Note</p>
+<p>The number of occurences of the nonzero integers is uniform for multiplication. (In particular when compared to <span class="math">\(Z_8\)</span>)</p>
+</aside>
 </div><div class="ld-slide" id="arithmetic-in-gf-2-3-additive-and-multiplicative-inverses">
 <h2>Arithmetic in <span class="math">\(GF(2^3)\)</span>: Additive and Multiplicative Inverses</h2>
 <table class="align-center">
@@ -1615,8 +1732,30 @@ x^{10} + x^4 +x^2 +1
 </tr>
 </tbody>
 </table>
-</div><div class="ld-slide" id="polynomial-arithmetic-modulo-x-3-x-1-addition">
-<h2>Polynomial Arithmetic Modulo <span class="math">\((x^3 + x + 1)\)</span> - Addition</h2>
+</div><div class="ld-slide" id="polynomial-arithmetic-in-gf-2-3">
+<h2>Polynomial Arithmetic in <span class="math">\(GF(2^3)\)</span></h2>
+<p>To construct the finite field <span class="math">\(GF(2^3)\)</span>, we need to chose an irreducible polynomial of degree 3. I.e., either <span class="math">\((x^3+x^2+1)\)</span> or  <span class="math">\((x^3+x+1)\)</span>.</p>
+<div class="smaller docutils container">
+<p>With multiplications modulo x^3 + x + 1, we have only the following eight polynomials in the set of polynomials over <span class="math">\(GF(2)\)</span>:</p>
+<div class="math">
+\begin{equation*}
+0, 1, x, x^2, x+1, x^2 + 1, x^2 + x, x^2 + x + 1
+\end{equation*}
+</div>
+</div>
+<aside class="admonition incremental small">
+<p class="admonition-title">Note</p>
+<p>AES performs the arithmetic in the finite field <span class="math">\(GF(2^8)\)</span> with the irreducible polynomial:</p>
+<div class="math">
+\begin{equation*}
+m(x) = x^8 + x^4 + x^3 + x +1
+\end{equation*}
+</div>
+</aside>
+</div><div class="ld-slide" id="polynomial-arithmetic-in-gf-2-3-modulo-x-3-x-1">
+<h2>Polynomial Arithmetic in <span class="math">\(GF(2^3)\)</span> Modulo <span class="math">\((x^3 + x + 1)\)</span></h2>
+<div class="section" id="addition">
+<h3>Addition</h3>
 <table class="align-center small">
 <tbody>
 <tr><td></td>
@@ -1731,8 +1870,10 @@ x^{10} + x^4 +x^2 +1
 </tr>
 </tbody>
 </table>
-</div><div class="ld-slide" id="arithmetic-in-gf-2-3-multiplication-modulo-x-3-x-1">
-<h2>Arithmetic in <span class="math">\(GF(2^3)\)</span>: Multiplication - Modulo <span class="math">\((x^3 + x + 1)\)</span></h2>
+</div></div><div class="ld-slide" id="polynomial-arithmetic-in-gf-2-3-modulo-x-3-x-1-1">
+<h2>Polynomial Arithmetic in <span class="math">\(GF(2^3)\)</span> Modulo <span class="math">\((x^3 + x + 1)\)</span></h2>
+<div class="section" id="multiplication">
+<h3>Multiplication</h3>
 <table class="align-center small">
 <tbody>
 <tr><td></td>
@@ -1848,6 +1989,27 @@ x^{10} + x^4 +x^2 +1
 </tbody>
 </table>
 <!-- replacements, e.g., 5 == x^2+1 -->
+</div></div><div class="ld-slide" id="multiplication-in-gf-2-n">
+<h2>Multiplication in <span class="math">\(GF(2^n)\)</span></h2>
+<ul class="simple">
+<li><p>No simple operation will achieve multiplication in <span class="math">\(GF(2^n)\)</span>.</p></li>
+<li><p>However, a reasonable straightforward technique is available.</p></li>
+</ul>
+<aside class="admonition admonition-example-multiplication-in-math-gf-2-8-as-used-by-aes">
+<p class="admonition-title">&quot;Example: Multiplication in <span class="math">\(GF(2^8)\)</span> as used by AES&quot;</p>
+<p>Observation: <span class="math">\(x^8\;mod\; m(x) = [m(x)-x^8] = x^4 +x^3 +x +1\)</span></p>
+<p>It follows that multiplication by x (i.e., 00000010) can be implemented as a 1-bit left shift followed by a condition bitwise XOR with 00011011:</p>
+<div class="math">
+\begin{equation*}
+x \times f(x) =
+\begin{cases}
+    (b_6b_5b_5b_4b_3b_2b_1b_00) &amp; if b_7 = 0\\
+    (b_6b_5b_5b_4b_3b_2b_1b_00) \oplus 0001 1011 &amp; if b_7 = 1\\
+\end{cases}
+\end{equation*}
+</div>
+<p>Multiplication by a higher power of x can be achieved by repeated application of the previous equation. By adding intermediate results, multiplication by any constant in <span class="math">\(GF(2^n)\)</span> can be achieved.</p>
+</aside>
 </div><div class="ld-slide" id="computational-considerations">
 <h2>Computational Considerations</h2>
 <ul>

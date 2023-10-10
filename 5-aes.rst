@@ -33,40 +33,58 @@ Advanced Encryption Standard (AES)
 Finite Field Arithmetic (Recap)
 -------------------------------
 
-- In the Advanced Encryption Standard (AES) all operations are performed on 8-bit bytes
-  
-  AES uses the irreducible polynomial :math:`x^8 + x^4 + x^3 +x +1` 
+.. class:: incremental
 
-- The arithmetic operations of addition, multiplication, and division are performed over the finite field :math:`GF(2^8)`
-- A field is a set in which we can do addition, subtraction, multiplication, and division without leaving the set
-- Division is defined with the following rule:  :math:`a/b = a(b^{-1})`
--  An example of a finite field (one with a finite number of elements) is the set :math:`Z_p` consisting of all the integers :math:`\lbrace 0,1,....,p-1 \rbrace`, where p is a prime number and in which arithmetic is carried out modulo :math:`p`
-
-
+- A field is a set in which we can do addition, subtraction, multiplication, and division without leaving the set.
+- Division is defined with the following rule:  :math:`a/b = a(b^{-1})`.
+-  An example of a finite field (one with a finite number of elements) is the set :math:`Z_p` consisting of all the integers :math:`\lbrace 0,1,....,p-1 \rbrace`, where p is a prime number and in which arithmetic is carried out modulo :math:`p`.
 
 
 Finite Field Arithmetic (Recap)
 --------------------------------
 
-.. class::incremental
+.. class:: incremental
 
-- For convenience and for implementation efficiency, we would like to work with integers that fit exactly into a given number of bits with no wasted bit patterns
+  - For convenience and for implementation efficiency, we would like to work with integers that fit exactly into a given number of bits with no wasted bit patterns.
   
-  • Integers in the range 0 through :math:`2^n – 1`, which fit into an n-bit word.
+    • Integers in the range 0 through :math:`2^n – 1`, which fit into an n-bit word.
 
-- If one of the operations used in the algorithm is division, then we need to work in arithmetic defined over a field.
+  - If one of the operations used in the algorithm is division, then we need to work in arithmetic defined over a field.
   
-  • Division requires that each nonzero element has a multiplicative inverse
+    • Division requires that each nonzero element has a multiplicative inverse.
 
-- The set of such integers, :math:`Z_{2^n}`, using modular arithmetic, is not a field
+  - The set of such integers, :math:`Z_{2^n}`, using modular arithmetic, is not a field!
   
-  • For example, the integer 2 has no multiplicative inverse in :math:`Z_{2^n}`, that is, there is no integer b, such that :math:`2b\; mod\; 2^n = 1`
+    • For example, the integer 2 has no multiplicative inverse in :math:`Z_{2^n}`, that is, there is no integer b, such that :math:`2b\; mod\; 2^n = 1`
 
-- A finite field containing :math:`2^n` elements is referred to as :math:`GF(2^n)`.
+  - A finite field containing :math:`2^n` elements is referred to as :math:`GF(2^n)`.
 
   .. container:: hint
 
     Every polynomial in :math:`GF(2^n)` can be represented by an n-bit number.
+
+
+Finite Field Arithmetic for AES
+--------------------------------
+
+- In the Advanced Encryption Standard (AES) all operations are performed on 8-bit bytes
+    
+- The arithmetic operations of addition, multiplication, and division are performed over the finite field :math:`GF(2^8)`
+
+  AES uses the irreducible polynomial :math:`m(x) = x^8 + x^4 + x^3 +x +1` 
+
+
+AES Key Elements
+----------------
+
+- AES uses a fixed block size of 128 bits.
+- AES operates on a 4x4 column-major order array of 16 bytes/128 bits: :math:`b_0,b_1,\dots,b_15` termed the state:
+  
+  .. math::
+
+    \begin{bmatrix}b_{0}&b_{4}&b_{8}&b_{12}\\b_{1}&b_{5}&b_{9}&b_{13}\\b_{2}&b_{6}&b_{10}&b_{14}\\b_{3}&b_{7}&b_{11}&b_{15}\end{bmatrix}
+    
+
 
 
 AES Encryption Process
@@ -91,8 +109,8 @@ AES Parameters
     Expanded Key Size (words/bytes), 44/176, 52/208, 60/240
 
 
-AES Encryption and Decryption Process
----------------------------------------
+AES Encryption and Decryption Process (Key Size 128bits)
+--------------------------------------------------------
 
 .. image:: 5-aes_encryption_and_decryption.svg
     :width: 1325px
@@ -107,7 +125,7 @@ AES Detailed Structure
 
 .. class:: incremental
 
-- The key that is provided as input is expanded into an array of forty-four 32-bit words, w[i].
+- The key that is provided as input is expanded into an array of forty-four 32-bit words, :math:`w[i]` if 128 bits are used for the keysize.
 
 - The cipher begins and ends with an AddRoundKey stage.
 - Can view the cipher as alternating operations of XOR encryption (AddRoundKey) of a block, followed by scrambling of the block (the other three stages), followed by XOR encryption, and so on.
@@ -121,9 +139,9 @@ AES Uses Four Different Stages
 -------------------------------
 
 :Substitute bytes: uses an S-box to perform a byte-by-byte substitution of the block
-:ShiftRows: a simple permutation
-:MixColumns: a substitution that makes use of arithmetic over GF(28)
-:AddRoundKey: a simple bitwise XOR of the current block with a portion of the expanded key
+:ShiftRows: is a simple permutation.
+:MixColumns: is a substitution that makes use of arithmetic over :math:`GF(2^8)`.
+:AddRoundKey: is a simple bitwise XOR of the current block with a portion of the expanded key.
 
 
 AES Substitute byte transformation
@@ -200,9 +218,9 @@ AES Inverse S-box
 S-Box Rationale
 ----------------
 
-- The S-box is designed to be resistant to known cryptanalytic attacks
-- The Rijndael developers sought a design that has a low correlation between input bits and output bits and the property that the output is not a linear mathematical function of the input
-- The nonlinearity is due to the use of the multiplicative inverse in the construction of the S-box
+- The S-box is designed to be resistant to known cryptanalytic attacks.
+- The Rijndael developers sought a design that has a low correlation between input bits and output bits and the property that the output is not a linear mathematical function of the input.
+- The nonlinearity is due to the use of the multiplicative inverse in the construction of the S-box.
 
 
 
@@ -222,11 +240,11 @@ Shift Row Transformation - Rationale
 
 .. class:: incremental
     
-- The State, as well as the cipher input and output, is treated as an array of four 4-byte columns
-- On encryption, the first 4 bytes of the plaintext are copied to the first column of State, and so on
-- The round key is applied to State column by column
-- Thus, a row shift moves an individual byte from one column to another, which is a linear distance of a multiple of 4 bytes
-- Transformation ensures that the 4 bytes of one column are spread out to four different columns
+- The State, as well as the cipher input and output, is treated as an array of four 4-byte columns.
+- On encryption, the first 4 bytes of the plaintext are copied to the first column of State, and so on.
+- The round key is applied to State column by column.
+- Thus, a row shift moves an individual byte from one column to another, which is a linear distance of a multiple of 4 bytes.
+- Transformation ensures that the 4 bytes of one column are spread out to four different columns.
 
 Mix Column Transformation
 ---------------------------
@@ -236,6 +254,59 @@ Mix Column Transformation
     :alt: Mix column transformation
     :align: center
     :width: 1500px 
+
+Inverse Mix Column Transformation
+---------------------------------
+
+
+.. image:: 5-aes_inv_mix_column_transformation.svg
+    :alt: Mix column transformation
+    :align: center
+    :width: 1500px 
+
+
+Mix Colum Transformation - Example
+-----------------------------------
+
+.. container:: two-columns smaller
+    
+    .. csv-table:: Given
+        :class: hexdump small
+
+        87, F2, 4D, 97
+        6E, 4C, 90, EC
+        46, E7, 4A, C3
+        A6, 8C, D8, 95
+
+    .. csv-table:: Result
+        :class: hexdump small
+
+        47,40,A3,4C
+        37,D4,70,9F
+        94,E4,3A,42 
+        ED,A5,A6,BC
+        
+.. container:: smaller
+
+    Example computation of :math:`S'_{0,0}`:
+
+    .. math::
+        
+        (02 \times 87) \oplus (03 \times 6E) \oplus (46) \oplus (A6) = 47.
+
+.. admonition:: Hints
+    :class: smaller
+    
+    .. math::
+
+        \begin{matrix}
+        (02 \times 87) = (0000\,1110) \oplus (0001\,1011) = & (0001\,0101) \\
+        (03 \times 6E) = 6E \oplus (02 \times 6E) = (0110\,1110) \oplus (1101\, 1100)  = & (1011\,0010) \\
+        46 = & (0100\,0110) \\
+        A6 = & (1010\,0110) \\
+        & \overline{  (0100\, 0111) }
+        \end{matrix}
+
 
 Mix Column Transformation - Rationale
 --------------------------------------
@@ -276,13 +347,13 @@ Input for a Single AES Round
 AES Key Expansion
 ------------------
 
-- Takes as input a four-word (16 byte) key and produces a linear array of 44 words (176) bytes
+- Takes as input a four-word (16 byte) key and produces a linear array of 44 words (176) bytes.
 - This is sufficient to provide a four-word round key for the initial `AddRoundKey` stage and each of the 10 rounds of the cipher.
-- Key is copied into the first four words of the expanded key
+- Key is copied into the first four words of the expanded key.
 - The remainder of the expanded key is filled in four words at a time.
 - Each added word :math:`w[i]` depends on the immediately preceding word, :math:`w[i – 1]`, and the word four positions back, :math:`w[i – 4]`
-- In three out of four cases a simple XOR is used
-- For a word whose position in the w array is a multiple of 4, a more complex function is used 
+- In three out of four cases a simple XOR is used.
+- For a word whose position in the w array is a multiple of 4, a more complex function :math:`g` is used.
 
 
 AES Key Expansion - Visualized
@@ -445,8 +516,8 @@ Equivalent Inverse Cipher
 
 AES decryption cipher is not identical to the encryption cipher.
 
-• The sequence of transformations differs although the form of the key schedules is the same
-• Has the disadvantage that two separate software or firmware modules are needed for applications that require both encryption and decryption
+• The sequence of transformations differs although the form of the key schedules is the same.
+• Has the disadvantage that two separate software or firmware modules are needed for applications that require both encryption and decryption.
 
 .. class:: incremental
 
@@ -454,8 +525,8 @@ AES decryption cipher is not identical to the encryption cipher.
 
   .. class:: incremental
 
-    1. The first two stages of the decryption round need to be interchanged
-    2. The second two stages of the decryption round need to be interchanged
+    1. The first two stages of the decryption round need to be interchanged.
+    2. The second two stages of the decryption round need to be interchanged.
 
 
 Interchanging `InvShiftRows` and `InvSubBytes`
@@ -473,10 +544,15 @@ Interchanging `InvShiftRows` and `InvSubBytes`
 Interchanging `AddRoundKey` and `InvMixColumns`
 ------------------------------------------------
 
-- The transformations `AddRoundKey` and `InvMixColumns` do not alter the sequence of bytes in State
-- If we view the key as a sequence of words, then both AddRoundKey and InvMixColumns operate on State one column at a time
-- These two operations are linear with respect to the column input
+- The transformations `AddRoundKey` and `InvMixColumns` do not alter the sequence of bytes in State.
+- If we view the key as a sequence of words, then both AddRoundKey and InvMixColumns operate on State one column at a time.
+- These two operations are linear with respect to the column input.
 
+  That is, for a given State :math:`S_i` and a given round key :math:`w_j`:
+  
+  .. math:: 
+
+    InvMixColumns(S_i \oplus w_j) = InvMixColumns(S_i) \oplus InvMixColumns(w_j)
 
 Equivalent Inverse Cipher
 --------------------------
@@ -492,10 +568,10 @@ Implementation Aspects
 
 AES can be implemented very efficiently on an 8-bit processor:
  
-:AddRoundKey: is a bytewise XOR operation
-:ShiftRows: is a simple byte-shifting operation
-:SubBytes: operates at the byte level and only requires a table of 256 bytes
-:MixColumns: requires matrix multiplication in the field :math:`GF(2^8)`, which means that all operations are carried out on bytes
+:AddRoundKey: is a bytewise XOR operation.
+:ShiftRows: is a simple byte-shifting operation.
+:SubBytes: operates at the byte level and only requires a table of 256 bytes.
+:MixColumns: requires matrix multiplication in the field :math:`GF(2^8)`, which means that all operations are carried out on bytes.
 
 
 Implementation Aspects

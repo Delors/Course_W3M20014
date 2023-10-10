@@ -28,7 +28,9 @@ Block Ciphers and the Data Encryption Standard
 Stream Cipher
 --------------
 
-- Encrypts a digital data stream one bit or one byte at a time. Examples: Autokeyed Vigenère cipher and  Vernam cipher
+- Encrypts a digital data stream one bit or one byte at a time. 
+  
+  Examples: Autokeyed Vigenère cipher and  Vernam cipher
 
 - In the ideal case, a one-time pad version of the Vernam cipher would be used, in which the keystream is as long as the plaintext bit stream.
 
@@ -36,18 +38,19 @@ Stream Cipher
 
        - If the cryptographic keystream is random, then this cipher is unbreakable by any means other than acquiring the keystream
 
-        .. class:: smaller
+         .. class:: smaller
 
-          • Keystream must be provided to both users in advance via some independent and secure channel
-          • This introduces insurmountable logistical problems if the intended data traffic is very large
+        • Keystream must be provided to both users in advance via some independent and secure channel
+        • This introduces insurmountable logistical problems if the intended data traffic is very large
         
 
 Stream Cipher
 --------------
 
-- For practical reasons the bit- stream generator must be implemented as an algorithmic procedure so that the cryptographic bit stream can be produced by both users
-    - It must be computationally impractical to predict future portions of the bit stream based on previous portions of the bit stream.
-    - The two users need only share the generating key and each can produce the keystream.
+- For practical reasons the bit-stream generator must be implemented as an algorithmic procedure so that the cryptographic bit stream can be produced by both users.
+  
+  - It must be computationally impractical to predict future portions of the bit stream based on previous portions of the bit stream.
+  - The two users need only share the generating key and each can produce the keystream.
 
 
 Block Cipher
@@ -67,6 +70,7 @@ Stream Cipher vs. Block Cipher
 
 .. image:: 3-block_cipher.svg
     :align: right
+    :class: incremental
    
 
 General n-bit-n-bit Block Substitution (n = 4)
@@ -80,7 +84,9 @@ General n-bit-n-bit Block Substitution (n = 4)
 Encryption and Decryption Tables for Substitution Cipher
 ---------------------------------------------------------
 
-.. list-table:: Encryption Table
+**Encryption Table**
+
+.. list-table:: 
     :align: center
     :class: small
         
@@ -119,10 +125,11 @@ Encryption and Decryption Tables for Substitution Cipher
       - 0000
       - 0111
 
+**Decryption Table**
 
-.. list-table:: Decryption Table
+.. list-table:: 
     :align: center
-    :class: small
+    :class: small incremental
 
     * - Ciphertext
       - 0000
@@ -181,14 +188,16 @@ Feistel Cipher - Background
 
 - This is a practical application of a proposal by Claude Shannon to develop a product cipher that alternates confusion and diffusion functions.
 
-- It is the structure used by many significant symmetric block ciphers currently in use
+- It is the structure used by many significant symmetric block ciphers currently in use.
 
 
-Diffusion and Confusion
-------------------------
+    .. container:: incremental
 
-- Terms introduced by Claude Shannon to capture the two basic building blocks for any cryptographic system.
-- Shannon’s concern was to thwart cryptanalysis based on statistical analysis.
+        *Diffusion and Confusion*
+
+        - Terms introduced by Claude Shannon to capture the two basic building blocks for any cryptographic system.
+        - Shannon’s concern was to thwart cryptanalysis based on statistical analysis.
+
 
 **Diffusion** and Confusion
 ---------------------------
@@ -197,7 +206,7 @@ Diffusion and Confusion
 
     - The statistical structure of the plaintext is dissipated into long-range statistics of the ciphertext; i.e., makes the statistical relationship between the plaintext and ciphertext as complex as possible.
     - This is achieved by having each plaintext digit affect the value of many ciphertext digits.
-    - Diffusion can be achieved, e.g., by permutations.
+    - Diffusion can be achieved, e.g., by *permutations*.
 
 Diffusion and **Confusion**
 ---------------------------
@@ -207,7 +216,7 @@ Diffusion and **Confusion**
 
     - Seeks to make the relationship between the statistics of the ciphertext and the value of the encryption key as complex as possible; i.e., a single change to the encrption key should affect many bits of the ciphertext.
     - Even if the attacker can get some handle on the statistics of the ciphertext, the way in which the key was used to produce that ciphertext is so complex as to make it difficult to deduce the key
-    - Confusion can be realized, e.g., by substitutions.
+    - Confusion can be realized, e.g., by *substitutions*.
 
 
 
@@ -284,9 +293,20 @@ DES General Design
 DES Round Function
 -------------------
 
+.. note::
+    :class: small
+
+    R is the right half of the message.
+
+    E is an expansion function.
+
+    S are substitution boxes.
+
+    P is a permutation.
+
 .. image:: 3-des-design-round_function.svg
     :width: 840px
-    :align: center
+    :align: left
 
 
 DES Example
@@ -316,7 +336,9 @@ DES Example
     16, 2921080b13143025, 75e8fd8f, 25896490
     IP-1, , da02ce3a, 89ecac3b
 
-DES subkeys are shown as eight 6-bit values in hex format.
+.. class:: small
+
+DES subkeys are shown as eight 6-bit values in hex format (max value for :math:`k_i` is   :math:`2^6-1=63=0x3F`)
 
 
 DES Example - Avalanche Effect in DES
@@ -424,9 +446,9 @@ Strength of DES - Timing Attacks
 
 .. class:: incremental
 
-  - One in which information about the key or the plaintext is obtained by observing how long it takes a given implementation to perform decryptions on various ciphertexts
-  - Exploits the fact that an encryption or decryption algorithm often takes slightly different amounts of time on different inputs
-  - So far it appears unlikely that this technique will ever be successful against DES or more powerful symmetric ciphers such as triple DES and AES
+  - One in which information about the key or the plaintext is obtained by observing how long it takes a given implementation to perform decryptions on various ciphertexts.
+  - Exploits the fact that an encryption or decryption algorithm often takes slightly different amounts of time on different inputs.
+  - So far it appears unlikely that this technique will ever be successful against DES or more powerful symmetric ciphers such as triple DES and AES.
 
 
 Block Cipher Design Principles - Number of Rounds
@@ -434,9 +456,9 @@ Block Cipher Design Principles - Number of Rounds
 
 .. class:: incremental
 
-  - The greater the number of rounds, the more difficult it is to perform cryptanalysis
-  - In general, the criterion should be that the number of rounds is chosen so that known cryptanalytic efforts require greater effort than a simple brute-force key search attack
-  - If DES had 15 or fewer rounds, differential cryptanalysis would require less effort than a brute-force key search
+  - The greater the number of rounds, the more difficult it is to perform cryptanalysis.
+  - In general, the criterion should be that the number of rounds is chosen so that known cryptanalytic efforts require greater effort than a simple brute-force key search attack.
+  - If DES had 15 or fewer rounds, differential cryptanalysis would require less effort than a brute-force key search.
 
 
 Block Cipher Design Principles - Function F
@@ -444,9 +466,9 @@ Block Cipher Design Principles - Function F
 
 .. class:: incremental
 
-  - The heart of a Feistel block cipher is the function F
-  - The more nonlinear F, the more difficult any type of cryptanalysis will be
-  - The algorithm should have good avalanche properties
+  - The heart of a Feistel block cipher is the function F.
+  - The more nonlinear F, the more difficult any type of cryptanalysis will be.
+  - The algorithm should have good avalanche properties.
 
 .. admonition:: Strict Avalanche Criterion (SAC)
     :class: incremental smaller
@@ -472,5 +494,5 @@ Block Cipher Design Principles - Key Schedule Algorithm
 
   - With any Feistel block cipher, the key is used to generate one subkey for each round
   - In general, we would like to select subkeys to maximize the difficulty of deducing individual subkeys and the difficulty of working back to the main key.
-  - It is suggested that, at a minimum, the key schedule should guarantee key/ciphertext Strict Avalanche Criterion and Bit Independence Criterion
+  - It is suggested that, at a minimum, the key schedule should guarantee key/ciphertext **Strict Avalanche Criterion** and **Bit Independence Criterion**
 
