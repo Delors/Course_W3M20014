@@ -623,7 +623,7 @@ a { text-decoration: none; }
 <dd class="lecturer"><p><strong>Prof. Dr. Michael Eichberg</strong></p>
 </dd>
 <dt class="version">Version<span class="colon">:</span></dt>
-<dd class="version">2023-10-10</dd>
+<dd class="version">2023-10-11</dd>
 <dt class="based-on">Based on<span class="colon">:</span></dt>
 <dd class="based-on"><p><em>Cryptography and Network Security - Principles and Practice, 8th Edition, William Stallings</em></p>
 </dd>
@@ -1762,7 +1762,7 @@ fc8923ee501a7d207ab670686839996b</p></td>
 <li><p>The transformations <cite>AddRoundKey</cite> and <cite>InvMixColumns</cite> do not alter the sequence of bytes in State.</p></li>
 <li><p>If we view the key as a sequence of words, then both AddRoundKey and InvMixColumns operate on State one column at a time.</p></li>
 <li><p>These two operations are linear with respect to the column input.</p>
-<p>That is, for a given State S_i and a given round key w_j:</p>
+<p>That is, for a given State <span class="math">\(S_i\)</span> and a given round key <span class="math">\(w_j\)</span>:</p>
 <div class="math">
 \begin{equation*}
 InvMixColumns(S_i \oplus w_j) = InvMixColumns(S_i) \oplus InvMixColumns(w_j)
