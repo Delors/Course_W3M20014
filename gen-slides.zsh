@@ -4,10 +4,10 @@ function update_html_if_necessary() {
     html_file="$1.html"   
     if [[ ! -f "$html_file" || "$html_file" -ot "$1" ]]
     then
-        echo "generating:" $html_file 
+        echo "$(date) updating:" $html_file 
         rst2ld/rst2ld.py "$1" > "$html_file"       
     else
-        echo "up to date:" $html_file 
+        # [debug] echo "up to date:" $html_file 
     fi
 }
 
@@ -19,27 +19,14 @@ function update_all_html_if_necessary() {
     done
 }
 
-update_all_html_if_necessary \
-    "0-introduction.rst" \
-    "1-introduction_to_number_theory.rst" \
-    "2-classical_encryption_techniques.rst" \
-    "3-block_ciphers.rst" \
-    "4-finite_fields.rst" \
-    "5-aes.rst" \
-    "6-block_cipher_operations.rst" \
-    "7-stream_ciphers.rst" \
-    "8-public_key_cryptography.rst" \
-    "9-hash_functions.rst"
-
-
 function update_pdf_if_necessary() {
     pdf_file="$1.pdf"   
     if [[ ! -f "$pdf_file" || "$pdf_file" -ot "$1" ]]
     then
-        echo "generating:" $pdf_file 
+        echo "$(date) updating:" $pdf_file 
         /Users/Michael/Library/Python/3.12/bin/rst2pdf "$1" -o "$pdf_file"       
     else
-        echo "up to date:" $pdf_file 
+        #[debug] echo "up to date:" $pdf_file 
     fi
 }
 
@@ -51,9 +38,29 @@ function update_all_pdf_if_necessary() {
     done
 }
 
-update_all_pdf_if_necessary \
-    "1-introduction_to_number_theory-exercise.rst" \
-    "2-classical_encryption_techniques-exercise.rst" \
-    "3-block_ciphers-exercise.rst" \
-    "4-finite_fields-exercise.rst" \
-    "5-aes-exercise.rst"
+echo "Checks every couple of seconds if some file needs to be regenarated."
+echo "Press CTRL+C to terminate"
+while true
+do
+    update_all_html_if_necessary \
+        "0-introduction.rst" \
+        "1-introduction_to_number_theory.rst" \
+        "2-classical_encryption_techniques.rst" \
+        "3-block_ciphers.rst" \
+        "4-finite_fields.rst" \
+        "5-aes.rst" \
+        "6-block_cipher_operations.rst" \
+        "7-stream_ciphers.rst" \
+        "8-public_key_cryptography.rst" \
+        "9-hash_functions.rst"
+
+    update_all_pdf_if_necessary \
+        "1-introduction_to_number_theory-exercise.rst" \
+        "2-classical_encryption_techniques-exercise.rst" \
+        "3-block_ciphers-exercise.rst" \
+        "4-finite_fields-exercise.rst" \
+        "5-aes-exercise.rst" \
+        "6-block_cipher_operations-exercise.rst"
+
+    sleep 3
+done

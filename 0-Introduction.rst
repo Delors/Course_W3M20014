@@ -9,10 +9,20 @@ IT-Security Cryptography and Secure Communications
 
 **Prof. Dr. Michael Eichberg**
 
-:since Oct. 2023: Professor at DHBW Mannheim
-:4 years: Federal Criminal Police Office
-:12 years: Postdoc at Software Technology Group - TU Darmstadt
-:2007: PhD (Dr. Ing.) at Software Technology Group - TU Darmstadt
+.. container:: small
+
+    michael.eichberg@dhbw-mannheim.de
+
+.. container:: smaller
+
+    :since Oct. 2023: Professor at DHBW Mannheim
+    :4 years: Federal Criminal Police Office
+    :12 years: Postdoc at Software Technology Group - TU Darmstadt
+    :2007: PhD (Dr. Ing.) at Software Technology Group - TU Darmstadt
+
+
+    :course material: https://delors.github.io
+    :sources: https://github.com/Delors/Course_W3M20014/
 
 .. image:: logo.svg
     :alt: DHBW CAS Logo
