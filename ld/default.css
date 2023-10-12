@@ -113,6 +113,10 @@ table.no-borders :is(td,th)  {
 }
 
 
+table.header-column td:first-child {
+    font-weight: bold;
+}
+
 
 .enable-copy-to-clipboard {
     padding: 25px;

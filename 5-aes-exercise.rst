@@ -67,7 +67,7 @@ For this exercise let's assume that we have a 128 bit key.
 
     ``54 59 0B 1A``
    
-   Perform the step substitute bytes; i.e., apply the s-box transformation.
+   Perform the step *substitute bytes*; i.e., apply the s-box transformation.
 
 
   .. Solution:
@@ -76,7 +76,7 @@ For this exercise let's assume that we have a 128 bit key.
       AB 30 AF C7
       20 CB 2B A2
 
-3. Perform the shift rows transformation on your previous result.
+3. Perform the *shift rows transformation* on your previous result.
 
    .. Solution:
       63 EB 9F A0
