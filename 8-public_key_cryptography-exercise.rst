@@ -5,6 +5,7 @@
 .. |date| date::
 
 .. image:: logo.png
+    :width: 4cm
     :align: right
 
 

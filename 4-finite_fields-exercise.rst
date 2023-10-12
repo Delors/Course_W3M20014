@@ -66,7 +66,7 @@ IT-Security Cryptography and Secure Communications
 
 3. In :math:`GF(2^8)`
  
-  Let's assume that 7 and 3 are representative of the bit patterns of the coefficients of the polynomial.
+  Let's assume that 7 and 3 are representatives of the bit patterns of the coefficients of the polynomial.
   
   - Calculate: :math:`7d - 3d`
   - Calculate: :math:`7d + 3d`

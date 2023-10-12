@@ -84,4 +84,8 @@ IT-Security Cryptography and Secure Communications
 
             :math:`7^6\, mod\, 9 = 1` 
 
-7. Execute the Miller-Rabin Algorithm.... TODO
+7. Execute the Miller-Rabin Algorithm for n = 37.
+
+  .. solution: n= 37, s = 2 , d = 9, a = 3 x = 36 
+  .. y = 1
+  .. x = 1 , y = 1

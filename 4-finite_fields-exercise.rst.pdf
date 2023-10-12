@@ -348,7 +348,7 @@ endobj
 endobj
 46 0 obj
 <<
-/Author () /CreationDate (D:20231010235604-01'00') /Creator (\(unspecified\)) /Keywords () /ModDate (D:20231010235604-01'00') /Producer (ReportLab PDF Library - www.reportlab.com) 
+/Author () /CreationDate (D:20231012190407-01'00') /Creator (\(unspecified\)) /Keywords () /ModDate (D:20231012190407-01'00') /Producer (ReportLab PDF Library - www.reportlab.com) 
   /Subject (\(unspecified\)) /Title () /Trapped /False
 >>
 endobj
@@ -369,7 +369,7 @@ endobj
 endobj
 50 0 obj
 <<
-/Length 8984
+/Length 8985
 >>
 stream
 1 0 0 1 0 0 cm  BT /F1 12 Tf 14.4 TL ET
@@ -451,7 +451,7 @@ q
 1 0 0 1 91.03937 3 cm
 q
 0 0 0 rg
-BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL (2023-10-10) Tj T* ET
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL (2023-10-12) Tj T* ET
 Q
 Q
 q
@@ -913,7 +913,7 @@ q
 1 0 0 1 20 54 cm
 q
 0 0 0 rg
-BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL (Let's assume that 7 and 3 are representative of the bit patterns of the coefficients of the polynomial.) Tj T* ET
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL (Let's assume that 7 and 3 are representatives of the bit patterns of the coefficients of the polynomial.) Tj T* ET
 Q
 Q
 q
@@ -1088,12 +1088,12 @@ xref
 0001781155 00000 n 
 0001781294 00000 n 
 0001781355 00000 n 
-0001790391 00000 n 
-0001790432 00000 n 
+0001790392 00000 n 
+0001790433 00000 n 
 trailer
 <<
 /ID 
-[<27ab563d8f25abaa29c9759fa41c2920><27ab563d8f25abaa29c9759fa41c2920>]
+[<ab064bc1fa6318685187995038de5b1f><ab064bc1fa6318685187995038de5b1f>]
 % ReportLab generated PDF document -- digest (http://www.reportlab.com)
 
 /Info 46 0 R
@@ -1101,5 +1101,5 @@ trailer
 /Size 53
 >>
 startxref
-1790466
+1790467
 %%EOF

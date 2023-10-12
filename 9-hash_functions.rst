@@ -232,7 +232,48 @@ Passwords are often created using one or more of the following sources:
 - Context Information
 - Password Generators
 
-A good source for studying the construction of passwords are so-called *leaks*.
+A good source for studying the construction of passwords are so-called *leaks* and *lists with common password*.
+
+Common Password Lists
+----------------------
+
+.. container:: three-columns
+
+    123456
+    password
+    123456789
+    12345
+    12345678
+    qwerty
+    1234567
+    111111
+    1234567890
+    123123
+    abc123
+    1234
+    password1
+    iloveyou
+    1q2w3e4r
+    000000
+    qwerty123
+    zaq12wsx
+    dragon
+    sunshine
+    princess
+    letmein
+    654321
+    monkey
+    27653
+    1qaz2wsx
+    123321
+    qwertyuiop
+    superman
+    asdfghjkl
+
+Source: `Becker's Health IT <https://www.beckershospitalreview.com/cybersecurity/30-most-common-passwords-of-2023.html>`__
+
+- The lists typically don't change much year-over-year.
+- The methodology is often questionable.
 
 
 Challenges When Recovering Passwords (Hashrates)
@@ -499,5 +540,40 @@ Avoids human bias.
 
                 Gospel
 
-                
-    
+SePass: Semantic Password Guessing Using k-nn Similarity Search in Word Embeddings
+-----------------------------------------------------------------------------------
+
+Avoids human bias.
+
+**Example**
+
+.. container:: two-columns smaller
+
+    .. container::
+
+        Given:
+
+            Luke2017
+
+            John1976
+
+            01Mark!
+
+    .. container:: 
+
+        ("Obvious") Base Word Candidates:
+
+            .. container:: incremental
+
+                Leia
+        
+                Darth Vader
+
+                Palpatine                
+
+SePass: Conceptual
+------------------
+
+.. image:: 9-sepass_conceptual_overview.svg
+    :align: center
+    :width: 1650px

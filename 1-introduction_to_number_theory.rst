@@ -10,6 +10,7 @@
 .. |date| date::
 
 .. role:: incremental
+.. role:: ger
 
 
 Introduction to Number Theory
@@ -127,7 +128,7 @@ Procedure for determing the greatest common divisor (GCD) of two positive intege
 
 .. admonition:: Definition
 
-    Two integers are **relatively prime** if their only common positive integer factor is 1 (e.g. 7 and 9, but also 3 and 8).
+    Two integers are **relatively prime** :ger:`relativ prim` if their only common positive integer factor is 1 (e.g. 7 and 9, but also 3 and 8).
 
 
 Greatest Common Divisor (:ab:`GCD`)
@@ -273,6 +274,8 @@ Properties of Congruence
 ------------------------
 
 Congruences have the following properties:
+
+.. class:: incremental
 
 1. :math:`a \equiv b (mod\; n)` if :math:`n|(a-b)`
 2. :math:`a \equiv b (mod\; n) \Rightarrow b \equiv a (mod\; n)`
@@ -475,7 +478,7 @@ Properties of Modular Arithmetic for Integers in :math:`Z_n`
 .. class:: incremental
 
     :Additive Inverse (-w):
-        For each :math:`w \in Z_n` there exists a zu such that :math:`w + z \equiv 0\; mod\; n`
+        For each :math:`w \in Z_n` there exists a :math:`z` such that :math:`w + z \equiv 0\; mod\; n`
 
 
 Euclidean Algorithm Revisited

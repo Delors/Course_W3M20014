@@ -25,9 +25,15 @@ function update_pdf_if_necessary() {
     then
         echo "$(date) updating:" $pdf_file 
         /Users/Michael/Library/Python/3.12/bin/rst2pdf "$1" -o "$pdf_file"       
-    else
-        #[debug] echo "up to date:" $pdf_file 
     fi
+
+    html_file="$1.html"
+    if [[ ! -f "$html_file" || "$html_file" -ot "$1" ]]
+    then
+        echo "$(date) updating:" $html_file 
+        /Users/Michael/Library/Python/3.12/bin/rst2html5.py "$1" --output="$html_file"       
+    fi
+
 }
 
 function update_all_pdf_if_necessary() {
@@ -61,6 +67,7 @@ do
         "4-finite_fields-exercise.rst" \
         "5-aes-exercise.rst" \
         "6-block_cipher_operations-exercise.rst" \
+        "7-stream_ciphers-exercise.rst" \
         "8-public_key_cryptography-exercise.rst" \
         "9-hash_functions-exercise.rst" 
 
