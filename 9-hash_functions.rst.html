@@ -11,6 +11,7 @@
 <meta content="2023_10-W3M20014-hash_functions" name="id" />
 <meta content="last-viewed" name="first-slide" />
 <title>Cryptographic Hash Functions</title>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@3.0.1/es5/tex-mml-chtml.js?config=TeX-AMS_CHTML"></script>
 <link rel="stylesheet" href="ld/normalize.css" type="text/css" />
 <style type="text/css">
 
@@ -622,18 +623,130 @@ a { text-decoration: none; }
 <dd class="lecturer"><p><strong>Prof. Dr. Michael Eichberg</strong></p>
 </dd>
 <dt class="version">Version<span class="colon">:</span></dt>
-<dd class="version">2023-10-10</dd>
+<dd class="version">2023-10-12</dd>
 <dt class="based-on">Based on<span class="colon">:</span></dt>
 <dd class="based-on"><p><em>Cryptography and Network Security - Principles and Practice, 8th Edition, William Stallings</em></p>
 </dd>
 </dl>
 <img alt="DHBW CAS Logo" class="logo" src="logo.svg" />
 </div>
-<div class="ld-slide" id="todo">
-<h2>TODO</h2>
+<div class="ld-slide" id="hash-function">
+<h2>Hash Function</h2>
+<ul class="incremental simple">
+<li><p>A hash function H accepts a variable-length block of data <span class="math">\(M\)</span> as input and produces a fixed-size result <span class="math">\(h = H(M)\)</span>.</p></li>
+<li><p>A good hash function will produce outputs that are evenly distributed and apparently random.</p></li>
+<li><p>Often used to ensure data integrity. A change to any bit in M should result with a high probability in a change of the hash value.</p></li>
+<li><p>Cryptographic hash functions are nedded for security applications.</p></li>
+<li><p>Applications:</p>
+<ul>
+<li><p>Message Authentication</p></li>
+<li><p>Digitial Signatures</p></li>
+<li><p>One-way Password Files</p></li>
+</ul>
+</li>
+</ul>
+</div><div class="ld-slide" id="security-requirements-for-a-cryptographic-hash-function-h">
+<h2>Security Requirements for a Cryptographic Hash Function H</h2>
+<dl class="field-list">
+<dt>Variable Input Size<span class="colon">:</span></dt>
+<dd><p>H can be applied to a block of data of any size.</p>
+</dd>
+<dt>Fixed Output Size<span class="colon">:</span></dt>
+<dd><p>H produces a fixed-length output</p>
+</dd>
+<dt>Efficiency<span class="colon">:</span></dt>
+<dd><p>When used for message authentication and digital signatures <span class="math">\(H(x)\)</span> is relatively easy to compute for any given <span class="math">\(x\)</span>, making both hardware and software implementations practical.</p>
+<p>vs.</p>
+<p>When used for password hashing it is hard to efficiently compute the hash even on specialized hardware (GPUs, ASICs) to thwart attackers.</p>
+</dd>
+</dl>
+</div><div class="ld-slide" id="security-requirements-for-a-cryptographic-hash-function-h-1">
+<h2>Security Requirements for a Cryptographic Hash Function H</h2>
+<dl class="field-list simple">
+<dt>Preimage resistant (one-way property)<span class="colon">:</span></dt>
+<dd><p>For any given hash value <span class="math">\(h\)</span>, it is computationally infeasible to find <span class="math">\(y\)</span> such that <span class="math">\(H(y) = h\)</span></p>
+</dd>
+<dt>Second preimage resistant (weak collision resistant)<span class="colon">:</span></dt>
+<dd><p>For any given block x, it is computationally infeasible to find <span class="math">\(y \neq x\)</span> with <span class="math">\(H(x) = H(y)\)</span></p>
+</dd>
+<dt>Collision resistant (strong collision resistant)<span class="colon">:</span></dt>
+<dd><p>It is computationally infeasible to find any pair <span class="math">\((x,y)\)</span> with <span class="math">\(x \neq y\)</span>, such that <span class="math">\(H(x) = H(y)\)</span></p>
+</dd>
+<dt>Pseudorandomness<span class="colon">:</span></dt>
+<dd><p>Output of H meets standard tests for pseudorandomness.</p>
+</dd>
+</dl>
+</div><div class="ld-slide" id="hash-function-resistance-properties-required">
+<h2>Hash Function Resistance Properties Required</h2>
+<table class="smaller">
+<thead>
+<tr><th class="head"></th>
+<th class="head"><p>Preimage Resistant</p></th>
+<th class="head"><p>Second Preimage Resistant</p></th>
+<th class="head"><p>Collision Resistant</p></th>
+<th class="head"></th>
+</tr>
+</thead>
+<tbody>
+<tr><td><p>Hash + digital signature</p></td>
+<td><p>yes</p></td>
+<td><p>yes</p></td>
+<td><p>yes</p></td>
+<td></td>
+</tr>
+<tr><td><p>Intrusion detection and virus detection</p></td>
+<td></td>
+<td><p>yes</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr><td><p>Hash + symmetric encryption</p></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr><td><p>One-way password file</p></td>
+<td><p>yes</p></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr><td><p>MAC</p></td>
+<td><p>yes</p></td>
+<td><p>yes</p></td>
+<td><p>yes</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div><div class="ld-slide" id="relationship-among-hash-function-properties">
+<h2>Relationship Among Hash Function Properties</h2>
+<img alt="9-hash_function_properties.svg" class="align-center" src="9-hash_function_properties.svg" style="width: 700px;" />
+<aside class="admonition small incremental">
+<p class="admonition-title">Note</p>
+<p>A collision attack requires less effort than a preimage or second preimage attack.</p>
+<p>This is explained by the birthday paradox. If we choose random variables from a uniform distribution in the range 0 through N-1, then the probability that a repeated element is encountered exceeds 0.5 after <span class="math">\(\sqrt{N}\)</span> choices. Hence, for an m-bit hash value, if we pick data blocks at random, we can expect to find two data blocks within <span class="math">\(\sqrt{2^m} = 2^{m/2}\)</span> attempts.</p>
+<div class="incremental small separated docutils container">
+<p>Constructing similar messages is relatively easy. If your text has 8 places where you could
+exchange a word with another one you already have <span class="math">\(2^{8}\)</span> different texts.</p>
+<p>Constructing comparable(1) messages is very(2) simple(3). If your text has 8 places where you could replace(4) a character sequence(5) with another word(6) you will(7) have <span class="math">\(2^{8}\)</span> different messages(8).</p>
+</div>
+</aside>
+</div><div class="ld-slide" id="structure-of-secure-hash-code">
+<h2>Structure of Secure Hash Code</h2>
+<img alt="9-structure_of_secure_hash_code.svg" class="align-center" src="9-structure_of_secure_hash_code.svg" style="width: 1400px;" />
+<div class="two-columns smaller docutils container">
+<p><span class="math">\(IV\)</span> = Initial Value (algorithm dependent)</p>
+<p><span class="math">\(CV_i\)</span> = Chaining variable</p>
+<p><span class="math">\(Y_i\)</span> = ith input block</p>
+<p><span class="math">\(f\)</span> = compression function</p>
+<p><span class="math">\(n\)</span> = Length of block</p>
+<p><span class="math">\(L\)</span> = Number of input blocks</p>
+<p><span class="math">\(b\)</span> = Length of input block</p>
+</div>
 </div><div class="ld-slide" id="password-recovery">
 <h2>Password Recovery</h2>
-<p class="small">Recall: A hash function takes an arbitrarily sized input and computes a fixed-length value.</p>
 <p>Passwords are often stored using hashes.</p>
 <p>Example using the md5 hash function:</p>
 <pre class="hexdump literal-block">md5 (&quot;Hello&quot;) = 8b1a9953c4611296a827abf8c47804d7
@@ -643,14 +756,14 @@ md5 (&quot;Dieses Passwort ist wirklich total sicher
       tippe es zweimal hintereinander blind
       fehlerfrei ein.&quot;)
               = 8fcf22b1f8327e3a005f0cba48dd44c8</pre>
-</div><div class="ld-slide" id="properties-of-cryptographic-hash-functions">
-<h2>Properties of Cryptographic Hash Functions</h2>
+</div><div class="ld-slide" id="usage-of-cryptographic-hash-functions">
+<h2>Usage of Cryptographic Hash Functions</h2>
 <ul class="simple">
-<li><p>given a hash h it should be hard to compute m where <span class="docutils literal">hash(m) = h</span></p></li>
-<li><p class="not-important">given m1 it should be hard to find a message m2 where <span class="docutils literal">hash(m1) = hash(m2)</span></p></li>
-<li><p class="not-important">it should be hard to find two messages m1 and m2, where <span class="docutils literal">hash(m1) = hash(m2)</span></p></li>
+<li><p>Known cryptographic hash functions: MD4, MD5, SHA-256, SHA-512, RIPE-MD, PBKDF2, …</p></li>
+<li><p>When used for password hashing the algorithms are usually applied many times to increase the runtime to make it harder for adversaries.</p></li>
+<li><p>Several hash algorithms were explicitly designed for passwort hashing to withstand common attacks. E.g., bcrypt, scrypt, Argon2</p></li>
+<li><p>Some of these algorithms are so computationally involved that they are not suitable for web applications/situations where have to authorize many users at a time. These algorithms are typically used to protect local harddisks or containers.</p></li>
 </ul>
-<p class="incremental">Known cryptographic hash functions: MD4, MD5, SHA-256, SHA-512, RIPE-MD, …</p>
 </div><div class="ld-slide" id="passwords-are-not-always-explicitly-stored">
 <h2>Passwords are not always explicitly stored</h2>
 <div class="section" id="encryption-of-containers-e-g-veracrypt">

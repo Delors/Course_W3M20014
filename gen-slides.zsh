@@ -60,7 +60,9 @@ do
         "3-block_ciphers-exercise.rst" \
         "4-finite_fields-exercise.rst" \
         "5-aes-exercise.rst" \
-        "6-block_cipher_operations-exercise.rst"
+        "6-block_cipher_operations-exercise.rst" \
+        "8-public_key_cryptography-exercise.rst" \
+        "9-hash_functions-exercise.rst" 
 
     sleep 3
 done

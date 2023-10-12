@@ -96,14 +96,23 @@ table.compact td {
     padding: 0;
 }
 
-table.no-borders :is(td,th)  {
-    border: 0;
-}
 
 /* fix for an rst2ld issue related to the csv tables */
 table.align-center tr{
     text-align: center;
 }
+
+table.invisible {
+    border: 0;
+    margin: 0;
+    padding: 0;
+}
+table.invisible :is(td,th), 
+table.no-borders :is(td,th)  {
+    border: 0;
+}
+
+
 
 .enable-copy-to-clipboard {
     padding: 25px;
@@ -149,6 +158,9 @@ span.green {
     color: rgb(175, 175, 175)
 }
 
+.separated {
+     border-top: 1px solid gray;
+}
 
 .two-columns {
     column-count: 2;
@@ -162,6 +174,10 @@ span.green {
     column-gap: 64px;
     column-rule: 2px solid gray;
     width: 100%;
+}
+
+.column {
+    break-inside: avoid;
 }
 
 td:has(p>span.red) {

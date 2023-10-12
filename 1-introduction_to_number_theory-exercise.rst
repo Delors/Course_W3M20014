@@ -83,3 +83,5 @@ IT-Security Cryptography and Secure Communications
             :math:`\phi(9) = 6 = |\lbrace 2,4,5,6,7,8 \rbrace|` 
 
             :math:`7^6\, mod\, 9 = 1` 
+
+7. Execute the Miller-Rabin Algorithm.... TODO

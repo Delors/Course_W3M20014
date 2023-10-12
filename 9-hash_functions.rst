@@ -32,21 +32,107 @@ Cryptographic Hash Functions
 
 
 
-TODO
+Hash Function
 -------------------------------
 
+.. class:: incremental
+
+- A hash function H accepts a variable-length block of data :math:`M` as input and produces a fixed-size result :math:`h = H(M)`.
+- A good hash function will produce outputs that are evenly distributed and apparently random.
+- Often used to ensure data integrity. A change to any bit in M should result with a high probability in a change of the hash value.
+- Cryptographic hash functions are nedded for security applications.
+- Applications:
+
+  - Message Authentication
+  - Digitial Signatures
+  - One-way Password Files
 
 
+Security Requirements for a Cryptographic Hash Function H
+----------------------------------------------------------
 
+:Variable Input Size: H can be applied to a block of data of any size.
+:Fixed Output Size: H produces a fixed-length output
+:Efficiency:
+
+  When used for message authentication and digital signatures :math:`H(x)` is relatively easy to compute for any given :math:`x`, making both hardware and software implementations practical.
+
+  vs. 
+
+  When used for password hashing it is hard to efficiently compute the hash even on specialized hardware (GPUs, ASICs) to thwart attackers.
+
+Security Requirements for a Cryptographic Hash Function H
+----------------------------------------------------------
+
+:Preimage resistant (one-way property): For any given hash value :math:`h`, it is computationally infeasible to find :math:`y` such that :math:`H(y) = h`
+:Second preimage resistant (weak collision resistant): For any given block x, it is computationally infeasible to find :math:`y \neq x` with :math:`H(x) = H(y)`
+:Collision resistant (strong collision resistant): It is computationally infeasible to find any pair :math:`(x,y)` with :math:`x \neq y`, such that :math:`H(x) = H(y)`
+:Pseudorandomness: Output of H meets standard tests for pseudorandomness.
+
+
+Hash Function Resistance Properties Required 
+----------------------------------------------
+
+.. csv-table::
+    :header: "", Preimage Resistant, Second Preimage Resistant, Collision Resistant
+    :class: smaller
+    
+    Hash + digital signature, yes, yes, yes
+    Intrusion detection and virus detection, , yes , 
+    Hash + symmetric encryption, , , ,
+    One-way password file, yes, , 
+    MAC, yes, yes, yes
+
+
+Relationship Among Hash Function Properties
+--------------------------------------------
+
+.. image:: 9-hash_function_properties.svg
+    :width: 700px
+    :align: center 
+
+.. admonition:: Note
+    :class: small incremental
+
+    A collision attack requires less effort than a preimage or second preimage attack.
+
+    This is explained by the birthday paradox. If we choose random variables from a uniform distribution in the range 0 through N-1, then the probability that a repeated element is encountered exceeds 0.5 after :math:`\sqrt{N}` choices. Hence, for an m-bit hash value, if we pick data blocks at random, we can expect to find two data blocks within :math:`\sqrt{2^m} = 2^{m/2}` attempts.  
+
+    .. container:: incremental small separated
+
+        Constructing similar messages is relatively easy. If your text has 8 places where you could 
+        exchange a word with another one you already have :math:`2^{8}` different texts.
+
+        Constructing comparable(1) messages is very(2) simple(3). If your text has 8 places where you could replace(4) a character sequence(5) with another word(6) you will(7) have :math:`2^{8}` different messages(8).
+
+
+Structure of Secure Hash Code
+------------------------------
+
+.. image:: 9-structure_of_secure_hash_code.svg
+    :width: 1400px
+    :align: center 
+
+.. container:: two-columns smaller
+
+    :math:`IV` = Initial Value (algorithm dependent)
+
+    :math:`CV_i` = Chaining variable
+    
+    :math:`Y_i` = ith input block
+    
+    :math:`f` = compression function
+    
+    :math:`n` = Length of block
+
+    :math:`L` = Number of input blocks 
+    
+    :math:`b` = Length of input block
 
 
 
 Password Recovery
 -------------------
-
-.. class:: small
-
-    Recall: A hash function takes an arbitrarily sized input and computes a fixed-length value.
 
 Passwords are often stored using hashes.
 
@@ -65,21 +151,13 @@ Example using the md5 hash function:
                   = 8fcf22b1f8327e3a005f0cba48dd44c8
 
 
-Properties of Cryptographic Hash Functions
+Usage of Cryptographic Hash Functions
 ------------------------------------------
 
-- given a hash h it should be hard to compute m where ``hash(m) = h``
-- .. class:: not_important
-
-  given m1 it should be hard to find a message m2 where ``hash(m1) = hash(m2)`` 
-
-- .. class:: not_important
-
-  it should be hard to find two messages m1 and m2, where ``hash(m1) = hash(m2)`` 
-
-.. class:: incremental 
-       
-    Known cryptographic hash functions: MD4, MD5, SHA-256, SHA-512, RIPE-MD, …
+- Known cryptographic hash functions: MD4, MD5, SHA-256, SHA-512, RIPE-MD, PBKDF2, …
+- When used for password hashing the algorithms are usually applied many times to increase the runtime to make it harder for adversaries.
+- Several hash algorithms were explicitly designed for passwort hashing to withstand common attacks. E.g., bcrypt, scrypt, Argon2
+- Some of these algorithms are so computationally involved that they are not suitable for web applications/situations where have to authorize many users at a time. These algorithms are typically used to protect local harddisks or containers.
 
 
 Passwords are not always explicitly stored 

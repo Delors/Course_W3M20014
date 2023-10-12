@@ -57,7 +57,7 @@ endobj
 endobj
 10 0 obj
 <<
-/Author () /CreationDate (D:20231011200553-01'00') /Creator (\(unspecified\)) /Keywords () /ModDate (D:20231011200553-01'00') /Producer (ReportLab PDF Library - www.reportlab.com) 
+/Author () /CreationDate (D:20231012120633-01'00') /Creator (\(unspecified\)) /Keywords () /ModDate (D:20231012120633-01'00') /Producer (ReportLab PDF Library - www.reportlab.com) 
   /Subject (\(unspecified\)) /Title () /Trapped /False
 >>
 endobj
@@ -78,7 +78,7 @@ endobj
 endobj
 14 0 obj
 <<
-/Length 4732
+/Length 2950
 >>
 stream
 1 0 0 1 0 0 cm  BT /F1 12 Tf 14.4 TL ET
@@ -114,7 +114,7 @@ q
 1 0 0 1 91.03937 3 cm
 q
 0 0 0 rg
-BT 1 0 0 1 0 2 Tm /F3 10 Tf 12 TL (Block Cipher Operation) Tj T* ET
+BT 1 0 0 1 0 2 Tm /F3 10 Tf 12 TL (Public Key Cryptography) Tj T* ET
 Q
 Q
 q
@@ -160,7 +160,7 @@ q
 1 0 0 1 91.03937 3 cm
 q
 0 0 0 rg
-BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL (2023-10-11) Tj T* ET
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL (2023-10-12) Tj T* ET
 Q
 Q
 q
@@ -189,7 +189,7 @@ q
 1 0 0 1 23 -3 cm
 q
 0 0 0 rg
-BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL (Why is it important in CBC to protect the IV?) Tj T* ET
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL (Execute the Square-and-Multiply algorithm for 3^17 mod 23.) Tj T* ET
 Q
 Q
 q
@@ -222,60 +222,45 @@ q
 1 0 0 1 57.02362 530.0634 cm
 Q
 q
-1 0 0 1 57.02362 518.0634 cm
+1 0 0 1 57.02362 476.0634 cm
 q
 0 0 0 rg
 BT /F1 10 Tf 12 TL ET
 q
-1 0 0 1 6 -3 cm
+1 0 0 1 6 39 cm
 q
 0 0 0 rg
 BT 1 0 0 1 0 2 Tm /F5 10 Tf 12 TL 2 0 Td (2.) Tj T* -2 0 Td ET
 Q
 Q
 q
+1 0 0 1 23 39 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL (Perform an encryption of a message using RSA.) Tj T* ET
+Q
+Q
+q
 1 0 0 1 23 -3 cm
 q
 0 0 0 rg
-BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL (In which operation modes is padding necessary?) Tj T* ET
+BT 1 0 0 1 0 26 Tm /F1 10 Tf 12 TL 1.166556 Tw (I.e., choose 2 small prime numbers, compute e,d,n. Then encrypt the message \(i.e., a \(rather\) small) Tj T* 0 Tw 1.994272 Tw (value\) using the public key of a fellow student and send him the encrypted message. Let her/him) Tj T* 0 Tw (decrypt your message. Afterwards validate that the encryption is successful.) Tj T* ET
 Q
 Q
 q
 Q
 Q
-Q
-q
-1 0 0 1 57.02362 518.0634 cm
-Q
-q
-1 0 0 1 57.02362 512.0634 cm
-Q
-q
-1 0 0 1 287.6378 500.0634 cm
-q
-0 0 0 rg
-BT /F1 10 Tf 12 TL ET
-BT 1 0 0 1 0 2 Tm  T* ET
-q
-Q
-Q
-Q
-q
-1 0 0 1 57.02362 500.0634 cm
-Q
-q
-1 0 0 1 57.02362 494.0634 cm
-Q
-q
-1 0 0 1 57.02362 494.0634 cm
 Q
 q
 1 0 0 1 57.02362 470.0634 cm
+Q
+q
+1 0 0 1 57.02362 458.0634 cm
 q
 0 0 0 rg
 BT /F1 10 Tf 12 TL ET
 q
-1 0 0 1 6 9 cm
+1 0 0 1 6 -3 cm
 q
 0 0 0 rg
 BT 1 0 0 1 0 2 Tm /F5 10 Tf 12 TL 2 0 Td (3.) Tj T* -2 0 Td ET
@@ -285,7 +270,7 @@ q
 1 0 0 1 23 -3 cm
 q
 0 0 0 rg
-BT 1 0 0 1 0 14 Tm /F1 10 Tf 12 TL .23213 Tw (What happens in case of a transmission error \(single bit flip in the ciphertext\) in ECB, CBC, CFB, OFB,) Tj T* 0 Tw (CTR?) Tj T* ET
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL (Can you think of a scenario in which fault-based attacks may be practical?) Tj T* ET
 Q
 Q
 q
@@ -293,150 +278,7 @@ Q
 Q
 Q
 q
-1 0 0 1 57.02362 470.0634 cm
-Q
-q
-1 0 0 1 57.02362 464.0634 cm
-Q
-q
-1 0 0 1 287.6378 452.0634 cm
-q
-0 0 0 rg
-BT /F1 10 Tf 12 TL ET
-BT 1 0 0 1 0 2 Tm  T* ET
-q
-Q
-Q
-Q
-q
-1 0 0 1 57.02362 452.0634 cm
-Q
-q
-1 0 0 1 57.02362 446.0634 cm
-Q
-q
-1 0 0 1 57.02362 446.0634 cm
-Q
-q
-1 0 0 1 57.02362 434.0634 cm
-q
-0 0 0 rg
-BT /F1 10 Tf 12 TL ET
-q
-1 0 0 1 6 -3 cm
-q
-0 0 0 rg
-BT 1 0 0 1 0 2 Tm /F5 10 Tf 12 TL 2 0 Td (4.) Tj T* -2 0 Td ET
-Q
-Q
-q
-1 0 0 1 23 -3 cm
-q
-0 0 0 rg
-BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL (Why does the IV in OFB has to be a nonce \(i.e., unique to each execution of the encryption algorithm\)?) Tj T* ET
-Q
-Q
-q
-Q
-Q
-Q
-q
-1 0 0 1 57.02362 434.0634 cm
-Q
-q
-1 0 0 1 57.02362 428.0634 cm
-Q
-q
-1 0 0 1 287.6378 416.0634 cm
-q
-0 0 0 rg
-BT /F1 10 Tf 12 TL ET
-BT 1 0 0 1 0 2 Tm  T* ET
-q
-Q
-Q
-Q
-q
-1 0 0 1 57.02362 416.0634 cm
-Q
-q
-1 0 0 1 57.02362 410.0634 cm
-Q
-q
-1 0 0 1 57.02362 410.0634 cm
-Q
-q
-1 0 0 1 57.02362 398.0634 cm
-q
-0 0 0 rg
-BT /F1 10 Tf 12 TL ET
-q
-1 0 0 1 6 -3 cm
-q
-0 0 0 rg
-BT 1 0 0 1 0 2 Tm /F5 10 Tf 12 TL 2 0 Td (5.) Tj T* -2 0 Td ET
-Q
-Q
-q
-1 0 0 1 23 -3 cm
-q
-0 0 0 rg
-BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL (You want to determine if a program for encrypting files uses ECB mode. What do you need to do?) Tj T* ET
-Q
-Q
-q
-Q
-Q
-Q
-q
-1 0 0 1 57.02362 398.0634 cm
-Q
-q
-1 0 0 1 57.02362 392.0634 cm
-Q
-q
-1 0 0 1 287.6378 380.0634 cm
-q
-0 0 0 rg
-BT /F1 10 Tf 12 TL ET
-BT 1 0 0 1 0 2 Tm  T* ET
-q
-Q
-Q
-Q
-q
-1 0 0 1 57.02362 380.0634 cm
-Q
-q
-1 0 0 1 57.02362 374.0634 cm
-Q
-q
-1 0 0 1 57.02362 374.0634 cm
-Q
-q
-1 0 0 1 57.02362 350.0634 cm
-q
-0 0 0 rg
-BT /F1 10 Tf 12 TL ET
-q
-1 0 0 1 6 9 cm
-q
-0 0 0 rg
-BT 1 0 0 1 0 2 Tm /F5 10 Tf 12 TL 2 0 Td (6.) Tj T* -2 0 Td ET
-Q
-Q
-q
-1 0 0 1 23 -3 cm
-q
-BT 1 0 0 1 0 14 Tm .89755 Tw 12 TL /F1 10 Tf 0 0 0 rg (A friend of yours invented a new block cipher. You are ) Tj /F3 10 Tf (very) Tj /F1 10 Tf ( skeptical. Think about some very simple) Tj T* 0 Tw (tests to invalidate the cipher.) Tj T* ET
-Q
-Q
-q
-Q
-Q
-Q
-q
-1 0 0 1 57.02362 350.0634 cm
+1 0 0 1 57.02362 458.0634 cm
 Q
  
 endstream
@@ -468,12 +310,12 @@ xref
 0000021939 00000 n 
 0000022077 00000 n 
 0000022137 00000 n 
-0000026921 00000 n 
-0000026962 00000 n 
+0000025139 00000 n 
+0000025180 00000 n 
 trailer
 <<
 /ID 
-[<4b0b06e969bb332817b2468c73dc1af6><4b0b06e969bb332817b2468c73dc1af6>]
+[<d112af6a6c431de85d01b576e90391af><d112af6a6c431de85d01b576e90391af>]
 % ReportLab generated PDF document -- digest (http://www.reportlab.com)
 
 /Info 10 0 R
@@ -481,5 +323,5 @@ trailer
 /Size 17
 >>
 startxref
-26996
+25214
 %%EOF
