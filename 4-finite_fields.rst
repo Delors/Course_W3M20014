@@ -98,7 +98,7 @@ Cyclic Group
 Rings
 ------
 
-- A ring :math:`R`, sometimes denoted by :math:`\lbrace R , + , * \rbrace`, is a set of elements with two binary operations, called addition and multiplication, such that for all :math:`a , b , c \in R` the axioms (A1-A5) are obeyed.
+- A ring :math:`R`, sometimes denoted by :math:`\lbrace R , + , \times \rbrace`, is a set of elements with two binary operations, called addition and multiplication, such that for all :math:`a , b , c \in R` the axioms (A1-A5) are obeyed.
 
 - :math:`R` is an abelian group with respect to addition; that is, :math:`R` satisfies axioms A1 through A5. For the case of an additive group, we denote the identity element as :math:`0` and the inverse of :math:`a` as :math:`–a`.
 
@@ -141,7 +141,7 @@ A commutative ring that obeys the following axioms.
 Fields :ger:`Körper`
 --------------------
 
-- A field :math:`F`, sometimes denoted by :math:`\lbrace F, +, * \rbrace`, is a set of elements with two binary operations, called addition and multiplication, such that for all :math:`a, b, c \in F` the axioms (A1–M6) are obeyed. 
+- A field :math:`F`, sometimes denoted by :math:`\lbrace F, +, \times \rbrace`, is a set of elements with two binary operations, called addition and multiplication, such that for all :math:`a, b, c \in F` the axioms (A1–M6) are obeyed. 
 - :math:`F` is an integral domain; that is, :math:`F` satisfies axioms A1 through A5 and M1 through M6 
   
 .. class:: incremental 
