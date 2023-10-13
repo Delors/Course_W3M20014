@@ -220,11 +220,6 @@ Diffusion and **Confusion**
 
 
 
-Entropie
---------
-
-TODO
-
 
 Feistel Cipher - Encryption and Decryption
 ------------------------------------------
