@@ -109,11 +109,15 @@ AES Parameters
     Expanded Key Size (words/bytes), 44/176, 52/208, 60/240
 
 
-AES Encryption and Decryption Process (Key Size 128bits)
+AES Encryption and Decryption Process
 --------------------------------------------------------
 
+.. container:: small
+    
+    (Key Size 128bits)
+
 .. image:: 5-aes_encryption_and_decryption.svg
-    :width: 1325px
+    :width: 1250px
     :alt: AES Encryption and Decryption Process
     :align: center
 
