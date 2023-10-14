@@ -40,7 +40,7 @@ Let's assume that you got one plaintext / ciphertext pair.
    
 ..
         Solution: 
-        the key is: PWDPWD
+        the key is: PODPOD
 
 2. What type of attack were you able to perform?
 
