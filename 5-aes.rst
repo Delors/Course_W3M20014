@@ -78,7 +78,7 @@ AES Key Elements
 ----------------
 
 - AES uses a fixed block size of 128 bits.
-- AES operates on a 4x4 column-major order array of 16 bytes/128 bits: :math:`b_0,b_1,\dots,b_15` termed the state:
+- AES operates on a 4x4 column-major order array of 16 bytes/128 bits: :math:`b_0,b_1,\dots,b_{15}` termed the state:
   
   .. math::
 
@@ -339,8 +339,8 @@ AddRoundKey Transformation
     -  The complexity of the round key expansion plus the complexity of the other stages of AES ensure security!
     
 
-Input for a Single AES Round
------------------------------
+Input for a Single AES Encryption Round
+-----------------------------------------
 
 .. image::  5-aes_input_for_a_single_round.svg
     :alt: Input for a single round.
