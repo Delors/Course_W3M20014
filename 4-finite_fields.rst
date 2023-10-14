@@ -647,7 +647,7 @@ ______________
     *000*,  *0*, 0, 0, 0, 0, 0, 0, 0, 0
     *001*,  *1*, 0, :red:`1`, :math:`x`, :math:`x+1`, :math:`x^2`, :math:`x^2 + 1`, :math:`x^2 + x`, :math:`x^2 + x + 1` 
     *010*,  :math:`x`, 0, :math:`x`, :math:`x^2`, :math:`x^2 + x`, :math:`x+1`, :red:`1`, :math:`x^2 + x + 1`, :math:`x^2 + 1`
-    *011*,  :math:`x+1`, 0, :math:`x+1`, :math:`x^2 + x`, :math:`x^2 + 1`, :math:`x^2 + x + 1`, :math:`x^2`, :red:`1`, 2
+    *011*,  :math:`x+1`, 0, :math:`x+1`, :math:`x^2 + x`, :math:`x^2 + 1`, :math:`x^2 + x + 1`, :math:`x^2`, :red:`1`, :math:`x`
     *100*,  :math:`x^2`, 0, :math:`x^2`, :math:`x+1`, :math:`x^2 + x + 1`, :math:`x^2 + x`, :math:`x`, :math:`x^2 + 1`, :red:`1` 
     *101*,  :math:`x^2+1`, 0, :math:`x^2 + 1`, :red:`1`, :math:`x^2`, :math:`x`, :math:`x^2 + x + 1`, :math:`x+1`, :math:`x^2 + x` 
     *110*,  :math:`x^2+x`, 0, :math:`x^2 + x`, :math:`x^2 + x + 1`, :red:`1`, :math:`x^2 + 1`, :math:`x+1`, :math:`x`, :math:`x^2` 
@@ -671,8 +671,8 @@ Multiplication in :math:`GF(2^n)`
     .. math::
         x \times f(x) =
         \begin{cases}
-            (b_6b_5b_5b_4b_3b_2b_1b_00) & if b_7 = 0\\
-            (b_6b_5b_5b_4b_3b_2b_1b_00) \oplus 0001 1011 & if b_7 = 1\\
+            (b_6b_5b_4b_3b_2b_1b_00) & if b_7 = 0\\
+            (b_6b_5b_4b_3b_2b_1b_00) \oplus 0001 1011 & if b_7 = 1\\
         \end{cases}
 
     Multiplication by a higher power of x can be achieved by repeated application of the previous equation. By adding intermediate results, multiplication by any constant in :math:`GF(2^n)` can be achieved.
