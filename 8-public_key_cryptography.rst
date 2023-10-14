@@ -232,7 +232,7 @@ Public-Key Requirements
   A one-way function is one that maps a domain into a range such that every function value has a unique inverse, with the condition that the *calculation of the function is easy*, whereas the *calculation of the inverse is infeasible*
 
   - :math:`Y = f(X)` easy  
-  - :math:`X = f–1(Y)` infeasible
+  - :math:`X = f^{–1}(Y)` infeasible
   
 - A trap-door one-way function is a family of invertible functions :math:`f_k`, such that
   
@@ -316,11 +316,11 @@ The RSA Algorithm
         **Key Generation by Alice**
 
         .. csv-table:: 
-            :class: invisible
+            :class: invisible 
             
             "Select p, q", ":math:`p` and :math:`b` both prime, :math:`p \neq q` "
             "Calculate n", ":math:`n = p \times q` "
-            "Calculate 𝜙(n)", ":math:`\phi(n) = (p - 1)(q - 1)` "
+            "Calculate 𝜙(n) ", ":math:`\phi(n) = (p - 1)(q - 1)` "
             "Select Int e", ":math:`gcd(\phi(n),e) = 1; \qquad 1 < e < \phi(n)` "
             Calculate d, :math:`d \equiv e^{-1}\; (mod\; \phi(n)) \Leftrightarrow ed\; mod\; \phi(n)= 1` 
             Public key, ":math:`PU = \lbrace e,n \rbrace` "
@@ -358,7 +358,7 @@ Example of RSA Algorithm
     :math:`88^7\;mod\; 187 = 11 = C`
 
 :Decryption:
-    :math:`PR =\lbrace d= 23, 187 \rbrace`: 
+    :math:`PR =\lbrace d= 23, n = 187 \rbrace`: 
 
     :math:`11^{23}\; mod\; 187 = 88 = P`
 
@@ -423,7 +423,7 @@ Efficient Operation Using the Public Key
 -----------------------------------------
 
 - To speed up the operation of the RSA algorithm using the public key, a specific choice of e is usually made
-- The most common choice is 65537 (216 + 1)
+- The most common choice is 65537 (:math:`2^{16} + 1`)
 - Two other popular choices are :math:`e=3` and :math:`e=17`
 - Each of these choices has only two 1 bits, so the number of multiplications required to perform exponentiation is minimized
 - With a very small public key, such as :math:`e = 3`, RSA becomes vulnerable to a simple attack
@@ -436,7 +436,7 @@ Efficient Operation Using the Private Key
 - A small value of d is vulnerable to a brute-force attack and to other forms of cryptanalysis
 - Can use the Chinese Remainder Theorem (CRT) to speed up computation:
 
-  The quantities :math:`d\; mod\; (p – 1)` and :math:`d\; mod\; (q – 1)` can be precalculated.
+  The quantities :math:`d\; mod\; (p - 1)` and :math:`d\; mod\; (q - 1)` can be precalculated.
 
   End result is that the calculation is approximately four times as fast as evaluating :math:`M = C^d\; mod\; n` directly.
 
@@ -478,9 +478,9 @@ Factoring Problem
 
 We can identify three approaches to attacking RSA mathematically:
 
-1. Factor :math:`n` into its two prime factors. This enables calculation of :math:`\phi(n) = (p - 1) \times (q - 1)`, which in turn enables determination of :math:`d = e^{-1} (mod ø(n))`
-2. Determine :math:`\phi(n)` directly without first determining p and q. Again this enables determination of :math:`d = e^{-1} (mod\; \phi(n))`
-3. Determine :math:`d` directly without first determining ø(n)
+1. Factor :math:`n` into its two prime factors. This enables calculation of :math:`\phi(n) = (p - 1) \times (q - 1)`, which in turn enables determination of :math:`d = e^{-1} (mod\; ø(n))`.
+2. Determine :math:`\phi(n)` directly without first determining :math:`p` and :math:`q`. Again, this enables determination of :math:`d = e^{-1} (mod\; \phi(n))`.
+3. Determine :math:`d` directly without first determining :math:`\phi(n)`. 
 
 Timing Attacks
 ---------------
