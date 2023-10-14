@@ -355,7 +355,7 @@ DES Example - Avalanche Effect in DES
     2eed7d94d0f23094", 34
     2, "bad2284599e9b723
     bad3284539a9b7a3", 5, 11, "600f7e8bf596506e
-    0f23094455da9c4", 37
+    d0f23094455da9c4", 37
     3, "99e9b7230bae3b9e
     39a9b7a3171cb8b3", 18, 12, "1596506e738538b8
     455da9c47f6e3cf3", 31
@@ -363,7 +363,7 @@ DES Example - Avalanche Effect in DES
     171cb8b3ccaca55e", 34, 13, "738538b8c6a62c4e
     7f6e3cf34bc1a8d9", 29
     5, "4241564918b3fa41
-    ccaca55ed16c3653", 37, 14, "с6а62с4е56b0bd75
+    ccaca55ed16c3653", 37, 14, "c6a62c4e56b0bd75
     4bc1a8d91e07d409", 33
     6, "18b3fa419616fe23
     d16c3653cf402c68", 33, 15, "56b0bd7575e8fd81
@@ -390,8 +390,8 @@ DES Example - Avalanche Effect in DES
      , "02468aceeca86420
     02468aceeca86420", 0, 9, "c11bfe09887fbe6c
     548f1de471f64dfd", 34
-    1, "3c103c0fbad22845
-    3ef03c019ad628e5", 3, 10, "8876be6c60067e8b
+    1, "3cf03c0fbad22845
+    3cf03c0f9ad628c5", 3, 10, "8876be6c60067e8b
     71664dfd4279876c", 36
     2, "bad2284599e9b723
     9ad628c59939136b", 11, 11, "60017e8bf596506e
