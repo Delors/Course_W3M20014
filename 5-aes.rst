@@ -378,7 +378,7 @@ AES Round Key Computation
     r_{c_{i+1}} = xtime(r_{c_i})
 
 .. admonition:: :math:`xtime` Function
-    :class: incremental
+    :class: incremental smaller
 
     .. math::
             y_7y_6y_5y_5y_4y_3y_2y_1y_0 = xtime(x_7x_6x_5x_5x_4x_3x_2x_1x_0) \qquad (x_i,y_i \in \lbrace 0,1 \rbrace)
