@@ -105,7 +105,7 @@ endobj
 endobj
 16 0 obj
 <<
-/Author () /CreationDate (D:20231012190801-01'00') /Creator (\(unspecified\)) /Keywords () /ModDate (D:20231012190801-01'00') /Producer (ReportLab PDF Library - www.reportlab.com) 
+/Author () /CreationDate (D:20231014143045-01'00') /Creator (\(unspecified\)) /Keywords () /ModDate (D:20231014143045-01'00') /Producer (ReportLab PDF Library - www.reportlab.com) 
   /Subject (\(unspecified\)) /Title () /Trapped /False
 >>
 endobj
@@ -126,7 +126,7 @@ endobj
 endobj
 20 0 obj
 <<
-/Length 6795
+/Length 6422
 >>
 stream
 1 0 0 1 0 0 cm  BT /F1 12 Tf 14.4 TL ET
@@ -208,7 +208,7 @@ q
 1 0 0 1 91.03937 3 cm
 q
 0 0 0 rg
-BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL (2023-10-12) Tj T* ET
+BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL (2023-10-14) Tj T* ET
 Q
 Q
 q
@@ -456,38 +456,6 @@ Q
 q
 1 0 0 1 57.02362 388.8634 cm
 Q
-q
-1 0 0 1 57.02362 382.8634 cm
-Q
-q
-1 0 0 1 57.02362 382.8634 cm
-Q
-q
-1 0 0 1 57.02362 370.8634 cm
-q
-0 0 0 rg
-BT /F1 10 Tf 12 TL ET
-q
-1 0 0 1 6 -3 cm
-q
-0 0 0 rg
-BT 1 0 0 1 0 2 Tm /F5 10 Tf 12 TL 2 0 Td (2.) Tj T* -2 0 Td ET
-Q
-Q
-q
-1 0 0 1 23 -3 cm
-q
-0 0 0 rg
-BT 1 0 0 1 0 2 Tm /F1 10 Tf 12 TL (Given the following ... Ho) Tj T* ET
-Q
-Q
-q
-Q
-Q
-Q
-q
-1 0 0 1 57.02362 370.8634 cm
-Q
  
 endstream
 endobj
@@ -524,12 +492,12 @@ xref
 0000068957 00000 n 
 0000069096 00000 n 
 0000069157 00000 n 
-0000076004 00000 n 
-0000076045 00000 n 
+0000075631 00000 n 
+0000075672 00000 n 
 trailer
 <<
 /ID 
-[<0f2e6ed5b7f539d0d3b08b2f6351d7e4><0f2e6ed5b7f539d0d3b08b2f6351d7e4>]
+[<745431985e08c8f4c965beb2e6559fa8><745431985e08c8f4c965beb2e6559fa8>]
 % ReportLab generated PDF document -- digest (http://www.reportlab.com)
 
 /Info 16 0 R
@@ -537,5 +505,5 @@ trailer
 /Size 23
 >>
 startxref
-76079
+75706
 %%EOF

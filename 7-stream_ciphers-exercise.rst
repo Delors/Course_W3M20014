@@ -33,7 +33,3 @@ IT-Security Cryptography and Secure Communications
     lcg(1234,-8,8,256,100)
     lcg(1234,-8,8,256,100)
 
-
-2) Given the following ... Ho
-
-
