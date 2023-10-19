@@ -99,17 +99,21 @@ Given any positive integer :math:`n` and any nonnegative integer :math:`a`, if w
     a = qn + r \qquad 0 \leq r < n; q = \left \lfloor{a/n} \right \rfloor
 
 
-.. image:: 1-division_algorithm.png
+.. image:: 1-division_algorithm.svg
     :alt: The relationship a=qn+r
     :class: incremental
+    :align: center
+    :width: 1600px
     
 
 Division Algorithm for negative `a`
 -----------------------------------
 
 
-.. image:: 1-division_algorithm_negative_a.png
+.. image:: 1-division_algorithm_for_negative_a.svg
     :alt: The relationship a=qn+r for negative a
+    :width: 1600px
+    :align: center
 
 .. admonition:: Example
     :class: incremental
@@ -201,7 +205,7 @@ Greatest Common Divisor (:ab:`GCD`)
 Example of computing the GCD using the Euclidean algorithm.
 
 
-.. image:: 1-euclidean_algorithm_example.png
+.. image:: 1-euclidean_algorithm_example.svg
     :width: 600
 
 
