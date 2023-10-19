@@ -11,7 +11,7 @@
 IT-Security Cryptography and Secure Communications
 ==================================================
     
-:Excercise: **Block Ciphers**
+:Exercise: **Block Ciphers**
 :Lecturer: *Prof. Dr. Michael Eichberg*
 :Version: |date|
 
@@ -27,12 +27,20 @@ Feistel Cipher
    - easily exchange the function :math:`f` to test the effect of :math:`f` (depending on the language of your choice you can, e.g, use native higher order functions or a function pointer)
    - you can use a function that produces the round keys by simply shifting the key
   
-    .. note::
+        **Note**
 
-        Don't worry about messages that are larger or smaller than the block size. This is not necessary to understand the impact of :math:`f` or using a round key. Don't worry about a key that does not have the appropriate size. I.e., use a message and a key with the appropriate size.
+        Don't worry about messages that are larger or smaller than the block size. This is not necessary to understand the impact of `f` or using a round key. Don't worry about a key that does not have the appropriate size. I.e., use a message and a key with the appropriate size.
 
 2. What happens if `f` just returns `0x00` values (independent of the round key)?
 3. What happens if `f` just returns `0x01` values (independent of the round key)?
 4. What happens if `f` simply xors the respective half with the result of the shift of the key?
 5. Test what happens when you change your message. In particular test what happens when the message just consists of `0x00` (and you use a "more reasonable" `f` function.)
 6. Test what happens when you change your key. What happens in extrem cases (e.g., the password just consists of "0"s?
+
+.. admonition:: Solution
+
+    A naive Python implementation of the algorithm can be found here:
+
+    `Jupyter Notbook with Solution <https://github.com/Delors/Course_W3M20014/blob/main/3-feistel.ipynb>`__
+
+    By adapting the above implementation and testing it, it will immediately beome apparent that the use of an inappropriate `f` function will lead to no security at all and that the design of such a function is really hard work. Additionally, it is necessry to consider all possible scenarios.

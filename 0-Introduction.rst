@@ -38,7 +38,7 @@ This lecture is based on the book:
 
 *Cryptography and Network Security - Principles and Practice, 8th Edition, William Stallings*
 
-.. container:: two-columns smaller
+.. container:: two-columns small
 
     .. container:: column
         
@@ -52,18 +52,22 @@ This lecture is based on the book:
         6. `Block Cipher Operations <6-block_cipher_operations.rst.html>`__
         7. `Random Bit Generation and Stream Ciphers <7-stream_ciphers.rst.html>`__
         8. `Public-Key Cryptography and RSA <8-public_key_cryptography.rst.html>`__
-        9.  `Cryptographic Hash Functions <9-hash_functions.rst.html>`__
+        9. Not relevant for the exam: 
+        
+           `Cryptographic Hash Functions <9-hash_functions.rst.html>`__
 
     .. container:: column
         
-        **Exercise**
+        **Exercises**
 
-        1. `Introduction to Number Theory <1-introduction_to_number_theory-exercise.rst.html>`__
-        2. `Classical Encryption Techniques <2-classical_encryption_techniques-exercise.rst.html>`__
-        3. `Block Ciphers and the Data Encryption Standard <3-block_ciphers-exercise.rst.html>`__
-        4. `Finite Fields <4-finite_fields-exercise.rst.html>`__
-        5. `Advanced Encryption Standard (AES) <5-aes-exercise.rst.html>`__
-        6. `Block Cipher Operations <6-block_cipher_operations-exercise.rst.html>`__
-        7. `Random Bit Generation and Stream Ciphers <7-stream_ciphers-exercise.rst.html>`__
-        8. `Public-Key Cryptography and RSA <8-public_key_cryptography-exercise.rst.html>`__
-        9.  `Cryptographic Hash Functions <9-hash_functions-exercise.rst.html>`__
+        1. `Introduction to Number Theory <1-introduction_to_number_theory-exercise.rst.pdf>`__
+        2. `Classical Encryption Techniques <2-classical_encryption_techniques-exercise.rst.pdf>`__
+        3. `Block Ciphers and the Data Encryption Standard <3-block_ciphers-exercise.rst.pdf>`__
+        4. `Finite Fields <4-finite_fields-exercise.rst.pdf>`__
+        5. `Advanced Encryption Standard (AES) <5-aes-exercise.rst.pdf>`__
+        6. `Block Cipher Operations <6-block_cipher_operations-exercise.rst.pdf>`__
+        7. `Random Bit Generation and Stream Ciphers <7-stream_ciphers-exercise.rst.pdf>`__
+        8. `Public-Key Cryptography and RSA <8-public_key_cryptography-exercise.rst.pdf>`__
+        9.  Not relevant for the exam: 
+   
+            `Cryptographic Hash Functions <9-hash_functions-exercise.rst.pdf>`__

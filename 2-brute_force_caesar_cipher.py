@@ -10,7 +10,7 @@ from functools import partial
 C = "PHHW PH DIWHU WKH WRJD SDUWB"
 
 
-def decrypt(k, c: int) -> str:
+def decrypt(k : int, c: str) -> str:
     if c == " ":
         return c
     else:

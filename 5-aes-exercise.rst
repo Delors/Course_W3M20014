@@ -11,7 +11,7 @@
 IT-Security Cryptography and Secure Communications
 ==================================================
     
-:Excercise: **AES**
+:Exercise: **AES**
 :Lecturer: *Prof. Dr. Michael Eichberg*
 :Version: |date|
 
@@ -31,68 +31,83 @@ For this exercise let's assume that we have a 128 bit key.
 
    1. Before performing the concrete computation, first write down the formulae:
 
-     .. math::
+      .. math::
 
-       w[8]\;\; =\; ... \oplus ... 
+         w[8]\;\; =\; ... \oplus ... 
 
-       w[9]\;\; =\; ... \oplus ... 
+         w[9]\;\; =\; ... \oplus ... 
        
-       w[10] =\; ... \oplus ...
+         w[10] =\; ... \oplus ...
       
-       w[11] =\; ... \oplus ... 
-    
+         w[11] =\; ... \oplus ... 
+
+      .. admonition:: Solution 
+
+         .. math::
+
+            w[8] = w[4] \oplus g(w[7])
+
+            w[9] = w[5] \oplus w[8]
+
+            w[10] = w[6] \oplus w[9]
+
+            w[11] = w[7] \oplus w[10]
+
    2. Calculate `w[8]` and `w[9]`.
+      
+      .. admonition:: Solution
 
-   .. Solution
-      w[8] = w[4] \oplus g(w[7])
-      w[9] = w[5] \oplus w[8]
-      w[10] = w[6] \oplus w[9]
-      w[11] = w[7] \oplus w[10]
+         :: 
 
-      g(w[7]): 
-      1. after left shift of w[7]:        79 A2 93 D6
-      2. after s-box substituion:         B6 3A DC F6
-      3. after add RoundKey (02 00 00 00): B6 3A DC F6 \oplus 02 00 00 00 = B4 3A DC F6
+            g(w[7]): 
+              1. after left shift of w[7]:              79 A2 93 D6
+              2. after s-box substituion:               B6 3A DC F6
+              3. after add RoundConstant (02 00 00 00):  B4 3A DC F6
 
-      w[8] = E2 32 FC F1 \oplus B4 3A DC F6 = 56 08 20 07
-      w[9] = w[8] \oplus 91 12 91 88 = C7 1A B1 8F
+            w[8] = E2 32 FC F1 xor B4 3A DC F6 = 56 08 20 07
+            w[9] = w[8]                      xor 91 12 91 88 = C7 1A B1 8F
 
 2. Let's assume that the current State matrix is:
    
-    ``00 3C 6E 47``
+   ``00 3C 6E 47``
 
-    ``1F 4E 22 74``
+   ``1F 4E 22 74``
     
-    ``0E 08 1B 31``
+   ``0E 08 1B 31``
 
-    ``54 59 0B 1A``
+   ``54 59 0B 1A``
    
    Perform the step *substitute bytes*; i.e., apply the s-box transformation.
 
+   .. admonition:: Solution
 
-  .. Solution:
-      63 EB 9F A0
-      C0 2F 93 92
-      AB 30 AF C7
-      20 CB 2B A2
+      ::
+
+         63 EB 9F A0
+         C0 2F 93 92
+         AB 30 AF C7
+         20 CB 2B A2
 
 3. Perform the *shift rows transformation* on your previous result.
 
-   .. Solution:
-      63 EB 9F A0
-      2F 93 92 C0
-      AF C7 AB 30
-      A2 20 CB 2B
+   .. admonition:: Solution
+
+      ::
+
+         63 EB 9F A0
+         2F 93 92 C0
+         AF C7 AB 30
+         A2 20 CB 2B
 
 4. Given the following State matrix:
 
-    ``6A 59 CB BD``
+   ``6A 59 CB BD``
 
-    ``4E 48 12 A0``
+   ``4E 48 12 A0``
     
-    ``98 9E 30 9B``
+   ``98 9E 30 9B``
     
-    ``8B 3D F4 9B``
+   ``8B 3D F4 9B``
 
   Perform the mix columns transformation for the missing field (:math:`S'_{0,0}` ):
   
@@ -104,10 +119,15 @@ For this exercise let's assume that we have a 128 bit key.
     
     ``65 47 97 CD``
 
-  .. Solution 0x15:
-     02 x 6A = (simple left shift orf 6A): 1101 0100
-     03 x 4E = 4e \oplus (02 x 4E) = 0100 1110 \oplus 1001 1100 = 1101 0010
-     S'_{0,0} = 1101 0100 \oplus 1101 0010 \oplus 0x98 \oplus 0x8B
+  .. admonition:: Solution 
+
+     .. math::
+
+        0x02 \times 0x6A = (simple\; left\; shift\; of\; 6A): 1101\, 0100_b
+
+        0x03 \times 0x4E = 0x4E \oplus (0x02 \times 0x4E) = 0100\, 1110_b \oplus 1001\, 1100_b = 1101 0010_b
+
+        S'_{0,0} = 1101\, 0100_b \oplus 1101\, 0010_b \oplus 0x98 \oplus 0x8B = 0x15
 
 5. Apply the RoundKey: 
    
@@ -125,16 +145,22 @@ For this exercise let's assume that we have a 128 bit key.
 
    ``B3 4B 5A 0A``
 
-   .. solution (recall the round key applies to the column!)
-      78 70 99 4B
-      76 76 3C 39
-      30 7D 37 34
-      54 23 5B F1
+   .. admonition:: Solution 
+    
+      Recall that the round key applies to the column!
+
+      ::
+
+         78 70 99 4B
+         76 76 3C 39
+         30 7D 37 34
+         54 23 5B F1
 
 6. Ask yourself what happens if you encrypt a block just consisting of ``0x00``\ s with a key also consisting only of ``0x00``\ s?
 
-  .. Solution
-   - Substition will map all values to the same value. 52
-   - Shift row will do nothing.
-   - Mix columns (because the values are no longer 00 will will lead to further diffusion 02 x 52 and 03 x 53 is not 52. )
-   - add round key will also have an effect
+  .. admonition:: Solution
+
+     - First substition will map all values to the same value: :math:`0x63`‚.
+     - Shift row will have no effect.
+     - Mix columns (because the values are no longer :math:`0x00` will lead to  some diffusion :math:`0x02 \times 0x63` and :math:`0x03 \times 0x63` is not :math:`0x63`. )
+     - AddRoundKey will also effect and lead (already during the first round) to some confusion.

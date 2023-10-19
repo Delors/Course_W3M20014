@@ -11,7 +11,7 @@
 IT-Security Cryptography and Secure Communications
 ==================================================
     
-:Excercise: **Hash Functions**
+:Exercise: **Hash Functions**
 :Lecturer: *Prof. Dr. Michael Eichberg*
 :Version: |date|
 

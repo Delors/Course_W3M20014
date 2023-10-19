@@ -35,7 +35,7 @@ Groups, Rings and Fields
     ((((((
         Finite Fields
             in Fields) 
-                in Integral Domains :ger:`Integritätsring`) 
+                in Integral Domains) 
                     in Commutative Rings) 
                         in Rings) 
                             in Abelian Groups) 
@@ -46,6 +46,7 @@ Groups, Rings and Fields
     :class: small
 
     Integral Domains :ger:`Integritätsring`
+    Field: :ger:`Körper``
 
 Groups
 -----------
@@ -126,8 +127,8 @@ Rings
   :(M4) Commutativity of multiplication:
         :math:`ab = ba` for all :math:`a, b \in R`
 
-Integral Domain
-----------------
+Integral Domain :ger:`Integritätsring` 
+---------------------------------------
 
 A commutative ring that obeys the following axioms.
 
