@@ -349,6 +349,10 @@ The RSA Algorithm
 Example of RSA Algorithm
 --------------------------
 
+:p and q: 
+
+    :math:`p = 11; q = 17; n = 187`
+
 :Plaintext:
     88
 
