@@ -5,9 +5,9 @@ function update_html_if_necessary() {
     if [[ ! -f "$html_file" || "$html_file" -ot "$1" ]]
     then
         echo "$(date) updating:" $html_file 
-        rst2ld/rst2ld.py "$1" > "$html_file"       
-    else
-        # [debug] echo "up to date:" $html_file 
+        rst2ld/rst2ld.py "$1" > "$html_file"           
+    #else # [debug] 
+    #    echo "up to date:" $html_file 
     fi
 }
 
@@ -27,12 +27,13 @@ function update_pdf_if_necessary() {
         /Users/Michael/Library/Python/3.12/bin/rst2pdf "$1" -o "$pdf_file"       
     fi
 
-    html_file="$1.html"
-    if [[ ! -f "$html_file" || "$html_file" -ot "$1" ]]
-    then
-        echo "$(date) updating:" $html_file 
-        /Users/Michael/Library/Python/3.12/bin/rst2html5.py "$1" --output="$html_file"       
-    fi
+    # THE HTML FILES ARE CURRENTLY NOT SELF-CONTAINED!
+    # html_file="$1.html"
+    # if [[ ! -f "$html_file" || "$html_file" -ot "$1" ]]
+    # then
+    #     echo "$(date) updating:" $html_file 
+    #     /Users/Michael/Library/Python/3.12/bin/rst2html5.py "$1" --output="$html_file"       
+    # fi
 
 }
 
