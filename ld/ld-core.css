@@ -2,11 +2,11 @@
 
 :root {
     /* 
-        Use 1920 x 1080px for 16:9 or 1920 x 1200px for 16:10 
-        Note: 
-        - These values are only for informational purposes!
-        - These value are acutally (re)set by the JavaScript
-                 when the document is loaded!
+        Specifies the width and height of slides. The following values are, 
+        however, only for informational purposes. These value are always 
+        (re)set by the JavaScript when the document is loaded; either to 
+        the default values as seen below or to the values specified in the
+        document.
     */
     --ld-slide-width: 1920px;
     --ld-slide-height: 1200px;

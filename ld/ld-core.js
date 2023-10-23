@@ -4,11 +4,7 @@
 
        -   LectureDoc (i.e., the slide set) must be 
            usable without a Server(!); hence, no JavaScript modules :-(...
-
-       -   The code related to a specific functionality is highly localized.
-           E.g., the code to show the help pane registers its own event listener to initialize
-           the help pane. However, the code necessary for the light table also registers a(nother) listener for the same event.
-
+       
        -   We store most state information in the DOM to make it possible to
            start the presentation in a specific state (e.g., on a specific slide,
            directly showing the light-table etc.)
@@ -20,13 +16,65 @@
 */
 "use strict";
 
-// TODO read these values from the DOM if possible.
-const slideWidth = 1920;
-/* if 16:9 is desired:*/ // const slideHeight = 1080;
-/* if 16:10 is desired (default):*/
-const slideHeight = 1200;
+/**
+ * Let's put all functionality in the `lectureDoc2` "module" to avoid conflicts
+ * with other JavaScript libraries.
+ */
+const lectureDoc2 = function() {
 
-var documentId = null;
+    const config = {
+        /** 
+         * The unique id of this document; required to store state information 
+         * across multiple calls to the same document in local storage.
+         */
+        documentId : null,
+        /** 
+         * Configuration of the slide dimensions. The default is 1920 (width) : 
+         * 1200 (height) for a 16:10 ratio. This can be changed in the meta 
+         * information.
+         */
+        slide:{
+            width: 1920,
+            height: 1200
+        }
+    }
+
+    function initDocumentId() {
+        try {
+            config.documentId = document.querySelector('meta[name="id"]').content;
+        } catch (error) {
+            console.info("document id not available; local storage cannot be used to store state");
+        }
+    }
+
+    /**
+     * Reads the meta element which specifies the dimension of a slide. 
+     * 
+     * The name has to be: `slide-dimensions` and the value (content) has to 
+     * use the format: `<width>x<height>`.
+     * 
+     * E.g., `<meta name="slide-dimensions" content="1600x1200">`.
+     */ 
+    function initSlideDimensions() {
+        try {
+            const slideDimensions = document.querySelector('meta[name="slide-dimensions"]').content;
+            const [width,height] = slideDimensions.trim().split("x").map((e) => e.trim())
+            config.slide.width = width;
+            config.slide.height = height;
+        } catch (error) {
+            console.info("slide dimensions are not specified; using default (1920x1200)");
+        }
+        // Set the corresponding CSS variables accordingly.
+        const root = document.querySelector(":root");
+        root.style.setProperty("--ld-slide-width", config.slide.width + "px");
+        root.style.setProperty("--ld-slide-height", config.slide.height + "px");        
+    }
+
+    document.addEventListener("DOMContentLoaded", (event) => {
+        initDocumentId();
+        initSlideDimensions();
+    });
+
 
 /*  Simple helper functions. 
 */
@@ -42,8 +90,8 @@ function togglePane(ld_pane) {
 }
 
 function uniqueId(id) {
-    if (documentId != null) {
-        return "ld-" + documentId + "-" + id;
+    if (config.documentId != null) {
+        return "ld-" + config.documentId + "-" + id;
     } else {
         throw new Error("no document id available")
     }
@@ -57,16 +105,8 @@ function uniqueId(id) {
     the elements that realizes LectureDoc's core functionality.
 */
 window.addEventListener("DOMContentLoaded", (event) => {
-    try {
-        documentId = document.querySelector('meta[name="id"]').content;
-    } catch (error) {
-        console.error("failed reading the document id", error);
-    }
 
-    const root = document.querySelector(":root");
-    root.style.setProperty("--ld-slide-width", slideWidth + "px");
-    root.style.setProperty("--ld-slide-height", slideHeight + "px");
-
+ 
     const body = document.getElementsByTagName("BODY")[0]
 
     const ld_main_pane = document.createElement("DIV")
@@ -106,7 +146,7 @@ window.addEventListener("DOMContentLoaded", (event) => {
 /*  ---------------------------------------------------------------------------
     Setup everything for rendering the slides and jumping to the slides.
 
-    Incremental animation is simply realized by making correspondibly 
+    Incremental animation is simply realized by making correspondingly 
     marked-up elements hidden and as long as an element is hidden progress
     is made by making the respective element visible. I.e., the whole
     progress is implicitly covered by the visible and hidden elements.
@@ -119,11 +159,12 @@ function getCurrentSlide() {
 }
 
 function resetSlideProgress(slide) {
-    const steps = slide.querySelectorAll(":scope :is(ol,ul).incremental>li, :scope :not( :is(ol,ul)).incremental");
-    const stepsCount = steps.length;
-    for (var s = 0; s < stepsCount; s++) {
-        steps[s].style.visibility = "hidden"
-    }
+    const elementsToAnimate = 
+        ":scope :is(ol,ul).incremental>li, "+
+        ":scope :not( :is(ol,ul)).incremental"
+    slide
+        .querySelectorAll(elementsToAnimate)
+        .forEach((element) => element.style.visibility = "hidden" )
 }
 
 window.addEventListener("load", (event) => {
@@ -153,7 +194,7 @@ window.addEventListener("load", (event) => {
                 // the documentId is null; we don't want multiple slide sets
                 // to share the same state! That's why we test for 
                 // documentId != null.
-                if (documentId) {
+                if (config.documentId) {
                     const lastViewed = localStorage.getItem(uniqueId("current-slide-no"));
                     if (lastViewed) {
                         if (lastViewed > lastSlideNo) {
@@ -193,8 +234,8 @@ window.addEventListener("load", (event) => {
     I.e., rescale the slide whenever the viewport changes. 
 */
 function setPaneScale() {
-    const w_scale = window.innerWidth / slideWidth;
-    const h_scale = window.innerHeight / slideHeight;
+    const w_scale = window.innerWidth / config.slide.width;
+    const h_scale = window.innerHeight / config.slide.height;
     document.getElementById("ld-main-pane").style.scale = Math.min(w_scale, h_scale);
 }
 window.addEventListener("load", (event) => {
@@ -228,7 +269,7 @@ function showSlide(slideNo) {
     const slide_id = "ld-slide-no-" + slideNo;
     console.info("trying to show: " + slide_id + " / " + lastSlideNo);
     document.getElementById(slide_id).style.display = "block";
-    if (documentId) {
+    if (config.documentId) {
         localStorage.setItem(uniqueId("current-slide-no"), slideNo);
     }
 }
@@ -435,3 +476,6 @@ document.addEventListener("keydown", (event) => {
             console.log("unhandled keydown: " + event.key);
     }
 });
+
+    return config;
+}();
