@@ -117,14 +117,12 @@ window.addEventListener("DOMContentLoaded", (event) => {
     ld_handout_pane.id = "ld-handout-pane"
     body.prepend(ld_handout_pane);
 
-    const ld_jump_target_pane = document.createElement("DIV")
-    ld_jump_target_pane.id = "ld-jump-target-pane"
-    ld_jump_target_pane.innerHTML = `
-        <div id="ld-jump-target">
-            <span id="ld-jump-target-current"></span> / <span id="ld-jump-target-max"></span>        
-        </div>
+    const ld_jump_target_dialog = document.createElement("DIALOG")
+    ld_jump_target_dialog.id = "ld-jump-target-dialog"
+    ld_jump_target_dialog.innerHTML = `
+        <span id="ld-jump-target-current"></span> / <span id="ld-jump-target-max"></span>        
     `
-    body.prepend(ld_jump_target_pane);
+    body.prepend(ld_jump_target_dialog);
 
     const slide_count = document.querySelectorAll("body>div.ld-slide").length
     const ld_light_table_pane = document.createElement("DIV")
@@ -137,9 +135,9 @@ window.addEventListener("DOMContentLoaded", (event) => {
     `
     body.prepend(ld_light_table_pane);
 
-    const ld_help_pane = document.createElement("DIV")
-    ld_help_pane.id = "ld-help-pane"
-    body.prepend(ld_help_pane);
+    const ld_help_dialog = document.createElement("DIALOG")
+    ld_help_dialog.id = "ld-help-dialog"
+    body.prepend(ld_help_dialog);
 });
 
 
@@ -310,7 +308,7 @@ function moveToPreviousSlide() {
 }
 function clearJumpTarget() {
     document.getElementById("ld-jump-target-current").innerText = "";
-    document.getElementById("ld-jump-target-pane").style.display = "none";
+    document.getElementById("ld-jump-target-dialog").close()
 }
 /** Removes the last digit of the current jump target. */
 function cutDownJumpTarget() {
@@ -327,13 +325,13 @@ function cutDownJumpTarget() {
 }
 function updateJumpTarget(number) {
     document.getElementById("ld-jump-target-current").innerText += number;
-    document.getElementById("ld-jump-target-pane").style.display = "flex";
+    document.getElementById("ld-jump-target-dialog").showModal();
 }
 function jumpToSlide() {
     const ld_goto_number = document.getElementById("ld-jump-target-current");
     const slideNo = Number(ld_goto_number.innerText) - 1; /* users number the slides starting with 1 */
     ld_goto_number.innerText = "";
-    document.getElementById("ld-jump-target-pane").style.display = "none";
+    document.getElementById("ld-jump-target-dialog").close();
     if (slideNo >= 0) {
         hideSlide(currentSlideNo);
         if (slideNo > lastSlideNo) {
@@ -387,18 +385,18 @@ function toggleLightTable() {
     Handling help.
 */
 window.addEventListener("load", (event) => {
-    document.getElementById("ld-help-pane").appendChild(getHelpElement());
+    document.getElementById("ld-help-dialog").appendChild(getHelpElement());
 });
 function toggleHelp() {
-    const ld_pane = document.getElementById("ld-help-pane");
-    const ld_content = document.getElementById("ld-help");
-    if (ld_content.style.opacity == 1) {
-        ld_content.style.opacity = 0;
+    const ld_help_dialog = document.getElementById("ld-help-dialog");
+    //const ld_content = document.getElementById("ld-help");
+    if (ld_help_dialog.open) {
+        ld_help_dialog.style.opacity = 0;
         /* the 500ms is also hard coded in the css */
-        setTimeout(function () { ld_pane.style.display = "none" }, 500);
+        setTimeout(function () { ld_help_dialog.close() }, 500);
     } else {
-        ld_pane.style.display = "flex"
-        ld_content.style.opacity = 1;
+        ld_help_dialog.showModal();
+        ld_help_dialog.style.opacity = 1;
     }
 }
 
