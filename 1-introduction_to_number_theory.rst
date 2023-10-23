@@ -626,7 +626,7 @@ Prime Numbers
    - Prime numbers only have divisors of 1 and itself.
    - They cannot be written as a product of other numbers
    - Prime numbers are central to number theory
-   - Any integer a > 1 can be factored in a unique way as: :math:`a=p_1^{a_1} \times p_2^{a_2} \times \dots \times p_t^{a_1}`  where :math:`p_1 < p_2 < . . . < p_t` are prime numbers and where each :math:`a_i` is a positive integer
+   - Any integer :math:`a > 1` can be factored in a unique way as: :math:`a=p_1^{a_1} \times p_2^{a_2} \times \dots \times p_t^{a_1}`  where :math:`p_1 < p_2 < . . . < p_t` are prime numbers and where each :math:`a_i` is a positive integer
    - This is known as the fundamental theorem of arithmetic.
   
 .. admonition:: Note
