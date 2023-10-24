@@ -22,10 +22,15 @@
  */
 const lectureDoc2 = function() {
 
+    /**
+     * The following information is read from the document if it is specified 
+     * and is therefore neither representing the state nor static configuration.
+     */
     const config = {
         /** 
          * The unique id of this document; required to store state information 
-         * across multiple calls to the same document in local storage.
+         * across multiple calls to the same document in local storage. If
+         * the document id is null we will not use local storage.
          */
         documentId : null,
         /** 
@@ -70,9 +75,21 @@ const lectureDoc2 = function() {
         root.style.setProperty("--ld-slide-height", config.slide.height + "px");        
     }
 
+
+    /**
+     * Performs all DOM manipulations.
+     */
     document.addEventListener("DOMContentLoaded", (event) => {
         initDocumentId();
         initSlideDimensions();
+    });
+
+    /**
+     * Registers the navigation related listeners. I.e., we only enable 
+     * navigation after all slides are fully loaded.
+     */
+    window.addEventListener("load", (event) => {
+
     });
 
 
@@ -105,7 +122,6 @@ function uniqueId(id) {
     the elements that realizes LectureDoc's core functionality.
 */
 window.addEventListener("DOMContentLoaded", (event) => {
-
  
     const body = document.getElementsByTagName("BODY")[0]
 
@@ -113,9 +129,9 @@ window.addEventListener("DOMContentLoaded", (event) => {
     ld_main_pane.id = "ld-main-pane"
     body.prepend(ld_main_pane);
 
-    const ld_handout_pane = document.createElement("DIV")
-    ld_handout_pane.id = "ld-handout-pane"
-    body.prepend(ld_handout_pane);
+    const ld_continuous_view_pane = document.createElement("DIV")
+    ld_continuous_view_pane.id = "ld-continuous-view-pane"
+    body.prepend(ld_continuous_view_pane);
 
     const ld_jump_target_dialog = document.createElement("DIALOG")
     ld_jump_target_dialog.id = "ld-jump-target-dialog"
@@ -404,17 +420,17 @@ function toggleHelp() {
     Supporting a handout pane/a print preview pane.
 */
 window.addEventListener("load", (event) => {
-    const ho = document.getElementById("ld-handout-pane");
+    const ho = document.getElementById("ld-continuous-view-pane");
     document.querySelectorAll("body > .ld-slide").forEach((slide, i) => {
         const ho_slide = slide.cloneNode(true);
         ho_slide.removeAttribute("id"); // not needed anymore (in case it was set)
 
         const ho_slide_scaler = document.createElement("DIV");
-        ho_slide_scaler.className = "ld-handout-scaler";
+        ho_slide_scaler.className = "ld-continuous-view-scaler";
         ho_slide_scaler.appendChild(ho_slide);
 
         const ho_slide_pane = document.createElement("DIV");
-        ho_slide_pane.className = "ld-handout-slide-pane"
+        ho_slide_pane.className = "ld-continuous-view-slide-pane"
         ho_slide_pane.appendChild(ho_slide_scaler);
 
         ho.appendChild(ho_slide_pane);
@@ -422,13 +438,13 @@ window.addEventListener("load", (event) => {
 });
 
 function toggleContinuousView() {
-    const ld_handout_pane = document.getElementById("ld-handout-pane");
+    const ld_continuous_view_pane = document.getElementById("ld-continuous-view-pane");
     const ld_main_pane = document.getElementById("ld-main-pane")
     if (getComputedStyle(ld_main_pane).display == "flex") {
         ld_main_pane.style.display = "none"
-        ld_handout_pane.style.display = "block"
+        ld_continuous_view_pane.style.display = "block"
     } else {
-        ld_handout_pane.style.display = "none"
+        ld_continuous_view_pane.style.display = "none"
         ld_main_pane.style.display = "flex"
     }
 }

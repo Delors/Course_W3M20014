@@ -165,7 +165,7 @@ div {
     overflow-x: scroll;
 }
 
-#ld-handout-pane {
+#ld-continuous-view-pane {
     display: none;
     background-color: white;
     margin: auto;
@@ -173,7 +173,7 @@ div {
     max-width: calc(var(--ld-slide-width) / 2);
 }
 
-#ld-handout-pane .ld-slide {
+#ld-continuous-view-pane .ld-slide {
     position: absolute;
     top: 0px;
     left: 0px;
@@ -181,7 +181,7 @@ div {
     /* to ensure that they are not "none" */
 }
 
-.ld-handout-slide-pane {
+.ld-continuous-view-slide-pane {
     width: calc(var(--ld-slide-width) / 2);
     max-width: calc(var(--ld-slide-width) / 2);
     height: calc(var(--ld-slide-height) / 2);
@@ -189,20 +189,20 @@ div {
 }
 
 @media print {
-    .ld-handout-slide-pane {
+    .ld-continuous-view-slide-pane {
         page-break-after: always;
     }
 }
 
 @media screen {
-    .ld-handout-slide-pane {
+    .ld-continuous-view-slide-pane {
         height: calc(var(--ld-slide-height) / 2 + 2px);
         max-height: calc(var(--ld-slide-height) / 2 + 2px);
         border-bottom: 2px solid gray;
     }
 }
 
-.ld-handout-scaler {
+.ld-continuous-view-scaler {
     scale: 0.5;
     position: absolute;
 }
