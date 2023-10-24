@@ -571,13 +571,17 @@ Arithmetic in :math:`GF(2^3)`: Multiplication
     The number of occurences of the nonzero integers is uniform for multiplication. (In particular when compared to :math:`Z_8`)
 
 
-Arithmetic in :math:`GF(2^3)`: Additive and Multiplicative Inverses
---------------------------------------------------------------------
+Arithmetic in :math:`GF(2^3)`
+--------------------------------------------------------------------------------------------------
+
+Additive (:math:`-w`) and Multiplicative Inverses (:math:`w^{-1}`)
+___________________________________________________________________
 
 .. csv-table::
+    :class: incremental
     :align: center
+    :header: :math:`w`, :math:`-w`, :math:`w^{-1}`
 
-    :math:`w`, :math:`-w`, :math:`w^{-1}`
     0,0,:math:`-`
     1,1,1
     2,2,5
