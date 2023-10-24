@@ -10,6 +10,10 @@
     */
     --ld-slide-width: 1920px;
     --ld-slide-height: 1200px;
+    /*
+        The default zoom level in percent.
+    */
+    --ld-light-table-zoom-level: 10;
 }
 
 /* Some further normalization. */
@@ -123,7 +127,7 @@ div {
 }
 
 .ld-light-table-slide-scaler {
-    scale: 0.1;
+    scale: calc(1 / var(--ld-light-table-zoom-level));
     position: absolute;
 }
 
@@ -131,17 +135,23 @@ div {
     position: absolute;
     top: 0px;
     left: 0px;
-    width: calc(var(--ld-slide-width) / 10);
-    height: calc(var(--ld-slide-height) / 10);
+    width: calc(var(--ld-slide-width) / var(--ld-light-table-zoom-level));
+    height: calc(var(--ld-slide-height) / var(--ld-light-table-zoom-level));
 }
 
 .ld-light-table-slide-pane {
     position: relative;
     flex-shrink: 0;
-    width: calc(var(--ld-slide-width) / 10);
-    ;
-    height: calc(var(--ld-slide-height) / 10);
+    width: calc(var(--ld-slide-width) / var(--ld-light-table-zoom-level));
+    height: calc(var(--ld-slide-height) / var(--ld-light-table-zoom-level));
     overflow: hidden;
+}
+
+#ld-light-table-zoom {
+    display:block;
+    position: absolute;
+    top: 10px;
+    right: 10px;
 }
 
 #ld-help-dialog {

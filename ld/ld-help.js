@@ -4,7 +4,7 @@ function getHelpElement() {
     var div = document.createElement('div');
     div.id = "ld-help";
     div.innerHTML = `
-        <h1>LectureDoc 2</h1>
+        <h1>LectureDoc<sup>2</sup></h1>
         <p>
             <strong>Developed by M. Eichberg</strong><br>
             <a href="https://github.com/Delors/LectureDoc">Lecture Doc Website</a>
@@ -13,7 +13,7 @@ function getHelpElement() {
             <strong>Mouse Navigation</strong><br>
             When you click on the left side of a slide you'll go the previous slide.
             When you click in the right half the next step will be done; i.e., the
-            next element will be made visible or you'll advance to the next slide.
+            next animation will be started or you'll advance to the next slide.
         </p>
         <p>
             <strong>Keyboard Bindings</strong><br>
