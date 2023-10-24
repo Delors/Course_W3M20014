@@ -2,10 +2,11 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta name="version" content="LD2 0.1" />
 <meta content="Michael Eichberg" name="author" />
 <meta content="Released under the terms of the `2-Clause BSD license`." name="license" />
-<title>LectureDoc is Here!</title>
+<title>LectureDoc^2 Tutorial</title>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@3.0.1/es5/tex-mml-chtml.js?config=TeX-AMS_CHTML"></script>
 <link rel="stylesheet" href="../ld/normalize.css" type="text/css" />
 <style type="text/css">
@@ -612,21 +613,77 @@ a { text-decoration: none; }
 </head>
 <body>
 <div class="ld-slide" id="slide0">
-<h1 class="title">LectureDoc is Here!</h1>
+<h1 class="title"><span class="math">\(LectureDoc^2\)</span> Tutorial</h1>
 
-<p>Dr. Michael Eichberg</p>
+<p>LectureDoc is an authoring system for creating lecture notes. LectureDoc enables you to write a single HTML or reStructuredText document that contains the slides, additional annotations and also exercises.</p>
+<p><em>Dr. Michael Eichberg</em></p>
 </div>
-<div class="ld-slide" id="some-other-slide">
-<h2>Some other Slide!</h2>
-<p>I'm too young!</p>
-</div><div class="ld-slide" id="and-definitive-some-ackknowledgements">
-<h2>And definitive some ackknowledgements!</h2>
-<p>I'm really too young!</p>
+<div class="ld-slide" id="basics">
+<h2>Basics</h2>
+<p>A basic slide consists of a (section) header and some reStructuredText content.</p>
+<aside class="admonition admonition-example">
+<p class="admonition-title">Example</p>
+<pre class="literal-block">First Slide
+-----------------
+
+A basic slide...</pre>
+</aside>
+</div><div class="ld-slide" id="embedding-formulae">
+<h2>Embedding Formulae</h2>
+<p>You can embed math equations in your slides using reStructuredText's default directives (<span class="docutils literal">.. math::</span>) and roles (<span class="docutils literal"><span class="pre">:math:`...`</span></span>).</p>
+<aside class="admonition smaller">
+<p class="admonition-title">Example</p>
+<div class="two-columns docutils container">
+<div class="column docutils container">
+<p>The following code:</p>
+<blockquote>
+<pre class="literal-block">Computation in :math:`GF(2)`:
+
+.. math::
+
+  \begin{matrix}
+  1 + 1 &amp; = 1 - 1 &amp; = 0 \\
+  1 + 0 &amp; = 1 - 0 &amp; = 1 \\
+  0 + 1 &amp; = 0 - 1 &amp; = 1
+  \end{matrix}</pre>
+</blockquote>
+</div>
+<div class="column docutils container">
+<p>Will render like this:</p>
+<blockquote>
+<p>Computation in <span class="math">\(GF(2)\)</span>:</p>
 <div class="math">
 \begin{equation*}
-E = mc^2
+\begin{matrix}
+1 + 1 &amp; = 1 - 1 &amp; = 0 \\
+1 + 0 &amp; = 1 - 0 &amp; = 1 \\
+0 + 1 &amp; = 0 - 1 &amp; = 1
+\end{matrix}
 \end{equation*}
 </div>
+</blockquote>
+</div>
+</div>
+</aside>
+</div><div class="ld-slide" id="section-1">
+<h2></h2>
+<p>A slide without an explicit title can be created by explicitly creating an empty title:</p>
+<aside class="admonition admonition-example">
+<p class="admonition-title">Example</p>
+<pre class="literal-block">\
+--</pre>
+<aside class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You have to add a space after the backslash (<span class="docutils literal">\</span>)!</p>
+</aside>
+</aside>
+</div><div class="ld-slide" id="animation">
+<h2>Animation</h2>
+<p>Basic <em>appear</em> animations can be created using the (CSS) class <span class="docutils literal">incremental</span>.</p>
+</div><div class="ld-slide" id="slide-dimensions">
+<h2>Slide Dimensions</h2>
+<p>The slide dimensions can be controlled by specifying the corresponding meta information.
+If not specified, the default dimension is set to <span class="math">\(1920 \times 1200\)</span>; i.e., a ratio of 16:10.</p>
 </div>
 </body>
 </html>
