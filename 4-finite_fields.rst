@@ -598,7 +598,7 @@ To construct the finite field :math:`GF(2^3)`, we need to chose an irreducible p
 
 .. container:: smaller
 
-    With multiplications modulo x^3 + x + 1, we have only the following eight polynomials in the set of polynomials over :math:`GF(2)`:
+    With multiplications modulo :math:`x^3 + x + 1`, we have only the following eight polynomials in the set of polynomials over :math:`GF(2)`:
 
     .. math::
 
@@ -676,8 +676,8 @@ Multiplication in :math:`GF(2^n)`
     .. math::
         x \times f(x) =
         \begin{cases}
-            (b_6b_5b_4b_3b_2b_1b_00) & if b_7 = 0\\
-            (b_6b_5b_4b_3b_2b_1b_00) \oplus 0001 1011 & if b_7 = 1\\
+            (b_6b_5b_4b_3b_2b_1b_00) & if\; b_7 = 0\\
+            (b_6b_5b_4b_3b_2b_1b_00) \oplus 0001 1011 & if\; b_7 = 1\\
         \end{cases}
 
     Multiplication by a higher power of x can be achieved by repeated application of the previous equation. By adding intermediate results, multiplication by any constant in :math:`GF(2^n)` can be achieved.
