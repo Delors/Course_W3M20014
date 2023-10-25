@@ -9,13 +9,10 @@ body {
     line-height: 1.5;
 }
 
-/* styling of all "overlay windows" */
-#ld-help-dialog,
-#ld-jump-target-dialog,
-#ld-light-table {
-    background-color: rgba(0, 0, 0, 0.9);
-    /*box-shadow: 4px 4px 6px black,  -4px -4px 6px black,  -4px 4px 6px black,  4px -4px 6px black;            
-    border: 1px solid rgb(48, 48, 48);*/
+/* common styling of all dialogs */
+.ld-dialog {
+    background-color: rgba(30, 30, 30, 0.9);
+    box-shadow: 2px 2px 3px black,  -2px -2px 3px black,  -2px 2px 3px black,  2px -2px 3px black;            
     border-radius: 10px;
     margin: auto;
 }

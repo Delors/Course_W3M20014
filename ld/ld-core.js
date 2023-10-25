@@ -45,7 +45,23 @@ const lectureDoc2 = function() {
         /**
          * The number of slides.
          */
-        slideCount: -1
+        slideCount: -1,
+        /**
+         * Defines the first slide that should be shown; the default is 
+         * to show the last-shown slide.
+         * Alternatives:
+         * - "<slide no>"" where slide no is a number in the range [1,<#slides>]
+         * - "last" to show the last slide
+         * - "last-viewed" to show the last shown slide (default)
+         */
+        firstSlide: "last-viewed"
+    }
+
+    /**
+     * Captures the current state of the presentation; in particular the progress.
+     */
+    const state = {
+        currentSlideNo: 0,
     }
 
     function initDocumentId() {
@@ -87,11 +103,55 @@ const lectureDoc2 = function() {
         presentation.slideCount = document.querySelectorAll("body>div.ld-slide").length
     }
 
+    /**
+     * Initializes the state information regarding the current slide to show and also 
+     * initializes the field storing the meta-information about the first-slide
+     * that should be shown.
+     */
+    function initCurrentSlide() {
+        try {
+            presentation.firstSlide = document.querySelector('meta[name="first-slide"]').content;
+        } catch (error) {
+            console.info("first slide is not specified; trying to show last viewed slide");
+        }
+        switch (presentation.firstSlide) {
+            case "last":
+                state.currentSlideNo = lastSlideNo();
+                break;
+            case "last-viewed":
+                if (presentation.id) {
+                    state.currentSlideNo = localStorage.getItem(uniqueId("current-slide-no"));
+                } else {
+                    console.warn('document has no id; using "first-slide" is not possible');
+                }
+                break;
+            default:
+                try {
+                    state.currentSlideNo = Number(ld_initial_slide_no.content) - 1
+                } catch (error) {
+                    console.error('invalid "first-slide" information: ${error}')
+                }
+        }
+        // Check if the currentSlideNo is (still) valid.
+        if (state.currentSlideNo) {
+            if (state.currentSlideNo > lastSlideNo()) {
+                console.info(`the specified slide number is too large: ${state.currentSlideNo}; setting it to the last slide`)
+                state.currentSlideNo = lastSlideNo();
+            } else if (state.currentSlideNo < 0) {
+                console.error(`the specified first slide is negative: ${state.currentSlideNo}; setting it to the first slide`)
+                state.currentSlideNo = 0;
+            }
+        } else {
+            state.currentSlideNo = 0
+        }
+    }
+
 
     function setupLighttable() {
-        const ld_light_table_pane = document.createElement("DIV")
-        ld_light_table_pane.id = "ld-light-table-pane"
-        ld_light_table_pane.innerHTML = `
+        const ld_light_table_dialog = document.createElement("DIALOG")
+        ld_light_table_dialog.id = "ld-light-table-dialog"
+        ld_light_table_dialog.className = "ld-dialog"
+        ld_light_table_dialog.innerHTML = `
             <div id="ld-light-table">
                 <div id="ld-light-table-header">
                     <span>Lighttable: ${presentation.slideCount} slides</span>
@@ -103,20 +163,23 @@ const lectureDoc2 = function() {
                 <div id="ld-light-table-slides"></div>        
             </div>
         `
-        document.getElementsByTagName("BODY")[0].prepend(ld_light_table_pane);
+        document.getElementsByTagName("BODY")[0].prepend(ld_light_table_dialog);
     }
 
     function setupHelp() {
         const ld_help_dialog = document.createElement("DIALOG")
         ld_help_dialog.id = "ld-help-dialog"
+        ld_help_dialog.className = "ld-dialog"
         document.getElementsByTagName("BODY")[0].prepend(ld_help_dialog);
     }
 
     function setupJumpTargetDialog() {
         const ld_jump_target_dialog = document.createElement("DIALOG")
         ld_jump_target_dialog.id = "ld-jump-target-dialog"
+        ld_jump_target_dialog.className = "ld-dialog"
         ld_jump_target_dialog.innerHTML = `
-            <span id="ld-jump-target-current"></span> / <span id="ld-jump-target-max"></span>        
+            <span id="ld-jump-target-current"></span> / 
+            <span id="ld-jump-target-max">${presentation.slideCount}</span>        
         `
         document.getElementsByTagName("BODY")[0].prepend(ld_jump_target_dialog);
     }
@@ -124,21 +187,47 @@ const lectureDoc2 = function() {
     function setupMainPane() {
         const ld_main_pane = document.createElement("DIV")
         ld_main_pane.id = "ld-main-pane"
+
+        /* 
+        Copies all slide(-template)s found in the document to the main pane
+        additionally, associate every slide with a unique id based on the
+        number of the slide (ld-slide-no-*). 
+        Internally the numbering of slides starts with 0. However, user facing
+        functions assume that the first slide has the id 1.
+        */
+        document.querySelectorAll("body > .ld-slide").forEach((slideTemplate,i) => {
+            const slide = slideTemplate.cloneNode(true);
+            slide.id = "ld-slide-no-" + i;
+            /*  let's hide all elements that should be shown incrementally */
+            resetSlideProgress(slide);
+            ld_main_pane.appendChild(slide);
+        })
+
         document.getElementsByTagName("BODY")[0].prepend(ld_main_pane);
     }
 
     function setupContinuousView() {
         const ld_continuous_view_pane = document.createElement("DIV")
         ld_continuous_view_pane.id = "ld-continuous-view-pane"
+
+        document.querySelectorAll("body > .ld-slide").forEach((slideTemplate, i) => {
+            const slide = slideTemplate.cloneNode(true);
+            slide.removeAttribute("id"); // not needed anymore (in case it was set)
+    
+            const slide_scaler = document.createElement("DIV");
+            slide_scaler.className = "ld-continuous-view-scaler";
+            slide_scaler.appendChild(slide);
+    
+            const slide_pane = document.createElement("DIV");
+            slide_pane.className = "ld-continuous-view-slide-pane"
+            slide_pane.appendChild(slide_scaler);
+    
+            ld_continuous_view_pane.appendChild(slide_pane);
+        });
+
         document.getElementsByTagName("BODY")[0].prepend(ld_continuous_view_pane);
     }
 
-    /**
-     * Captures the current state of the presentation; in particular the progress.
-     */
-    const state = {
-        currentSlideNo: 0,
-    }
 
 
     /* 
@@ -153,24 +242,18 @@ const lectureDoc2 = function() {
     }
 
 
-function togglePane(ld_pane) {
-    if (ld_pane.style.opacity == 1) {
-        ld_pane.style.opacity = 0;
-        /* the 500ms is also hard coded in the css */
-        setTimeout(function () { ld_pane.style.display = "none" }, 500);
-    } else {
-        ld_pane.style.display = "block"
-        ld_pane.style.opacity = 1;
+    /**
+     * Creates a document dependent unique id. This enables the storage of
+     * document dependent information in local storage, even if all documents
+     * have the same origin and therefore use the same local storage object.
+     */
+    function uniqueId(id) {
+        if (presentation.id != null) {
+            return "ld-" + presentation.id + "-" + id;
+        } else {
+            throw new Error("no document id available")
+        }
     }
-}
-
-function uniqueId(id) {
-    if (presentation.id != null) {
-        return "ld-" + presentation.id + "-" + id;
-    } else {
-        throw new Error("no document id available")
-    }
-}
 
 
 /*  ---------------------------------------------------------------------------
@@ -186,66 +269,6 @@ function getCurrentSlide() {
 }
 
 
-window.addEventListener("load", (event) => {
-    /*  Associate every slide with a unique id based on the
-        number of the slide (ld-slide-no-*). Show the first 
-        slide. Internally the numbering of slides starts 
-        with 0 - however, user facing functions assume that
-        the first slide has the id 1.
-    */
-    const ld_main_pane = document.getElementById("ld-main-pane");
-    const slides = document.querySelectorAll("body > .ld-slide");
-    for (var i = 0; i <= lastSlideNo(); i++) {
-        const main_slide = slides[i].cloneNode(true);
-        main_slide.id = "ld-slide-no-" + i;
-        /*  let's hide all elements that should be shown incrementally */
-        resetSlideProgress(main_slide);
-        ld_main_pane.appendChild(main_slide);
-    };
-    const ld_initial_slide_no = document.querySelector('meta[name="first-slide"]');
-    if (ld_initial_slide_no) {
-        try {
-            if (ld_initial_slide_no.content == "last") {
-                state.currentSlideNo = lastSlideNo();
-            } else if (ld_initial_slide_no.content == "last-viewed") {
-                // Remember that we can't use local storage meaningfully when
-                // the documentId is null; we don't want multiple slide sets
-                // to share the same state! That's why we test for 
-                // id != null.
-                if (presentation.id) {
-                    const lastViewed = localStorage.getItem(uniqueId("current-slide-no"));
-                    if (lastViewed) {
-                        if (lastViewed > lastSlideNo()) {
-                            lastViewed = lastSlideNo();
-                        } else {
-                            state.currentSlideNo = lastViewed;
-                        }
-                    }
-                } else {
-                    console.info("the document has no id using first-slide is not possible");
-                    state.currentSlideNo = 0;
-                }
-            } else {
-                state.currentSlideNo = Number(ld_initial_slide_no.content) - 1
-                if (state.currentSlideNo > lastSlideNo()) {
-                    state.currentSlideNo = lastSlideNo();
-                } else if (state.currentSlideNo < 0) {
-                    state.currentSlideNo = 0;
-                }
-            }
-        } catch (error) {
-            console.error(error)
-        }
-    }
-    console.info("the presentation starts with slide: " + state.currentSlideNo);
-    showSlide(state.currentSlideNo);
-
-    /*  Initialize the span element which shows the  
-        number of the last slide when the user wants to 
-        jump to a specific slide. */
-    document.getElementById("ld-jump-target-max").innerText = presentation.slideCount;
-});
-
 /*  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     Make sure that the slide is always shown in the middle
     of the screen and completely fills it.
@@ -257,8 +280,8 @@ function setPaneScale() {
     document.getElementById("ld-main-pane").style.scale = Math.min(w_scale, h_scale);
 }
 window.addEventListener("load", (event) => {
-    setPaneScale();
-    /* the following element will be added when the "DOMConentIsLoaded" */
+    
+    /* the following element will be added when the "DOMContentIsLoaded" */
     document.getElementById("ld-main-pane").addEventListener("click", (event) => {
         if (window.getSelection().anchorNode != null) {
             return;
@@ -272,7 +295,7 @@ window.addEventListener("load", (event) => {
         }
     });
 });
-document.defaultView.addEventListener("resize", (event) => setPaneScale());
+
 
 /*  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     Handling of presentation progress. 
@@ -418,7 +441,15 @@ window.addEventListener("load", (event) => {
     })
 });
 function toggleLightTable() {
-    togglePane(document.getElementById("ld-light-table-pane"));
+    const light_table_dialog = document.getElementById("ld-light-table-dialog")
+    if (light_table_dialog.open) {
+        light_table_dialog.style.opacity = 0;
+        /* the 500ms is also hard coded in the css */
+        setTimeout(function () { light_table_dialog.close()}, 500);
+    } else {
+        light_table_dialog.showModal();
+        light_table_dialog.style.opacity = 1;
+    }
 }
 /*  -------------------------------------------------------------------
     Handling help.
@@ -442,23 +473,6 @@ function toggleHelp() {
 /*  -------------------------------------------------------------------
     Supporting a handout pane/a print preview pane.
 */
-window.addEventListener("load", (event) => {
-    const ho = document.getElementById("ld-continuous-view-pane");
-    document.querySelectorAll("body > .ld-slide").forEach((slide, i) => {
-        const ho_slide = slide.cloneNode(true);
-        ho_slide.removeAttribute("id"); // not needed anymore (in case it was set)
-
-        const ho_slide_scaler = document.createElement("DIV");
-        ho_slide_scaler.className = "ld-continuous-view-scaler";
-        ho_slide_scaler.appendChild(ho_slide);
-
-        const ho_slide_pane = document.createElement("DIV");
-        ho_slide_pane.className = "ld-continuous-view-slide-pane"
-        ho_slide_pane.appendChild(ho_slide_scaler);
-
-        ho.appendChild(ho_slide_pane);
-    });
-});
 
 function toggleContinuousView() {
     const ld_continuous_view_pane = document.getElementById("ld-continuous-view-pane");
@@ -515,17 +529,21 @@ function toggleContinuousView() {
         });
     }
 
+    function registerResizeListener() { 
+        document.defaultView.addEventListener("resize", () => setPaneScale());
+    }
 
     /**
      * Queries and manipulates the DOM to setup LectureDoc.
      */
-    document.addEventListener("DOMContentLoaded", (event) => {
+    document.addEventListener("DOMContentLoaded", () => {
         initDocumentId();
         initSlideDimensions();
         initSlideCount();
+        initCurrentSlide();
 
         /*
-        Setup base structure!
+        Setup base structure.
 
         Given a LectureDoc HTML document - which is basically an HTML document that
         has to follow some well-defined restrictions - we first extend the DOM with
@@ -536,14 +554,22 @@ function toggleContinuousView() {
         setupJumpTargetDialog();
         setupContinuousView();
         setupMainPane();
+
+        /*
+        Update rendering related information.
+        */
+        setPaneScale(); // done to improve the initial rendering behavior
     });
 
     /**
      * Registers the navigation related listeners. I.e., we only enable 
      * navigation after all slides are fully loaded.
      */
-    window.addEventListener("load", (event) => {
+    window.addEventListener("load", () => {
         registerKeyboardEventListener();
+        registerResizeListener();
+        
+        showSlide(state.currentSlideNo);
     });
 
 
