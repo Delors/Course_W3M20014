@@ -23,8 +23,9 @@
 const lectureDoc2 = function() {
 
     /**
-     * The following information is read from the document if it is specified 
-     * and is therefore neither representing the state nor static configuration.
+     * The following information is read from the document, if it is specified.
+     * Therefore this information is neither representing the state nor static 
+     * configuration information.
      */
     const presentation = { // we can't use "document" here because we don't want to override the standard document object.
         /** 
@@ -50,11 +51,19 @@ const lectureDoc2 = function() {
          * Defines the first slide that should be shown; the default is 
          * to show the last-shown slide.
          * Alternatives:
-         * - "<slide no>"" where slide no is a number in the range [1,<#slides>]
+         * - "<slide no>" where slide no is a number in the range [1,<#slides>]
          * - "last" to show the last slide
          * - "last-viewed" to show the last shown slide (default)
          */
-        firstSlide: "last-viewed"
+        firstSlide: "last-viewed",
+        showLightTable: false, // FIXME .... split information read from file and current state
+        /**
+         * If true the help dialog will be shown on startup. This will generally
+         * happen, when the help was never shown before w.r.t. the same origin. 
+         * I.e., this setting is by default not document dependent.
+         * If explicitly set to "true" in the document the help will always be shown.
+         */
+        showHelp: false // FIXME .... split information read from file and current state
     }
 
     /**
@@ -62,6 +71,7 @@ const lectureDoc2 = function() {
      */
     const state = {
         currentSlideNo: 0,
+        // FIXME ... add showHelp and showLightTable
     }
 
     function initDocumentId() {
@@ -146,15 +156,31 @@ const lectureDoc2 = function() {
         }
     }
 
+    function initShowLightTable() {
+        const ld_show_light_table = document.querySelector('meta[name="ld-show-light-table"]');
+        presentation.showLightTable = (ld_show_light_table && ld_show_light_table.content) ? true : false;
+    }
 
-    function setupLighttable() {
+    function initShowHelp() {
+        const ld_show_help = document.querySelector('meta[name="ld-show-help"]');
+        if (ld_show_help) {
+            presentation.showHelp = ld_show_help.content == "true"
+        } else {
+            presentation.showHelp = localStorage.getItem("ld-help-was-shown") ? false : true;
+        }
+        if (presentation.showHelp) {
+            localStorage.setItem("ld-help-was-shown",true);
+        }
+    }
+
+    function setupLightTable() {
         const ld_light_table_dialog = document.createElement("DIALOG")
         ld_light_table_dialog.id = "ld-light-table-dialog"
         ld_light_table_dialog.className = "ld-dialog"
         ld_light_table_dialog.innerHTML = `
             <div id="ld-light-table">
                 <div id="ld-light-table-header">
-                    <span>Lighttable: ${presentation.slideCount} slides</span>
+                    <span>Light Table: ${presentation.slideCount} slides</span>
                     <div id="ld-light-table-zoom">
                         <label for="ld-light-table-zoom-slider">Zoom:</label>
                         <input type="range" id="ld-light-table-zoom-slider" name="Zoom" min="3"  max="25" step="2" value="10"/>
@@ -163,6 +189,7 @@ const lectureDoc2 = function() {
                 <div id="ld-light-table-slides"></div>        
             </div>
         `
+
         document.getElementsByTagName("BODY")[0].prepend(ld_light_table_dialog);
     }
 
@@ -170,6 +197,7 @@ const lectureDoc2 = function() {
         const ld_help_dialog = document.createElement("DIALOG")
         ld_help_dialog.id = "ld-help-dialog"
         ld_help_dialog.className = "ld-dialog"
+
         document.getElementsByTagName("BODY")[0].prepend(ld_help_dialog);
     }
 
@@ -181,6 +209,7 @@ const lectureDoc2 = function() {
             <span id="ld-jump-target-current"></span> / 
             <span id="ld-jump-target-max">${presentation.slideCount}</span>        
         `
+
         document.getElementsByTagName("BODY")[0].prepend(ld_jump_target_dialog);
     }
 
@@ -390,11 +419,7 @@ function jumpToSlide() {
     document.getElementById("ld-jump-target-dialog").close();
     if (slideNo >= 0) {
         hideSlide(state.currentSlideNo);
-        if (slideNo > lastSlideNo()) {
-            state.currentSlideNo = lastSlideNo();
-        } else {
-            state.currentSlideNo = slideNo;
-        }
+        state.currentSlideNo = slideNo > lastSlideNo() ? lastSlideNo() : slideNo;
         showSlide(state.currentSlideNo);
     }
 }
@@ -416,10 +441,12 @@ window.addEventListener("load", (event) => {
         var lt_slide_overlay = document.createElement("DIV");
         lt_slide_overlay.className = "ld-light-table-slide-overlay";
         lt_slide_overlay.id = "ld-light-table-slide-no-" + i;
-        lt_slide_overlay.addEventListener("click", (event) => {
+        // TODO Move listener registration to general code!
+        lt_slide_overlay.addEventListener("click", () => {
             hideSlide(state.currentSlideNo);
             state.currentSlideNo = i;
             showSlide(state.currentSlideNo);
+            toggleLightTable();            
         });
         var lt_slide_pane = document.createElement("DIV");
         lt_slide_pane.className = "ld-light-table-slide-pane";
@@ -429,18 +456,12 @@ window.addEventListener("load", (event) => {
         lt.appendChild(lt_slide_pane);
     });
 
-    const ld_show_light_table = document.querySelector('meta[name="ld-show-light-table"]');
-    if (ld_show_light_table && ld_show_light_table.content == "true") {
-        toggleLightTable();
-    }
-
     document.querySelector("#ld-light-table-zoom-slider").addEventListener("input", (event) => {
-        console.log(event.target.value)
         const root = document.querySelector(":root");
         root.style.setProperty("--ld-light-table-zoom-level", event.target.value);
     })
 });
-function toggleLightTable() {
+function toggleLightTable() { // TODO refactor to toggleDialog(dialog)
     const light_table_dialog = document.getElementById("ld-light-table-dialog")
     if (light_table_dialog.open) {
         light_table_dialog.style.opacity = 0;
@@ -457,7 +478,7 @@ function toggleLightTable() {
 window.addEventListener("load", (event) => {
     document.getElementById("ld-help-dialog").appendChild(getHelpElement());
 });
-function toggleHelp() {
+function toggleHelp() { // TODO refactor to toggleDialog(dialog)
     const ld_help_dialog = document.getElementById("ld-help-dialog");
     //const ld_content = document.getElementById("ld-help");
     if (ld_help_dialog.open) {
@@ -541,6 +562,8 @@ function toggleContinuousView() {
         initSlideDimensions();
         initSlideCount();
         initCurrentSlide();
+        initShowLightTable();
+        initShowHelp();
 
         /*
         Setup base structure.
@@ -549,7 +572,7 @@ function toggleContinuousView() {
         has to follow some well-defined restrictions - we first extend the DOM with
         the elements that realize LectureDoc's core functionality.
         */
-        setupLighttable();
+        setupLightTable();
         setupHelp();
         setupJumpTargetDialog();
         setupContinuousView();
@@ -562,14 +585,16 @@ function toggleContinuousView() {
     });
 
     /**
-     * Registers the navigation related listeners. I.e., we only enable 
-     * navigation after all slides are fully loaded.
+     * Registers the state (e.g., navigation) related listeners. I.e., we only
+     * enable state changes after everything is fully loaded.
      */
     window.addEventListener("load", () => {
         registerKeyboardEventListener();
         registerResizeListener();
         
         showSlide(state.currentSlideNo);
+        if(presentation.showLightTable) toggleLightTable(); //FIXME: use state
+        if(presentation.showHelp) toggleHelp(); //FIXME: use state
     });
 
 
