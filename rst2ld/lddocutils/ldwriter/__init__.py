@@ -23,7 +23,7 @@ class LDTranslator(html5_polyglot.HTMLTranslator):
 
     ld_stylesheet_template = """\
     <script src="%(ld_path)s/ld-help.js" type="text/javascript"></script>
-    <script src="%(ld_path)s/ld-core.js" type="text/javascript"></script>    
+    <script src="%(ld_path)s/ld-core.js" type="text/javascript"></script>
     <link rel="stylesheet" href="%(ld_path)s/ld.css" type="text/css" />
     <link rel="stylesheet" href="%(ld_path)s/default.css" type="text/css" />\n"""
 
