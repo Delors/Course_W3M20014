@@ -3,6 +3,14 @@
 */
 
 
+tbody tr:hover {
+    background-color: rgb(180, 249, 242);
+}
+
+tbody td:hover {
+    background-color: rgb(161, 204, 199);
+}
+
 small {
     font-size: smaller;
 }

@@ -74,11 +74,41 @@ const lectureDoc2 = function() {
     /**
      * Captures the current state of the presentation; in particular the progress.
      */
-    const state = {
+    var state = { // the following is the default state 
         currentSlideNo: 0,
         showLightTable: false,
-        showHelp: false        
+        lightTableZoomLevel : 10,
+        showHelp: false,
+        showContinuousView: false      
     }
+
+    function storeState() {
+        if (presentation.id) {
+            localStorage.setItem(documentSpecificId("state"),JSON.stringify(state));
+        }
+    }
+
+    function restoreState() {
+        if (presentation.id) {
+            const newState = JSON.parse(localStorage.getItem(documentSpecificId("state")));
+            if (newState) {
+                console.log("restored state: "+newState);
+                state = newState;
+            }
+        }
+    }
+
+    function applyState() {
+        showSlide(state.currentSlideNo);
+
+        updateLightTableZoomLevel(state.lightTableZoomLevel);
+        if (state.showLightTable) toggleDialog("light-table");
+
+        if (state.showHelp) toggleDialog("help");
+
+        if (state.showContinuousView) toggleContinuousView();
+    }
+
 
     /**
      * Creates a document dependent unique id. This enables the storage of
@@ -110,22 +140,6 @@ const lectureDoc2 = function() {
                     return e[0].toUpperCase() + e.slice(1) 
                 }).
                 join("")
-    }
-
-    /**
-     * @param {string} id The id of the element. 
-     * @returns The stored document specific value for the given id. Recall that
-     *      the returned value is either undefined or a string.
-     */
-    function getStoredItem(id) {
-        return localStorage.getItem(documentSpecificId(id));
-    }
-
-    /**
-     * @returns The element ("DIV") with the ID of the current slide.
-     */
-    function currentSlide() {
-        return document.getElementById("ld-slide-no-" + state.currentSlideNo)
     }
 
     /**
@@ -218,21 +232,19 @@ const lectureDoc2 = function() {
     }
 
     function initShowLightTable() {
-        presentation.showLightTable = document.querySelector('meta[name="ld-show-light-table"]');
-        if (presentation.showLightTable) {
-            state.showLightTable = (presentation.showLightTable.content.trim().toLowerCase() === "true")
-        } else if (presentation.id) {
-            state.showLightTable = getStoredItem("show-light-table") === "true"
-        }
+        const showLightTable = document.querySelector('meta[name="ld-show-light-table"]');
+        if (showLightTable) {
+            presentation.showLightTable = showLightTable.content.trim().toLowerCase()
+            state.showLightTable = (presentation.showLightTable === "true")
+        } 
     }
 
     function initShowHelp() {
-        presentation.showHelp = document.querySelector('meta[name="ld-show-help"]');
-        if (presentation.showHelp) {
-            state.showHelp = (presentation.showHelp.content.trim().toLowerCase() === "true")
-        } else if (presentation.id) {
-            state.showHelp = getStoredItem("show-help") === "true";
-        }
+        const showHelp = document.querySelector('meta[name="ld-show-help"]');
+        if (showHelp) {
+            presentation.showHelp = showHelp.content.trim().toLowerCase()
+            state.showHelp = (presentation.showHelp === "true")
+        } 
         // We don't want to show the help over and over again ... therefore,
         // we use a LectureDoc specific - i.e., document independent - id to
         // store the information if the help was shown at least once.
@@ -243,50 +255,81 @@ const lectureDoc2 = function() {
     }
 
     function setupLightTable() {
-        const ld_light_table_dialog = document.createElement("DIALOG")
-        ld_light_table_dialog.id = "ld-light-table-dialog"
-        ld_light_table_dialog.className = "ld-dialog"
-        ld_light_table_dialog.innerHTML = `
-            <div id="ld-light-table">
-                <div id="ld-light-table-header">
-                    <span>Light Table: ${presentation.slideCount} slides</span>
-                    <div id="ld-light-table-zoom">
-                        <label for="ld-light-table-zoom-slider">Zoom:</label>
-                        <input type="range" id="ld-light-table-zoom-slider" name="Zoom" min="3"  max="25" step="2" value="10"/>
-                    </div>
-                </div>
-                <div id="ld-light-table-slides"></div>        
+        const light_table_dialog = document.createElement("DIALOG")
+        light_table_dialog.id = "ld-light-table-dialog"
+        light_table_dialog.className = "ld-dialog"
+
+        const light_table = document.createElement("DIV")
+        light_table.id = "ld-light-table"
+        light_table_dialog.appendChild(light_table)
+
+        const light_table_header = document.createElement("DIV")
+        light_table_header.id = "ld-light-table-header"
+        light_table_header.innerHTML = `
+            <span>Light Table: ${presentation.slideCount} slides</span>
+            <div id="ld-light-table-zoom">
+                <label for="ld-light-table-zoom-slider">Zoom:</label>
+                <input type="range" id="ld-light-table-zoom-slider" name="Zoom" min="3"  max="25" step="2" value="10"/>
             </div>
         `
+        light_table.appendChild(light_table_header)
 
-        document.getElementsByTagName("BODY")[0].prepend(ld_light_table_dialog);
+        const light_table_slides = document.createElement("DIV")
+        light_table_slides.id = "ld-light-table-slides"
+        light_table.appendChild(light_table_slides)
+
+        document.querySelectorAll("body > .ld-slide").forEach((slide_template, i) => {
+            const slide = slide_template.cloneNode(true);
+            slide.removeAttribute("id"); // not needed anymore (in case it was set)
+            slide.style.display = "block"; // in case it was "none"
+    
+            const slide_scaler = document.createElement("DIV");
+            slide_scaler.className = "ld-light-table-slide-scaler";
+            slide_scaler.appendChild(slide);
+    
+            const slide_overlay = document.createElement("DIV");
+            slide_overlay.className = "ld-light-table-slide-overlay";
+            slide_overlay.dataset.ldSlideNo = i;
+
+            const slide_pane = document.createElement("DIV");
+            slide_pane.className = "ld-light-table-slide-pane";
+            slide_pane.appendChild(slide_scaler);
+            slide_pane.appendChild(slide_overlay);
+    
+            light_table_slides.appendChild(slide_pane);
+        });
+
+        document.getElementsByTagName("BODY")[0].prepend(light_table_dialog);
     }
 
     function setupHelp() {
-        const ld_help_dialog = document.createElement("DIALOG")
-        ld_help_dialog.id = "ld-help-dialog"
-        ld_help_dialog.className = "ld-dialog"
-        ld_help_dialog.appendChild(lectureDoc2Help());
+        const help_dialog = document.createElement("DIALOG")
+        help_dialog.id = "ld-help-dialog"
+        help_dialog.className = "ld-dialog"
+        try {
+            help_dialog.appendChild(lectureDoc2Help());
+        } catch (error) {
+            help_dialog.innerText = 'Help not found. "ld-help.js" probably not loaded.'
+        }
 
-        document.getElementsByTagName("BODY")[0].prepend(ld_help_dialog);
-
+        document.getElementsByTagName("BODY")[0].prepend(help_dialog);
     }
 
     function setupJumpTargetDialog() {
-        const ld_jump_target_dialog = document.createElement("DIALOG")
-        ld_jump_target_dialog.id = "ld-jump-target-dialog"
-        ld_jump_target_dialog.className = "ld-dialog"
-        ld_jump_target_dialog.innerHTML = `
+        const jump_target_dialog = document.createElement("DIALOG")
+        jump_target_dialog.id = "ld-jump-target-dialog"
+        jump_target_dialog.className = "ld-dialog"
+        jump_target_dialog.innerHTML = `
             <span id="ld-jump-target-current"></span> / 
             <span id="ld-jump-target-max">${presentation.slideCount}</span>        
         `
 
-        document.getElementsByTagName("BODY")[0].prepend(ld_jump_target_dialog);
+        document.getElementsByTagName("BODY")[0].prepend(jump_target_dialog);
     }
 
     function setupMainPane() {
-        const ld_main_pane = document.createElement("DIV")
-        ld_main_pane.id = "ld-main-pane"
+        const main_pane = document.createElement("DIV")
+        main_pane.id = "ld-main-pane"
 
         /* 
         Copies all slide(-template)s found in the document to the main pane
@@ -300,15 +343,15 @@ const lectureDoc2 = function() {
             slide.id = "ld-slide-no-" + i;
             /*  let's hide all elements that should be shown incrementally */
             resetSlideProgress(slide);
-            ld_main_pane.appendChild(slide);
+            main_pane.appendChild(slide);
         })
 
-        document.getElementsByTagName("BODY")[0].prepend(ld_main_pane);
+        document.getElementsByTagName("BODY")[0].prepend(main_pane);
     }
 
     function setupContinuousView() {
-        const ld_continuous_view_pane = document.createElement("DIV")
-        ld_continuous_view_pane.id = "ld-continuous-view-pane"
+        const continuous_view_pane = document.createElement("DIV")
+        continuous_view_pane.id = "ld-continuous-view-pane"
 
         document.querySelectorAll("body > .ld-slide").forEach((slideTemplate, i) => {
             const slide = slideTemplate.cloneNode(true);
@@ -322,22 +365,13 @@ const lectureDoc2 = function() {
             slide_pane.className = "ld-continuous-view-slide-pane"
             slide_pane.appendChild(slide_scaler);
     
-            ld_continuous_view_pane.appendChild(slide_pane);
+            continuous_view_pane.appendChild(slide_pane);
         });
 
-        document.getElementsByTagName("BODY")[0].prepend(ld_continuous_view_pane);
+        document.getElementsByTagName("BODY")[0].prepend(continuous_view_pane);
     }
 
-    /* 
-    Simple helper functions. 
-    */
-
-
-
-
-
-
-
+ 
 /*  ---------------------------------------------------------------------------
     Setup everything for rendering the slides and jumping to the slides.
 
@@ -346,9 +380,14 @@ const lectureDoc2 = function() {
     is made by making the respective element visible. I.e., the whole
     progress is implicitly covered by the visible and hidden elements.
 */
-function getCurrentSlide() {
-    return document.getElementById("ld-slide-no-" + state.currentSlideNo);
-}
+
+
+    /**
+     * @returns The element ("DIV") with the ID of the current slide.
+     */
+    function getCurrentSlide() {
+        return document.getElementById("ld-slide-no-" + state.currentSlideNo);
+    }
 
 
 /*  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -440,7 +479,8 @@ function cutDownJumpTarget() {
         case 0: /* a redundant "backspace" press */
             return;
         case 1: /* the last remaining digit is deleted */
-            clearJumpTarget(); return;
+            clearJumpTarget(); 
+            return;
         default:
             ld_goto_number.innerText = jumpTarget.substring(0, jumpTarget.length - 1)
     }
@@ -461,54 +501,30 @@ function jumpToSlide() {
     }
 }
 
-/*  -------------------------------------------------------------------
-    Handling the light table.
-*/
-window.addEventListener("load", (event) => {
-    const lt = document.getElementById("ld-light-table-slides");
-    document.querySelectorAll("body > .ld-slide").forEach((slide, i) => {
-        var lt_slide = slide.cloneNode(true);
-        lt_slide.removeAttribute("id"); // not needed anymore (in case it was set)
-        lt_slide.style.display = "block"; // in case it was "none"
 
-        var lt_slide_scaler = document.createElement("DIV");
-        lt_slide_scaler.className = "ld-light-table-slide-scaler";
-        lt_slide_scaler.appendChild(lt_slide);
+    function updateLightTableZoomLevel(value) {
+        // The following will not trigger an event but is necessary when 
+        // the state is restored.
+        document.querySelector("#ld-light-table-zoom-slider").value = value
 
-        var lt_slide_overlay = document.createElement("DIV");
-        lt_slide_overlay.className = "ld-light-table-slide-overlay";
-        lt_slide_overlay.id = "ld-light-table-slide-no-" + i;
-        // TODO Move listener registration to general code!
-        lt_slide_overlay.addEventListener("click", () => {
-            hideSlide(state.currentSlideNo);
-            state.currentSlideNo = i;
-            showSlide(state.currentSlideNo);
-            toggleDialog("light-table");            
-        });
-        var lt_slide_pane = document.createElement("DIV");
-        lt_slide_pane.className = "ld-light-table-slide-pane";
-        lt_slide_pane.appendChild(lt_slide_scaler);
-        lt_slide_pane.appendChild(lt_slide_overlay);
-
-        lt.appendChild(lt_slide_pane);
-    });
-
-    document.querySelector("#ld-light-table-zoom-slider").addEventListener("input", (event) => {
         const root = document.querySelector(":root");
-        root.style.setProperty("--ld-light-table-zoom-level", event.target.value);
-    })
-});
+        root.style.setProperty("--ld-light-table-zoom-level",value);
+
+        state.lightTableZoomLevel = value
+    }
+
 
     /**
      * Toggles a modal dialog. 
      * 
      * @param {string} name The name of the dialog in css notation; e.g., "light-table". 
-     *      The name identifies the element after prepending "ld-" and appending "-dialog".
-     *      
+     *      The name is used to identify the dialog element after prepending "ld-" 
+     *      and appending "-dialog".
+     *      The name is also used to identify the key in the state object that is used
+     *      to store the current state. 
      */
     function toggleDialog(name) {
         const elementId = "ld-"+name+"-dialog"
-        const itemId = documentSpecificId("show-"+name)
         const stateId = "show"+capitalize(name)
 
         const dialog = document.getElementById(elementId)
@@ -522,25 +538,25 @@ window.addEventListener("load", (event) => {
             dialog.style.opacity = 1;
             state[stateId] = true
         }
-        localStorage.setItem(itemId,state[stateId]);
     }
 
-
-/*  -------------------------------------------------------------------
-    Supporting a continuous view of all slides.
-*/
-
-function toggleContinuousView() {
-    const ld_continuous_view_pane = document.getElementById("ld-continuous-view-pane");
-    const ld_main_pane = document.getElementById("ld-main-pane")
-    if (getComputedStyle(ld_main_pane).display == "flex") {
-        ld_main_pane.style.display = "none"
-        ld_continuous_view_pane.style.display = "block"
-    } else {
-        ld_continuous_view_pane.style.display = "none"
-        ld_main_pane.style.display = "flex"
+    /**
+     * Shows/hides the continuous view, which shows all slide in its final rendering.
+     */
+    function toggleContinuousView() {
+        const ld_continuous_view_pane = document.getElementById("ld-continuous-view-pane");
+        const ld_main_pane = document.getElementById("ld-main-pane")
+        // if we currently show the slides, we update the state for showContinuousView
+        // and then actually perform the change.
+        state.showContinuousView = getComputedStyle(ld_main_pane).display == "flex"
+        if (state.showContinuousView) {
+            ld_main_pane.style.display = "none"
+            ld_continuous_view_pane.style.display = "block"
+        } else {
+            ld_continuous_view_pane.style.display = "none"
+            ld_main_pane.style.display = "flex"
+        }
     }
-}
 
     /** 
      * Central keyboard event handler 
@@ -570,7 +586,7 @@ function toggleContinuousView() {
                 case "ArrowLeft":   moveToPreviousSlide(); break;
                 case "ArrowRight": 
                 case "Space":       advancePresentation(); break;
-                case "r":           resetSlideProgress(currentSlide()); break;
+                case "r":           resetSlideProgress(getCurrentSlide()); break;
 
                 case "l":           toggleDialog("light-table"); break; //toggleLightTable(); break;
 
@@ -591,11 +607,13 @@ function toggleContinuousView() {
 
     function registerSlideClickedListener() {
         document.getElementById("ld-main-pane").addEventListener("click", (event) => {
+            // Let's check if the user is currently selecting text - we don't want
+            // to interfere with that!
             if (window.getSelection().anchorNode != null) {
                 return;
             }
     
-            /* let's determine if we have clicked on the left or right part */
+            /* Let's determine if we have clicked on the left or right part. */
             if (event.pageX < (window.innerWidth / 2)) {
                 moveToPreviousSlide();
             } else {
@@ -604,8 +622,29 @@ function toggleContinuousView() {
         });
     }
 
+    function registerLightTableZoomListener() {
+        document.
+            querySelector("#ld-light-table-zoom-slider").
+            addEventListener("input", (event) => {
+                updateLightTableZoomLevel(event.target.value)
+        });
+    }
+
+    function registerLightTableSlideSelectionListener() {
+        document.querySelectorAll(".ld-light-table-slide-overlay").forEach((slideOverlay) => {
+            const slideNo = slideOverlay.dataset.ldSlideNo;
+            slideOverlay.addEventListener("click", () => {
+                hideSlide(state.currentSlideNo);
+                state.currentSlideNo = slideNo;
+                showSlide(state.currentSlideNo);
+                toggleDialog("light-table");            
+            });   
+        });
+    }
+
     /**
-     * Queries and manipulates the DOM to setup LectureDoc.
+     * Queries and manipulates the DOM to setup lecture doc and bring the 
+     * presentation to the last state.
      */
     document.addEventListener("DOMContentLoaded", () => {
         initDocumentId();
@@ -614,6 +653,11 @@ function toggleContinuousView() {
         initCurrentSlide();
         initShowLightTable();
         initShowHelp();
+
+        /**
+         * Restores previous state if possible; this may override document settings.
+         */
+        restoreState();
 
         /*
         Setup base structure.
@@ -639,18 +683,33 @@ function toggleContinuousView() {
      * enable state changes after everything is fully loaded.
      */
     window.addEventListener("load", () => {
+        // Whatever the state is/was - let's apply it before we enable 
+        // further state changes. 
+        applyState();
+
         registerKeyboardEventListener();
         registerViewportResizeListener();
         registerSlideClickedListener();
-        
-        showSlide(state.currentSlideNo);
-        if(state.showLightTable) toggleDialog("light-table"); 
-        if(state.showHelp) toggleDialog("help"); 
+        registerLightTableZoomListener();
+        registerLightTableSlideSelectionListener();
     });
 
+    /**
+     * We store the current state, when the page becomes invisible; i.e., the 
+     * user leaves the page. 
+     * This enables us to restore the state even if the user "kills" the browser 
+     * and therefore other events (e.g., "onunload") are not reliably fired. 
+     * (See MDN for more details.)
+     */
+    document.onvisibilitychange = () => {
+        if (document.visibilityState === "hidden") {
+            storeState();
+            console.log(`Saved state of: ${presentation.id}`);
+        }
+    };
 
     return {
-        'presentation':presentation,
-        'state':state
+        'presentation': presentation,
+        'getState': function () { return state; } // the state object as a whole may change
     };
 }();
