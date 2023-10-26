@@ -1,6 +1,6 @@
 "use-strict";
 
-function getHelpElement() {
+const lectureDoc2Help = function () {
     var div = document.createElement('div');
     div.id = "ld-help";
     div.innerHTML = `
@@ -33,4 +33,4 @@ function getHelpElement() {
         </p>
     `;
     return div;
-}
+};

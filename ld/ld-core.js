@@ -27,10 +27,10 @@ const lectureDoc2 = function() {
      * Therefore this information is neither representing the state nor static 
      * configuration information.
      */
-    const presentation = { // we can't use "document" here because we don't want to override the standard document object.
+    const presentation = { 
         /** 
          * The unique id of this document; required to store state information 
-         * across multiple calls to the same document in local storage. If
+         * across multiple visits to the same document in local storage. If
          * the document id is null we will not use local storage.
          */
         id : null,
@@ -56,14 +56,19 @@ const lectureDoc2 = function() {
          * - "last-viewed" to show the last shown slide (default)
          */
         firstSlide: "last-viewed",
-        showLightTable: false, // FIXME .... split information read from file and current state
         /**
-         * If true the help dialog will be shown on startup. This will generally
-         * happen, when the help was never shown before w.r.t. the same origin. 
-         * I.e., this setting is by default not document dependent.
-         * If explicitly set to "true" in the document the help will always be shown.
+         * If true the light table will be shown when this presentation
+         * is shown for the first time. If false (default) it will not be shown.
          */
-        showHelp: false // FIXME .... split information read from file and current state
+        showLightTable: false, 
+        /**
+         * If true the help dialog will be shown when this presentation is
+         * shown for the first time.
+         * 
+         * However, if the help was never shown before w.r.t. the same origin
+         * the help will be shown; unless help is explicitly set to false.
+         */
+        showHelp: false 
     }
 
     /**
@@ -71,7 +76,63 @@ const lectureDoc2 = function() {
      */
     const state = {
         currentSlideNo: 0,
-        // FIXME ... add showHelp and showLightTable
+        showLightTable: false,
+        showHelp: false        
+    }
+
+    /**
+     * Creates a document dependent unique id. This enables the storage of
+     * document dependent information in local storage, even though all documents
+     * have the same origin and therefore use the same local storage object.
+     * 
+     * @param {string} id the id of the information item without the prefix "ld-".
+     */
+    function documentSpecificId(id) {
+        if (presentation.id != null) {
+            return "ld-" + presentation.id + "-" + id;
+        } else {
+            throw new Error("no document id available")
+        }
+    }
+
+    /**
+     * 
+     * @param {string} a string in css notation; e.g., "light-table". 
+     * @returns The given string where each segment is capitalized. 
+     *      Segments are assumed to be separated using a dash ("-").
+     *      E.g., "light-table" => "LightTable"
+     *          
+     */
+    function capitalize(str, separator = "-") {
+        return str.
+                split(separator).
+                map((e) => { 
+                    return e[0].toUpperCase() + e.slice(1) 
+                }).
+                join("")
+    }
+
+    /**
+     * @param {string} id The id of the element. 
+     * @returns The stored document specific value for the given id. Recall that
+     *      the returned value is either undefined or a string.
+     */
+    function getStoredItem(id) {
+        return localStorage.getItem(documentSpecificId(id));
+    }
+
+    /**
+     * @returns The element ("DIV") with the ID of the current slide.
+     */
+    function currentSlide() {
+        return document.getElementById("ld-slide-no-" + state.currentSlideNo)
+    }
+
+    /**
+     * The number of the last slide.
+     */
+    function lastSlideNo(){
+        return presentation.slideCount -1;
     }
 
     function initDocumentId() {
@@ -130,7 +191,7 @@ const lectureDoc2 = function() {
                 break;
             case "last-viewed":
                 if (presentation.id) {
-                    state.currentSlideNo = localStorage.getItem(uniqueId("current-slide-no"));
+                    state.currentSlideNo = localStorage.getItem(documentSpecificId("current-slide-no"));
                 } else {
                     console.warn('document has no id; using "first-slide" is not possible');
                 }
@@ -157,19 +218,27 @@ const lectureDoc2 = function() {
     }
 
     function initShowLightTable() {
-        const ld_show_light_table = document.querySelector('meta[name="ld-show-light-table"]');
-        presentation.showLightTable = (ld_show_light_table && ld_show_light_table.content) ? true : false;
+        presentation.showLightTable = document.querySelector('meta[name="ld-show-light-table"]');
+        if (presentation.showLightTable) {
+            state.showLightTable = (presentation.showLightTable.content.trim().toLowerCase() === "true")
+        } else if (presentation.id) {
+            state.showLightTable = getStoredItem("show-light-table") === "true"
+        }
     }
 
     function initShowHelp() {
-        const ld_show_help = document.querySelector('meta[name="ld-show-help"]');
-        if (ld_show_help) {
-            presentation.showHelp = ld_show_help.content == "true"
-        } else {
-            presentation.showHelp = localStorage.getItem("ld-help-was-shown") ? false : true;
-        }
+        presentation.showHelp = document.querySelector('meta[name="ld-show-help"]');
         if (presentation.showHelp) {
-            localStorage.setItem("ld-help-was-shown",true);
+            state.showHelp = (presentation.showHelp.content.trim().toLowerCase() === "true")
+        } else if (presentation.id) {
+            state.showHelp = getStoredItem("show-help") === "true";
+        }
+        // We don't want to show the help over and over again ... therefore,
+        // we use a LectureDoc specific - i.e., document independent - id to
+        // store the information if the help was shown at least once.
+        if (!state.showHelp && !localStorage.getItem("ld-help-was-shown")) {
+            state.showHelp = true
+            localStorage.setItem("ld-help-was-shown", true);
         }
     }
 
@@ -197,8 +266,10 @@ const lectureDoc2 = function() {
         const ld_help_dialog = document.createElement("DIALOG")
         ld_help_dialog.id = "ld-help-dialog"
         ld_help_dialog.className = "ld-dialog"
+        ld_help_dialog.appendChild(lectureDoc2Help());
 
         document.getElementsByTagName("BODY")[0].prepend(ld_help_dialog);
+
     }
 
     function setupJumpTargetDialog() {
@@ -257,32 +328,14 @@ const lectureDoc2 = function() {
         document.getElementsByTagName("BODY")[0].prepend(ld_continuous_view_pane);
     }
 
-
-
     /* 
     Simple helper functions. 
     */
 
-    /**
-     * The number of the last slide.
-     */
-    function lastSlideNo(){
-        return presentation.slideCount -1;
-    }
 
 
-    /**
-     * Creates a document dependent unique id. This enables the storage of
-     * document dependent information in local storage, even if all documents
-     * have the same origin and therefore use the same local storage object.
-     */
-    function uniqueId(id) {
-        if (presentation.id != null) {
-            return "ld-" + presentation.id + "-" + id;
-        } else {
-            throw new Error("no document id available")
-        }
-    }
+
+
 
 
 /*  ---------------------------------------------------------------------------
@@ -308,22 +361,6 @@ function setPaneScale() {
     const h_scale = window.innerHeight / presentation.slide.height;
     document.getElementById("ld-main-pane").style.scale = Math.min(w_scale, h_scale);
 }
-window.addEventListener("load", (event) => {
-    
-    /* the following element will be added when the "DOMContentIsLoaded" */
-    document.getElementById("ld-main-pane").addEventListener("click", (event) => {
-        if (window.getSelection().anchorNode != null) {
-            return;
-        }
-
-        /* let's determine if we have clicked on the left or right part */
-        if (event.pageX < (window.innerWidth / 2)) {
-            moveToPreviousSlide();
-        } else {
-            advancePresentation();
-        }
-    });
-});
 
 
 /*  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -340,7 +377,7 @@ function showSlide(slideNo) {
     console.info("trying to show: " + slide_id + " / " + lastSlideNo());
     document.getElementById(slide_id).style.display = "block";
     if (presentation.id) {
-        localStorage.setItem(uniqueId("current-slide-no"), slideNo);
+        localStorage.setItem(documentSpecificId("current-slide-no"), slideNo);
     }
 }
 function hideSlide(slideNo) {
@@ -446,7 +483,7 @@ window.addEventListener("load", (event) => {
             hideSlide(state.currentSlideNo);
             state.currentSlideNo = i;
             showSlide(state.currentSlideNo);
-            toggleLightTable();            
+            toggleDialog("light-table");            
         });
         var lt_slide_pane = document.createElement("DIV");
         lt_slide_pane.className = "ld-light-table-slide-pane";
@@ -461,38 +498,36 @@ window.addEventListener("load", (event) => {
         root.style.setProperty("--ld-light-table-zoom-level", event.target.value);
     })
 });
-function toggleLightTable() { // TODO refactor to toggleDialog(dialog)
-    const light_table_dialog = document.getElementById("ld-light-table-dialog")
-    if (light_table_dialog.open) {
-        light_table_dialog.style.opacity = 0;
-        /* the 500ms is also hard coded in the css */
-        setTimeout(function () { light_table_dialog.close()}, 500);
-    } else {
-        light_table_dialog.showModal();
-        light_table_dialog.style.opacity = 1;
+
+    /**
+     * Toggles a modal dialog. 
+     * 
+     * @param {string} name The name of the dialog in css notation; e.g., "light-table". 
+     *      The name identifies the element after prepending "ld-" and appending "-dialog".
+     *      
+     */
+    function toggleDialog(name) {
+        const elementId = "ld-"+name+"-dialog"
+        const itemId = documentSpecificId("show-"+name)
+        const stateId = "show"+capitalize(name)
+
+        const dialog = document.getElementById(elementId)
+        if (dialog.open) {
+            dialog.style.opacity = 0;
+            /* the 500ms is also hard coded in the css */
+            setTimeout(function () { dialog.close()}, 500);
+            state[stateId] = false
+        } else {
+            dialog.showModal();
+            dialog.style.opacity = 1;
+            state[stateId] = true
+        }
+        localStorage.setItem(itemId,state[stateId]);
     }
-}
-/*  -------------------------------------------------------------------
-    Handling help.
-*/
-window.addEventListener("load", (event) => {
-    document.getElementById("ld-help-dialog").appendChild(getHelpElement());
-});
-function toggleHelp() { // TODO refactor to toggleDialog(dialog)
-    const ld_help_dialog = document.getElementById("ld-help-dialog");
-    //const ld_content = document.getElementById("ld-help");
-    if (ld_help_dialog.open) {
-        ld_help_dialog.style.opacity = 0;
-        /* the 500ms is also hard coded in the css */
-        setTimeout(function () { ld_help_dialog.close() }, 500);
-    } else {
-        ld_help_dialog.showModal();
-        ld_help_dialog.style.opacity = 1;
-    }
-}
+
 
 /*  -------------------------------------------------------------------
-    Supporting a handout pane/a print preview pane.
+    Supporting a continuous view of all slides.
 */
 
 function toggleContinuousView() {
@@ -535,11 +570,11 @@ function toggleContinuousView() {
                 case "ArrowLeft":   moveToPreviousSlide(); break;
                 case "ArrowRight": 
                 case "Space":       advancePresentation(); break;
-                case "r":           resetSlideProgress(document.getElementById("ld-slide-no-" + state.currentSlideNo)); break;
+                case "r":           resetSlideProgress(currentSlide()); break;
 
-                case "l":           toggleLightTable(); break;
+                case "l":           toggleDialog("light-table"); break; //toggleLightTable(); break;
 
-                case "h":           toggleHelp(); break;
+                case "h":           toggleDialog("help"); break; //toggleHelp(); break;
 
                 case "c":           toggleContinuousView(); break;
 
@@ -550,8 +585,23 @@ function toggleContinuousView() {
         });
     }
 
-    function registerResizeListener() { 
+    function registerViewportResizeListener() { 
         document.defaultView.addEventListener("resize", () => setPaneScale());
+    }
+
+    function registerSlideClickedListener() {
+        document.getElementById("ld-main-pane").addEventListener("click", (event) => {
+            if (window.getSelection().anchorNode != null) {
+                return;
+            }
+    
+            /* let's determine if we have clicked on the left or right part */
+            if (event.pageX < (window.innerWidth / 2)) {
+                moveToPreviousSlide();
+            } else {
+                advancePresentation();
+            }
+        });
     }
 
     /**
@@ -590,11 +640,12 @@ function toggleContinuousView() {
      */
     window.addEventListener("load", () => {
         registerKeyboardEventListener();
-        registerResizeListener();
+        registerViewportResizeListener();
+        registerSlideClickedListener();
         
         showSlide(state.currentSlideNo);
-        if(presentation.showLightTable) toggleLightTable(); //FIXME: use state
-        if(presentation.showHelp) toggleHelp(); //FIXME: use state
+        if(state.showLightTable) toggleDialog("light-table"); 
+        if(state.showHelp) toggleDialog("help"); 
     });
 
 
