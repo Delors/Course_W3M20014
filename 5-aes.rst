@@ -101,6 +101,7 @@ AES Parameters
 .. csv-table::        
     :align: center 
     :width: 1650px
+    :class: highlight-line-on-hover
 
     Key Size (words/bytes/bits), 4/16/128, 6/24/192, 8/32/256
     Plaintext Block Size (words/bytes/bits), 4/16/128, 4/16/128, 4/16/128
@@ -161,7 +162,7 @@ AES S-box
 -----------
 
 .. csv-table::
-    :class: small hexdump        
+    :class: small monospaced highlight-on-hover       
     :align: center 
     :name: s-box
 
@@ -191,7 +192,7 @@ AES Inverse S-box
 -----------------
 
 .. csv-table::
-    :class: small hexdump        
+    :class: small monospaced highlight-on-hover        
     :align: center
     :name: inverse-s-box
 
@@ -275,7 +276,7 @@ Mix Colum Transformation - Example
 .. container:: two-columns smaller
     
     .. csv-table:: Given
-        :class: hexdump small
+        :class: monospaced small
 
         87, F2, 4D, 97
         6E, 4C, 90, EC
@@ -283,7 +284,7 @@ Mix Colum Transformation - Example
         A6, 8C, D8, 95
 
     .. csv-table:: Result
-        :class: hexdump small
+        :class: monospaced small
 
         47,40,A3,4C
         37,D4,70,9F
@@ -447,7 +448,7 @@ Avalanche Effect in AES: Change in Plaintext
 --------------------------------------------
 
 .. csv-table::        
-    :class: tiny hexdump
+    :class: tiny monospaced highlight-line-on-hover
     :align: center 
     :width: 1000px
 
@@ -483,7 +484,7 @@ Avalanche Effect in AES: Change in Key
 ----------------------------------------
 
 .. csv-table::        
-    :class: tiny hexdump
+    :class: tiny monospaced highlight-line-on-hover
     :align: center 
     :width: 1000px
 

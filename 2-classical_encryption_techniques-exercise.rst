@@ -68,7 +68,7 @@ ________________________
 
 You received the following message:
 
-.. class:: hexdump
+.. class:: monospaced
 
     YSFRITTUNCOSPJU
 

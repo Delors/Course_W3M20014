@@ -1,5 +1,16 @@
-/* Core CSS file - any changes here, will likely break Lecture Doc!  */
+/* 
+    This is LectureDoc's core CSS file. It primarily defines css properties directly 
+    related to layout of LectureDoc and the interaction with it. All styling
+    information related to LectureDoc's widgets is found in ld-theme.css.
 
+    Styling related to slides is defined in a used defined css file or in default.css.
+    
+    _______________________________________________________________________________________________
+
+    ________________       Any changes here, will likely break LectureDoc!        _________________
+
+    _______________________________________________________________________________________________
+*/
 :root {
     /* 
         Specifies the width and height of slides. The following values are, 
@@ -11,22 +22,18 @@
     --ld-slide-width: 1920px;
     --ld-slide-height: 1200px;
     /*
-        The default zoom level in percent.
+        The default zoom level as a ratio. I.e., the slides shown in the 
+        light-table will be 1/10th of --ld-slide-width by default.
     */
     --ld-light-table-zoom-level: 10;
 }
 
-/* Some further normalization. */
+/* Basic normalization. */
 * {
     margin: 0;
     padding: 0;
     border: 0;
     box-sizing: border-box;
-}
-
-body {
-    background-color: rgb(25, 25, 30);
-    /*for debugging purposes!*/
 }
 
 div {
@@ -42,13 +49,6 @@ div {
 ::-webkit-scrollbar-track {
     background: transparent;
 }
-
-@media print {
-    @page {
-        size: landscape;
-    }
-}
-
 
 /*  We need a fixed size for the main pane to make the content
     as a whole scalable using the scale property which is 
@@ -83,6 +83,7 @@ div {
     justify-content: center;
     -webkit-user-select: none;
     user-select: none;
+    cursor: default;
 }
 
 #ld-main-pane .ld-slide {
@@ -90,31 +91,21 @@ div {
 }
 
 #ld-light-table-dialog {
-    /*position: fixed;
-    top: 5vh;
-    left: 5vw;*/
     z-index: 100;
-    height: 90vh;
-    width: 90vw;
     opacity: 0;
     transition: opacity 500ms;
-    /*display: none;*/
-}
-
-#ld-light-table {
-    height: 100%;
-    width: 100%;
-    overflow-y: scroll;
-}
-
-#ld-light-table .ld-slide {
-    position: absolute;
 }
 
 #ld-light-table-header {
     position: sticky;
     top: 0;
     z-index: 101;
+}
+
+#ld-light-table {
+    height: 100%;
+    width: 100%;
+    overflow-y: scroll;
 }
 
 #ld-light-table-slides {
@@ -126,10 +117,6 @@ div {
     overflow-y: scroll;
 }
 
-.ld-light-table-slide-scaler {
-    scale: calc(1 / var(--ld-light-table-zoom-level));
-    position: absolute;
-}
 
 .ld-light-table-slide-overlay {
     position: absolute;
@@ -147,12 +134,15 @@ div {
     overflow: hidden;
 }
 
-#ld-light-table-zoom {
-    display:block;
+.ld-light-table-slide-scaler {
+    scale: calc(1 / var(--ld-light-table-zoom-level));
     position: absolute;
-    top: 10px;
-    right: 10px;
 }
+
+#ld-light-table .ld-slide {
+    position: absolute;
+}
+
 
 #ld-help-dialog {
     /*  We want to have a very subtle fade-out effect. 
@@ -167,10 +157,6 @@ div {
 }
 
 #ld-help {
-    min-width: 45vw;
-    max-width: 75vw;
-    max-height: 75vh;
-    padding: 1em;
     overflow-y: scroll;
     overflow-x: scroll;
 }
@@ -187,8 +173,8 @@ div {
     position: absolute;
     top: 0px;
     left: 0px;
+    /* To ensure that they are not "none" for whatever reason. */
     display: block;
-    /* to ensure that they are not "none" */
 }
 
 .ld-continuous-view-slide-pane {
@@ -198,10 +184,9 @@ div {
     max-height: calc(var(--ld-slide-height) / 2);
 }
 
-@media print {
-    .ld-continuous-view-slide-pane {
-        page-break-after: always;
-    }
+.ld-continuous-view-scaler {
+    position: absolute;
+    scale: 0.5;
 }
 
 @media screen {
@@ -212,7 +197,3 @@ div {
     }
 }
 
-.ld-continuous-view-scaler {
-    scale: 0.5;
-    position: absolute;
-}

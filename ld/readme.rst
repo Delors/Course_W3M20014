@@ -114,13 +114,13 @@ In case of lists (`ol` or `ul`) it is sufficient to specify `incremental` in the
 Slide Design
 ___________________
 
-In general no hard restrictions have to be followed regarding the design of your slides.
+In general, no hard restrictions have to be followed regarding the design of your slides.
 
-However, when you use rst2ld to author your slides, you can make use of some predefined classes which have corresponding css definitions. 
+However, when you use ``rst2ld`` to author your slides, you can make use of some predefined classes which have corresponding css definitions in ``default.css``.
 
 - .smaller 
 - .small
-- .hexdump 
+- .monospaced 
 - table.compact 
 - .enable-copy-to-clipboard
 

@@ -2,11 +2,11 @@
 
 
 body {
-    /*  48px to have roughly 16 lines of text on a slide 
-        with a height of 1200px.
-    */
+    /*  48px to have roughly 16 lines of text on a slide with a height of 1200px. */
     font: 48px "Helvetica", sans-serif;
     line-height: 1.5;
+    /* Primarily for debugging purposes!*/
+    background-color: rgb(25, 25, 30); 
 }
 
 /* common styling of all dialogs */
@@ -20,12 +20,22 @@ body {
 /* z-index: 1000 */
 #ld-help {
     /* used by ld: display, opacity, z-index, position, transition */
-    font-size: 12px;
+    font-size: 14px;
     color: white;
+    min-width: 45vw;
+    max-width: 75vw;
+    max-height: 75vh;
+    padding: 1em;
+    overflow-y: scroll;
+    overflow-x: scroll;
 }
 
 #ld-help p {
     margin-top: 9px;
+}
+
+#ld-help :is(a:link,  a:visited) {
+    color:rgb(255, 173, 96)
 }
 
 #ld-help table {
@@ -47,6 +57,12 @@ body {
     padding: 10px;
 }
 
+#ld-light-table-dialog {
+    z-index: 100;
+    height: 90vh;
+    width: 90vw;
+}
+
 #ld-light-table-header {
     font-size: 12px;
     color: white;
@@ -60,6 +76,13 @@ body {
     gap: 10px;
 }
 
+#ld-light-table-zoom {
+    display:block;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
 .ld-light-table-slide-overlay:hover {
     opacity: 0;
 }
@@ -68,9 +91,4 @@ body {
     background-color: rgba(0, 0, 0, 0.5);
     opacity: 1;
     transition: opacity 333ms ease-in;
-}
-
-.ld-slide {
-    padding: 45px;
-    background-color: white;
 }

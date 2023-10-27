@@ -535,7 +535,7 @@ Let's take a look at :math:`ax+by` for some :math:`x` and :math:`y`:
 
 .. csv-table::
     :width: 1500px
-    :class: hexdump
+    :class: monospaced
     :align: center
 
     :math:`_у \\ ^x`, -3, -2, -1, 0, 1, 2, 3
@@ -605,7 +605,7 @@ Extended Euclidean Algorithm - Example :math:`gcd(1759,550)`
 .. csv-table::
     :header: :math:`i`, :math:`r_i`, :math:`q_i`, :math:`x_i`, :math:`y_i`
     :width: 1200px
-    :class: hexdump
+    :class: monospaced
     :align: center
 
     -1, 1759, , 1, 0

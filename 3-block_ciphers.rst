@@ -308,7 +308,7 @@ DES Example
 -----------
 
 .. csv-table::
-    :class: small hexdump
+    :class: small monospaced
     :align: center
     
     Round, Ki, Li, Ri
@@ -342,7 +342,7 @@ DES Example - Avalanche Effect in DES
 **Small change in plaintext**:
 
 .. csv-table::
-    :class: small hexdump
+    :class: small monospaced
     :width: 800px
     :align: center
 
@@ -382,7 +382,7 @@ DES Example - Avalanche Effect in DES
 **Small change in key** (`0f1571c947d9e859` :math:`\rightarrow` `1f1571c947d9e859`):
 
 .. csv-table::
-    :class: small hexdump
+    :class: small monospaced
     :width: 800px
     :align: center
 

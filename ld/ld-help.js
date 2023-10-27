@@ -7,7 +7,7 @@ const lectureDoc2Help = function () {
         <h1>LectureDoc<sup>2</sup></h1>
         <p>
             <strong>Developed by M. Eichberg</strong><br>
-            <a href="https://github.com/Delors/LectureDoc">Lecture Doc Website</a>
+            <a href="https://github.com/Delors/LectureDoc" target="_blank" rel="external noopener noreferrer">LectureDoc<sup>2</sup> Website</a>
         </p>
         <p>
             <strong>Mouse Navigation</strong><br>

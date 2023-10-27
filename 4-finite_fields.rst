@@ -332,7 +332,7 @@ In this section, we have shown how to construct finite fields of order :math:`p`
 .. admonition:: Quintessence 
     :class: incremental
     
-    We have shown that the elements of :math:`GF(p)` are the integers :math:`\lbrace 0, 1, . . . , p – 1 \rbrace` and that the arithmetic operations are addition and multiplication mod p.
+    We have shown that the elements of :math:`GF(p)` are the integers :math:`\lbrace 0, 1, . . . , p - 1 \rbrace` and that the arithmetic operations are addition and multiplication mod p.
 
 .. admonition:: Note
     :class: small incremental
@@ -671,7 +671,7 @@ Multiplication in :math:`GF(2^n)`
 
     Observation: :math:`x^8\;mod\; m(x) = [m(x)-x^8] = x^4 +x^3 +x +1` 
 
-    It follows that multiplication by x (i.e., 00000010) can be implemented as a 1-bit left shift followed by a condition bitwise XOR with 00011011:
+    It follows that multiplication by :math:`x` (i.e., :math:`0000\,0010`) can be implemented as a 1-bit left shift followed by a conditional bitwise XOR with :math:`0001\,1011`:
 
     .. math::
         x \times f(x) =
@@ -680,7 +680,7 @@ Multiplication in :math:`GF(2^n)`
             (b_6b_5b_4b_3b_2b_1b_00) \oplus 0001 1011 & if\; b_7 = 1\\
         \end{cases}
 
-    Multiplication by a higher power of x can be achieved by repeated application of the previous equation. By adding intermediate results, multiplication by any constant in :math:`GF(2^n)` can be achieved.
+    Multiplication by a higher power of :math:`x` can be achieved by repeated application of the previous equation. By adding intermediate results, multiplication by any constant in :math:`GF(2^n)` can be achieved.
 
 
 Computational Considerations

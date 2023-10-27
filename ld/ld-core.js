@@ -99,6 +99,10 @@ const lectureDoc2 = function() {
     }
 
     function applyState() {
+        if (state.currentSlideNo > lastSlideNo()) {
+            console.info(`the specified slide number is too large: ${state.currentSlideNo}; setting it to the last slide`)
+            state.currentSlideNo = lastSlideNo();
+        } 
         showSlide(state.currentSlideNo);
 
         updateLightTableZoomLevel(state.lightTableZoomLevel);
@@ -200,34 +204,19 @@ const lectureDoc2 = function() {
             console.info("first slide is not specified; trying to show last viewed slide");
         }
         switch (presentation.firstSlide) {
+            case "last-viewed":
+                // handled by applyState; defaults to the first slide 
+                break;
             case "last":
                 state.currentSlideNo = lastSlideNo();
                 break;
-            case "last-viewed":
-                if (presentation.id) {
-                    state.currentSlideNo = localStorage.getItem(documentSpecificId("current-slide-no"));
-                } else {
-                    console.warn('document has no id; using "first-slide" is not possible');
-                }
-                break;
+            
             default:
                 try {
-                    state.currentSlideNo = Number(ld_initial_slide_no.content) - 1
+                    state.currentSlideNo = Number(presentation.firstSlide) - 1
                 } catch (error) {
                     console.error('invalid "first-slide" information: ${error}')
                 }
-        }
-        // Check if the currentSlideNo is (still) valid.
-        if (state.currentSlideNo) {
-            if (state.currentSlideNo > lastSlideNo()) {
-                console.info(`the specified slide number is too large: ${state.currentSlideNo}; setting it to the last slide`)
-                state.currentSlideNo = lastSlideNo();
-            } else if (state.currentSlideNo < 0) {
-                console.error(`the specified first slide is negative: ${state.currentSlideNo}; setting it to the first slide`)
-                state.currentSlideNo = 0;
-            }
-        } else {
-            state.currentSlideNo = 0
         }
     }
 
@@ -402,9 +391,6 @@ function setPaneScale() {
 }
 
 
-/*  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    Handling of presentation progress. 
-*/
 
 /**
  * Core method to show the next slide. Hiding and showing slides has to be done
@@ -415,9 +401,7 @@ function showSlide(slideNo) {
     const slide_id = "ld-slide-no-" + slideNo;
     console.info("trying to show: " + slide_id + " / " + lastSlideNo());
     document.getElementById(slide_id).style.display = "block";
-    if (presentation.id) {
-        localStorage.setItem(documentSpecificId("current-slide-no"), slideNo);
-    }
+    state.currentSlideNo = slideNo;
 }
 function hideSlide(slideNo) {
     const ld_slide = document.getElementById("ld-slide-no-" + slideNo)
@@ -541,12 +525,14 @@ function jumpToSlide() {
     }
 
     /**
-     * Shows/hides the continuous view, which shows all slide in its final rendering.
+     * Shows/hides the continuous view. 
+     * 
+     * This view shows all slides in its final rendering.
      */
     function toggleContinuousView() {
         const ld_continuous_view_pane = document.getElementById("ld-continuous-view-pane");
         const ld_main_pane = document.getElementById("ld-main-pane")
-        // if we currently show the slides, we update the state for showContinuousView
+        // If we currently show the slides, we update the state for `showContinuousView`
         // and then actually perform the change.
         state.showContinuousView = getComputedStyle(ld_main_pane).display == "flex"
         if (state.showContinuousView) {
@@ -559,17 +545,16 @@ function jumpToSlide() {
     }
 
     /** 
-     * Central keyboard event handler 
+     * Central keyboard event handler.
      */
     function registerKeyboardEventListener() {
         document.addEventListener("keydown", (event) => {
+            // we don't want to stop the user from interacting with the browser/OS
             if (event.altKey || event.ctrlKey || event.shiftKey || event.metaKey) {
-                console.log("modifier pressed: " + event.key);
                 return;
             }
 
             switch (event.key) {
-                // handle navigation 
                 case "0": 
                 case "1": 
                 case "2": 
@@ -588,9 +573,9 @@ function jumpToSlide() {
                 case "Space":       advancePresentation(); break;
                 case "r":           resetSlideProgress(getCurrentSlide()); break;
 
-                case "l":           toggleDialog("light-table"); break; //toggleLightTable(); break;
+                case "l":           toggleDialog("light-table"); break; 
 
-                case "h":           toggleDialog("help"); break; //toggleHelp(); break;
+                case "h":           toggleDialog("help"); break; 
 
                 case "c":           toggleContinuousView(); break;
 
@@ -624,7 +609,7 @@ function jumpToSlide() {
 
     function registerLightTableZoomListener() {
         document.
-            querySelector("#ld-light-table-zoom-slider").
+            getElementById("ld-light-table-zoom-slider").
             addEventListener("input", (event) => {
                 updateLightTableZoomLevel(event.target.value)
         });
@@ -692,6 +677,12 @@ function jumpToSlide() {
         registerSlideClickedListener();
         registerLightTableZoomListener();
         registerLightTableSlideSelectionListener();
+
+        try {
+            lectureDoc2Animations();
+        } catch (error) {
+            console.log("advanced animations package is not found/not loaded")
+        }
     });
 
     /**

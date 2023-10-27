@@ -2,13 +2,20 @@
     This demonstrates how to style LectureDoc documents.
 */
 
-
-tbody tr:hover {
-    background-color: rgb(180, 249, 242);
+table.highlight-line-on-hover tr:hover {
+    background-color: rgb(180, 214, 249);
+}
+table.highlight-line-on-hover tbody td:hover {
+    background-color: rgb(200, 234, 256);
 }
 
-tbody td:hover {
-    background-color: rgb(161, 204, 199);
+td.highlight {
+    background-color: rgb(171, 224, 253);
+}
+
+.ld-slide {
+    padding: 45px;
+    background-color: white;
 }
 
 small {
@@ -83,10 +90,6 @@ pre.code {
 
 .tiny {
     font-size: 24px;
-}
-
-.hexdump {
-    font-family: monospace;
 }
 
 .monospaced {

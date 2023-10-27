@@ -138,7 +138,7 @@ Passwords are often stored using hashes.
 
 Example using the md5 hash function:
 
-.. class:: hexdump
+.. class:: monospaced
 
 :: 
 
