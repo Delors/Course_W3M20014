@@ -1,18 +1,16 @@
 /*
        
    Core Ideas: 
+   
+    -   LectureDoc (i.e., the slide set) must be 
+        usable without a Server(!); hence, no JavaScript modules :-(...
+   
+    -   We store the state information in a state object; this object can then
+        be used to re-instantiate a LectureDoc session later on. This object
+        is saved in local storage whenever the user leaves the webpage.
 
-       -   LectureDoc (i.e., the slide set) must be 
-           usable without a Server(!); hence, no JavaScript modules :-(...
-       
-       -   We store most state information in the DOM to make it possible to
-           start the presentation in a specific state (e.g., on a specific slide,
-           directly showing the light-table etc.)
-
-           However, if a presentation was already opened local storage will be used
-           to track the further progress.
-           
-
+    -   Meta information about the presentation is stored in the presentation 
+        object. This object is - after initialization - not mutated. 
 */
 "use strict";
 
@@ -20,31 +18,31 @@
  * Let's put all functionality in the `lectureDoc2` "module" to avoid conflicts
  * with other JavaScript libraries.
  */
-const lectureDoc2 = function() {
+const lectureDoc2 = function () {
 
     /**
      * The following information is read from the document, if it is specified.
-     * Therefore this information is neither representing the state nor static 
-     * configuration information.
+     * Therefore this information is neither representing the runtime state nor
+     * static code configuration information.
      */
-    const presentation = { 
+    const presentation = {
         /** 
          * The unique id of this document; required to store state information 
          * across multiple visits to the same document in local storage. If
          * the document id is null we will not use local storage.
          */
-        id : null,
+        id: null,
         /** 
          * Configuration of the slide dimensions. The default is 1920 (width) : 
          * 1200 (height) for a 16:10 ratio. This can be changed in the meta 
          * information.
          */
-        slide:{
+        slide: {
             width: 1920,
             height: 1200
         },
         /**
-         * The number of slides.
+         * The number of slides; automatically derived when the slide set is loaded.
          */
         slideCount: -1,
         /**
@@ -57,52 +55,82 @@ const lectureDoc2 = function() {
          */
         firstSlide: "last-viewed",
         /**
-         * If true the light table will be shown when this presentation
+         * If true, the light table will be shown when this presentation
          * is shown for the first time. If false (default) it will not be shown.
          */
-        showLightTable: false, 
+        showLightTable: false,
         /**
          * If true the help dialog will be shown when this presentation is
          * shown for the first time.
          * 
-         * However, if the help was never shown before w.r.t. the same origin
-         * the help will be shown; unless help is explicitly set to false.
+         * However, if the help was never shown before w.r.t. the same origin,
+         * then the help will be shown at least once; unless help is explicitly
+         * set to false.
          */
-        showHelp: false 
+        showHelp: false
     }
 
     /**
-     * Captures the current state of the presentation; in particular the progress.
+     * Captures the current state of the presentation.
      */
     var state = { // the following is the default state 
         currentSlideNo: 0,
+        slideProgress: {}, // stores for each slide the number of revealed elements
         showLightTable: false,
-        lightTableZoomLevel : 10,
+        lightTableZoomLevel: 10,
         showHelp: false,
-        showContinuousView: false      
+        showContinuousView: false,
     }
 
+    /**
+     * Stores the state in local storage, iff the presentation has a unique id.
+     */
     function storeState() {
         if (presentation.id) {
-            localStorage.setItem(documentSpecificId("state"),JSON.stringify(state));
+            const jsonState = JSON.stringify(state)
+            console.log(`saving state of ${presentation.id}: ${jsonState}`)
+            localStorage.setItem(documentSpecificId("state"), jsonState);
         }
     }
 
-    function restoreState() {
+    /**
+     * Stores the current state, when the page is hidden.
+     * 
+     * Register this function as a listener when the visibility of a document
+     * changes. This enables us to restore the state even if the user "kills" the browser 
+     * and therefore other events (e.g., "onunload") are not reliably fired. 
+     * (See MDN for more details.)
+     */
+    function storeStateOnVisibilityHidden() {
+        if (document.visibilityState === "hidden") {
+            storeState();
+        }
+    }
+
+    /**
+     * Restores the state of this presentation.
+     */
+    function loadState() {
         if (presentation.id) {
-            const newState = JSON.parse(localStorage.getItem(documentSpecificId("state")));
+            const jsonState = localStorage.getItem(documentSpecificId("state"))
+            const newState = JSON.parse(jsonState);
             if (newState) {
-                console.log("restored state: "+newState);
+                console.info(`loaded state of ${presentation.id}: ${jsonState}`);
                 state = newState;
             }
         }
     }
 
+    /**
+     * Applies the current state object to the presentation.
+     */
     function applyState() {
+        reapplySlideProgress();
+
         if (state.currentSlideNo > lastSlideNo()) {
-            console.info(`the specified slide number is too large: ${state.currentSlideNo}; setting it to the last slide`)
+            console.info(`invalid slide number: ${state.currentSlideNo}; set to last slide`)
             state.currentSlideNo = lastSlideNo();
-        } 
+        }
         showSlide(state.currentSlideNo);
 
         updateLightTableZoomLevel(state.lightTableZoomLevel);
@@ -113,6 +141,29 @@ const lectureDoc2 = function() {
         if (state.showContinuousView) toggleContinuousView();
     }
 
+    function deleteStoredState() {
+        localStorage.removeItem("ld-help-was-shown");
+
+        if (presentation.id) {
+            localStorage.removeItem(documentSpecificId("state"))
+        }
+    }
+
+    /**
+     * Deletes all LectureDoc information associated with this document and lectureDoc
+     * as such.
+     */
+    function resetLectureDoc() {
+        console.log(`LectureDoc reset initiated`);
+
+        // We need to remove the listener to avoid that the state is saved before/on a 
+        // reload.
+        document.removeEventListener("visibilitychange", storeStateOnVisibilityHidden);
+
+        deleteStoredState();
+
+        location.reload();
+    }
 
     /**
      * Creates a document dependent unique id. This enables the storage of
@@ -137,20 +188,20 @@ const lectureDoc2 = function() {
      *      E.g., "light-table" => "LightTable"
      *          
      */
-    function capitalize(str, separator = "-") {
+    function capitalizeCSSName(str, separator = "-") {
         return str.
-                split(separator).
-                map((e) => { 
-                    return e[0].toUpperCase() + e.slice(1) 
-                }).
-                join("")
+            split(separator).
+            map((e) => {
+                return e[0].toUpperCase() + e.slice(1)
+            }).
+            join("")
     }
 
     /**
      * The number of the last slide.
      */
-    function lastSlideNo(){
-        return presentation.slideCount -1;
+    function lastSlideNo() {
+        return presentation.slideCount - 1;
     }
 
     function initDocumentId() {
@@ -169,11 +220,11 @@ const lectureDoc2 = function() {
      * use the format: `<width>x<height>`.
      * 
      * E.g., `<meta name="slide-dimensions" content="1600x1200">`.
-     */ 
+     */
     function initSlideDimensions() {
         try {
             const slideDimensions = document.querySelector('meta[name="slide-dimensions"]').content;
-            const [width,height] = slideDimensions.trim().split("x").map((e) => e.trim())
+            const [width, height] = slideDimensions.trim().split("x").map((e) => e.trim())
             presentation.slide.width = width;
             presentation.slide.height = height;
         } catch (error) {
@@ -182,7 +233,7 @@ const lectureDoc2 = function() {
         // Set the corresponding CSS variables accordingly.
         const root = document.querySelector(":root");
         root.style.setProperty("--ld-slide-width", presentation.slide.width + "px");
-        root.style.setProperty("--ld-slide-height", presentation.slide.height + "px");        
+        root.style.setProperty("--ld-slide-height", presentation.slide.height + "px");
     }
 
     /**
@@ -210,7 +261,7 @@ const lectureDoc2 = function() {
             case "last":
                 state.currentSlideNo = lastSlideNo();
                 break;
-            
+
             default:
                 try {
                     state.currentSlideNo = Number(presentation.firstSlide) - 1
@@ -225,7 +276,7 @@ const lectureDoc2 = function() {
         if (showLightTable) {
             presentation.showLightTable = showLightTable.content.trim().toLowerCase()
             state.showLightTable = (presentation.showLightTable === "true")
-        } 
+        }
     }
 
     function initShowHelp() {
@@ -233,7 +284,7 @@ const lectureDoc2 = function() {
         if (showHelp) {
             presentation.showHelp = showHelp.content.trim().toLowerCase()
             state.showHelp = (presentation.showHelp === "true")
-        } 
+        }
         // We don't want to show the help over and over again ... therefore,
         // we use a LectureDoc specific - i.e., document independent - id to
         // store the information if the help was shown at least once.
@@ -271,11 +322,11 @@ const lectureDoc2 = function() {
             const slide = slide_template.cloneNode(true);
             slide.removeAttribute("id"); // not needed anymore (in case it was set)
             slide.style.display = "block"; // in case it was "none"
-    
+
             const slide_scaler = document.createElement("DIV");
             slide_scaler.className = "ld-light-table-slide-scaler";
             slide_scaler.appendChild(slide);
-    
+
             const slide_overlay = document.createElement("DIV");
             slide_overlay.className = "ld-light-table-slide-overlay";
             slide_overlay.dataset.ldSlideNo = i;
@@ -284,7 +335,7 @@ const lectureDoc2 = function() {
             slide_pane.className = "ld-light-table-slide-pane";
             slide_pane.appendChild(slide_scaler);
             slide_pane.appendChild(slide_overlay);
-    
+
             light_table_slides.appendChild(slide_pane);
         });
 
@@ -327,11 +378,12 @@ const lectureDoc2 = function() {
         Internally the numbering of slides starts with 0. However, user facing
         functions assume that the first slide has the id 1.
         */
-        document.querySelectorAll("body > .ld-slide").forEach((slideTemplate,i) => {
+        document.querySelectorAll("body > .ld-slide").forEach((slideTemplate, i) => {
             const slide = slideTemplate.cloneNode(true);
             slide.id = "ld-slide-no-" + i;
-            /*  let's hide all elements that should be shown incrementally */
-            resetSlideProgress(slide);
+            // Let's hide all elements that should be shown incrementally;
+            // this is down to get all (new) slides to a well-defined state.
+            setupSlideProgress(slide);
             main_pane.appendChild(slide);
         })
 
@@ -345,31 +397,20 @@ const lectureDoc2 = function() {
         document.querySelectorAll("body > .ld-slide").forEach((slideTemplate, i) => {
             const slide = slideTemplate.cloneNode(true);
             slide.removeAttribute("id"); // not needed anymore (in case it was set)
-    
+
             const slide_scaler = document.createElement("DIV");
             slide_scaler.className = "ld-continuous-view-scaler";
             slide_scaler.appendChild(slide);
-    
+
             const slide_pane = document.createElement("DIV");
             slide_pane.className = "ld-continuous-view-slide-pane"
             slide_pane.appendChild(slide_scaler);
-    
+
             continuous_view_pane.appendChild(slide_pane);
         });
 
         document.getElementsByTagName("BODY")[0].prepend(continuous_view_pane);
     }
-
- 
-/*  ---------------------------------------------------------------------------
-    Setup everything for rendering the slides and jumping to the slides.
-
-    Incremental animation is simply realized by making correspondingly 
-    marked-up elements hidden and as long as an element is hidden progress
-    is made by making the respective element visible. I.e., the whole
-    progress is implicitly covered by the visible and hidden elements.
-*/
-
 
     /**
      * @returns The element ("DIV") with the ID of the current slide.
@@ -378,112 +419,166 @@ const lectureDoc2 = function() {
         return document.getElementById("ld-slide-no-" + state.currentSlideNo);
     }
 
-
-/*  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    Make sure that the slide is always shown in the middle
-    of the screen and completely fills it.
-    I.e., rescale the slide whenever the viewport changes. 
-*/
-function setPaneScale() {
-    const w_scale = window.innerWidth / presentation.slide.width;
-    const h_scale = window.innerHeight / presentation.slide.height;
-    document.getElementById("ld-main-pane").style.scale = Math.min(w_scale, h_scale);
-}
-
-
-
-/**
- * Core method to show the next slide. Hiding and showing slides has to be done
- * using this and the `hideSlide` method. This ensures that the internal
- * state is correctly updated!
- */
-function showSlide(slideNo) {
-    const slide_id = "ld-slide-no-" + slideNo;
-    console.info("trying to show: " + slide_id + " / " + lastSlideNo());
-    document.getElementById(slide_id).style.display = "block";
-    state.currentSlideNo = slideNo;
-}
-function hideSlide(slideNo) {
-    const ld_slide = document.getElementById("ld-slide-no-" + slideNo)
-    if (ld_slide) {
-        ld_slide.style.display = "none";
-
-        /* We have to clear a potential selection to avoid a very confusing 
-           behavior.
-        */
-        window.getSelection().empty()
+    /**
+     * Sets the scaling of the main-pane to make sure that the slide is always shown 
+     * in the middle of the screen and completely fills it.
+     * 
+     * I.e., this function should be called to rescale the slide whenever the 
+     * viewport changes. 
+     */
+    function setPaneScale() {
+        const w_scale = window.innerWidth / presentation.slide.width;
+        const h_scale = window.innerHeight / presentation.slide.height;
+        document.getElementById("ld-main-pane").style.scale = Math.min(w_scale, h_scale);
     }
-}
-function advancePresentation() {
-    const slide = getCurrentSlide();
-    const elementsToAnimate = 
-        ':scope :is(ul,ol).incremental>li, ' +
-        ':scope :is(table).incremental>tbody>tr, ' +
-        ':scope :not( :is(ul,ol,table)).incremental'
-    const steps = slide.querySelectorAll(elementsToAnimate);
-    const stepsCount = steps.length;
-    for (var s = 0; s < stepsCount; s++) {
-        if (steps[s].style.visibility == "hidden") {
-            steps[s].style.visibility = "visible";
-            return;
+
+    /**
+     * Core method to show the next slide. Hiding and showing slides has to be done
+     * using this and the `hideSlide` method. This ensures that the internal
+     * state is correctly updated!
+     */
+    function showSlide(slideNo) {
+        const slide_id = "ld-slide-no-" + slideNo;
+        document.getElementById(slide_id).style.display = "block";
+        state.currentSlideNo = slideNo;
+    }
+
+    function hideSlide(slideNo) {
+        const ld_slide = document.getElementById("ld-slide-no-" + slideNo)
+        if (ld_slide) {
+            ld_slide.style.display = "none";
+
+            // We have to clear a potential selection of text to avoid that the
+            // user is confused if s(he) copies text to the clipboard (s)he can't 
+            // see.
+            window.getSelection().empty()
         }
     }
-    moveToNextSlide();
-}
-function resetSlideProgress(slide) {
-    const elementsToAnimate = 
-        ":scope :is(ol,ul).incremental>li, "+
-        ':scope :is(table).incremental>tbody>tr, '+
-        ":scope :not( :is(ol,ul,table)).incremental"
-    slide
-        .querySelectorAll(elementsToAnimate)
-        .forEach((element) => element.style.visibility = "hidden" )
-}
-function moveToNextSlide() {
-    if (state.currentSlideNo < lastSlideNo()) {
-        hideSlide(state.currentSlideNo);
-        showSlide(++state.currentSlideNo);
+
+    /**
+     * Advances the presentation by moving to the next slide.
+     * 
+     * In general, `advancePresentation` should be called.
+     */
+    function moveToNextSlide() {
+        if (state.currentSlideNo < lastSlideNo()) {
+            hideSlide(state.currentSlideNo);
+            showSlide(++state.currentSlideNo);
+        }
     }
-}
-function moveToPreviousSlide() {
-    if (state.currentSlideNo > 0) {
-        hideSlide(state.currentSlideNo)
-        showSlide(--state.currentSlideNo)
+
+    function moveToPreviousSlide() {
+        if (state.currentSlideNo > 0) {
+            hideSlide(state.currentSlideNo)
+            showSlide(--state.currentSlideNo)
+        }
     }
-}
-function clearJumpTarget() {
-    document.getElementById("ld-jump-target-current").innerText = "";
-    document.getElementById("ld-jump-target-dialog").close()
-}
-/** Removes the last digit of the current jump target. */
-function cutDownJumpTarget() {
-    var ld_goto_number = document.getElementById("ld-jump-target-current");
-    var jumpTarget = ld_goto_number.innerText
-    switch (jumpTarget.length) {
-        case 0: /* a redundant "backspace" press */
+
+    function getSlideProgress(slide) {
+        if (!state.slideProgress) {
+            return 0;
+        }
+        return state.slideProgress[slide.id];
+    }
+
+    function setSlideProgress(slide, i) {
+        if (!state.slideProgress) {
+            state.slideProgress = {};
+        }
+        state.slideProgress[slide.id] = i + 1;
+    }
+
+    function getElementsToAnimate(slide) {
+        const elementsToAnimate =
+            ':scope :is(ul,ol).incremental>li, ' +
+            ':scope :is(table).incremental>tbody>tr, ' +
+            ':scope :not( :is(ul,ol,table)).incremental'
+        return slide.querySelectorAll(elementsToAnimate);
+    }
+    /**
+     * Advances the presentation by either showing the next element or going
+     * to the next slide.
+     * 
+     * Incremental animation is simply realized by making correspondingly 
+     * marked-up elements hidden and as long as an element is hidden progress
+     * is made by making the respective element visible. I.e., the whole
+     * progress is implicitly covered by the visible and hidden elements.
+     */
+    function advancePresentation() {
+        const slide = getCurrentSlide();
+        const elements = getElementsToAnimate(slide)
+        const elementsCount = elements.length;
+        for (var i = 0; i < elementsCount; i++) {
+            if (elements[i].style.visibility == "hidden") {
+                elements[i].style.visibility = "visible";
+                setSlideProgress(slide, i)
+                return;
+            }
+        }
+        // When we reach this point all elements are (already) visible.
+        moveToNextSlide();
+    }
+    function setupSlideProgress(slide) {
+        getElementsToAnimate(slide).forEach((e) => e.style.visibility = "hidden");
+    }
+    function resetSlideProgress(slide) {
+        setupSlideProgress(slide);
+        if (state.slideProgress) {
+            state.slideProgress.removeAttribute(slide.id)
+            // ... when the last slide.id key is removed from the object, the 
+            // object is actually deleted...
+        }
+    }
+    function reapplySlideProgress() {
+        if (!state.slideProgress) {
+            state.slideProgress = {};
             return;
-        case 1: /* the last remaining digit is deleted */
-            clearJumpTarget(); 
-            return;
-        default:
-            ld_goto_number.innerText = jumpTarget.substring(0, jumpTarget.length - 1)
+        }
+        document.querySelectorAll("#ld-main-pane .ld-slide").forEach((slide) => {
+            const visibleElements = getSlideProgress(slide);
+            if (visibleElements > 0) {
+                const elements = getElementsToAnimate(slide);
+                const elementsCount = elements.length;
+                for (var i = 0; i < visibleElements && i < elementsCount; i++) {
+                    elements[i].style.visibility = "visible";
+                }
+            }
+        });
     }
-}
-function updateJumpTarget(number) {
-    document.getElementById("ld-jump-target-current").innerText += number;
-    document.getElementById("ld-jump-target-dialog").showModal();
-}
-function jumpToSlide() {
-    const ld_goto_number = document.getElementById("ld-jump-target-current");
-    const slideNo = Number(ld_goto_number.innerText) - 1; /* users number the slides starting with 1 */
-    ld_goto_number.innerText = "";
-    document.getElementById("ld-jump-target-dialog").close();
-    if (slideNo >= 0) {
-        hideSlide(state.currentSlideNo);
-        state.currentSlideNo = slideNo > lastSlideNo() ? lastSlideNo() : slideNo;
-        showSlide(state.currentSlideNo);
+
+    function clearJumpTarget() {
+        document.getElementById("ld-jump-target-current").innerText = "";
+        document.getElementById("ld-jump-target-dialog").close()
     }
-}
+    /** Removes the last digit of the current jump target. */
+    function cutDownJumpTarget() {
+        var ld_goto_number = document.getElementById("ld-jump-target-current");
+        var jumpTarget = ld_goto_number.innerText
+        switch (jumpTarget.length) {
+            case 0: /* a redundant "backspace" press */
+                return;
+            case 1: /* the last remaining digit is deleted */
+                clearJumpTarget();
+                return;
+            default:
+                ld_goto_number.innerText = jumpTarget.substring(0, jumpTarget.length - 1)
+        }
+    }
+    function updateJumpTarget(number) {
+        document.getElementById("ld-jump-target-current").innerText += number;
+        document.getElementById("ld-jump-target-dialog").showModal();
+    }
+    function jumpToSlide() {
+        const ld_goto_number = document.getElementById("ld-jump-target-current");
+        const slideNo = Number(ld_goto_number.innerText) - 1; /* users number the slides starting with 1 */
+        ld_goto_number.innerText = "";
+        document.getElementById("ld-jump-target-dialog").close();
+        if (slideNo >= 0) {
+            hideSlide(state.currentSlideNo);
+            state.currentSlideNo = slideNo > lastSlideNo() ? lastSlideNo() : slideNo;
+            showSlide(state.currentSlideNo);
+        }
+    }
 
 
     function updateLightTableZoomLevel(value) {
@@ -492,7 +587,7 @@ function jumpToSlide() {
         document.querySelector("#ld-light-table-zoom-slider").value = value
 
         const root = document.querySelector(":root");
-        root.style.setProperty("--ld-light-table-zoom-level",value);
+        root.style.setProperty("--ld-light-table-zoom-level", value);
 
         state.lightTableZoomLevel = value
     }
@@ -508,14 +603,14 @@ function jumpToSlide() {
      *      to store the current state. 
      */
     function toggleDialog(name) {
-        const elementId = "ld-"+name+"-dialog"
-        const stateId = "show"+capitalize(name)
+        const elementId = "ld-" + name + "-dialog"
+        const stateId = "show" + capitalizeCSSName(name)
 
         const dialog = document.getElementById(elementId)
         if (dialog.open) {
             dialog.style.opacity = 0;
             /* the 500ms is also hard coded in the css */
-            setTimeout(function () { dialog.close()}, 500);
+            setTimeout(function () { dialog.close() }, 500);
             state[stateId] = false
         } else {
             dialog.showModal();
@@ -545,6 +640,11 @@ function jumpToSlide() {
     }
 
     /** 
+     * Stores the number of times the user has to press the reset key
+     * before LectureDoc will be reset.
+     */
+    var resetCount = 8
+    /** 
      * Central keyboard event handler.
      */
     function registerKeyboardEventListener() {
@@ -554,30 +654,44 @@ function jumpToSlide() {
                 return;
             }
 
+            // When the user presses the "r" key eight times in a row, LectureDoc
+            // will be reset.
+            if (event.key == "r") {
+                resetCount--
+                if (resetCount == 0) {
+                    resetLectureDoc();
+                } else if (resetCount < 7) {
+                    console.info(`press r ${resetCount} more times more to reset LectureDoc`)
+                    return;
+                }
+            } else {
+                resetCount == 8
+            }
+
             switch (event.key) {
-                case "0": 
-                case "1": 
-                case "2": 
-                case "3": 
-                case "4": 
-                case "5": 
-                case "6": 
-                case "7": 
-                case "8": 
-                case "9":           updateJumpTarget(event.key); break;
-                case "Escape":      clearJumpTarget(); break;
-                case "Backspace":   cutDownJumpTarget(); break;
-                case "Enter":       jumpToSlide(); break;
-                case "ArrowLeft":   moveToPreviousSlide(); break;
-                case "ArrowRight": 
-                case "Space":       advancePresentation(); break;
-                case "r":           resetSlideProgress(getCurrentSlide()); break;
+                case "0":
+                case "1":
+                case "2":
+                case "3":
+                case "4":
+                case "5":
+                case "6":
+                case "7":
+                case "8":
+                case "9": updateJumpTarget(event.key); break;
+                case "Escape": clearJumpTarget(); break;
+                case "Backspace": cutDownJumpTarget(); break;
+                case "Enter": jumpToSlide(); break;
+                case "ArrowLeft": moveToPreviousSlide(); break;
+                case "ArrowRight":
+                case "Space": advancePresentation(); break;
+                case "r": resetSlideProgress(getCurrentSlide()); break;
 
-                case "l":           toggleDialog("light-table"); break; 
+                case "l": toggleDialog("light-table"); break;
 
-                case "h":           toggleDialog("help"); break; 
+                case "h": toggleDialog("help"); break;
 
-                case "c":           toggleContinuousView(); break;
+                case "c": toggleContinuousView(); break;
 
                 // for development purposes:
                 default:
@@ -586,7 +700,7 @@ function jumpToSlide() {
         });
     }
 
-    function registerViewportResizeListener() { 
+    function registerViewportResizeListener() {
         document.defaultView.addEventListener("resize", () => setPaneScale());
     }
 
@@ -597,7 +711,7 @@ function jumpToSlide() {
             if (window.getSelection().anchorNode != null) {
                 return;
             }
-    
+
             /* Let's determine if we have clicked on the left or right part. */
             if (event.pageX < (window.innerWidth / 2)) {
                 moveToPreviousSlide();
@@ -612,7 +726,7 @@ function jumpToSlide() {
             getElementById("ld-light-table-zoom-slider").
             addEventListener("input", (event) => {
                 updateLightTableZoomLevel(event.target.value)
-        });
+            });
     }
 
     function registerLightTableSlideSelectionListener() {
@@ -622,8 +736,8 @@ function jumpToSlide() {
                 hideSlide(state.currentSlideNo);
                 state.currentSlideNo = slideNo;
                 showSlide(state.currentSlideNo);
-                toggleDialog("light-table");            
-            });   
+                toggleDialog("light-table");
+            });
         });
     }
 
@@ -640,9 +754,12 @@ function jumpToSlide() {
         initShowHelp();
 
         /**
-         * Restores previous state if possible; this may override document settings.
+         * Load the previous state if possible; this may override document settings.
+         * 
+         * However, information in the state object is APPLIED after all DOM
+         * Manipulations are executed!
          */
-        restoreState();
+        loadState();
 
         /*
         Setup base structure.
@@ -668,9 +785,11 @@ function jumpToSlide() {
      * enable state changes after everything is fully loaded.
      */
     window.addEventListener("load", () => {
-        // Whatever the state is/was - let's apply it before we enable 
-        // further state changes. 
+        // Whatever the state is/was - let's apply it before we make state changes
+        // possible by the user.
         applyState();
+
+        document.addEventListener("visibilitychange", storeStateOnVisibilityHidden);
 
         registerKeyboardEventListener();
         registerViewportResizeListener();
@@ -684,20 +803,6 @@ function jumpToSlide() {
             console.log("advanced animations package is not found/not loaded")
         }
     });
-
-    /**
-     * We store the current state, when the page becomes invisible; i.e., the 
-     * user leaves the page. 
-     * This enables us to restore the state even if the user "kills" the browser 
-     * and therefore other events (e.g., "onunload") are not reliably fired. 
-     * (See MDN for more details.)
-     */
-    document.onvisibilitychange = () => {
-        if (document.visibilityState === "hidden") {
-            storeState();
-            console.log(`Saved state of: ${presentation.id}`);
-        }
-    };
 
     return {
         'presentation': presentation,
